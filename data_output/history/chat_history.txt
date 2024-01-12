@@ -7082,3 +7082,70 @@ Kündigung rechtfertigen.
 ()
 
 
+
+
+User Query:
+ test
+ Facts:
+ ['sonstiges']
+ Response des LLM:
+ Als Datenmengeninformationen zur Verfügung gestellt wurden, die nicht direkt mit der Anfrage in Verbindung stehen, kann keine spezifische Antwort geliefert werden.
+
+ Korpus aus Knowledge Graph (A) und referenzierten Textstellen aus dem Grundkorpus (B): 
+A. Kontext vom Knowledge Graphen - 
+1. cosine similarity Vector-searched Nodes und Edges vom Knowledge Graphen :
+Node: außerdienstliches verhalten ist mit Node: betriebliche sphäre verbunden, durch die Edge: 'Das außerdienstliche Verhalten eines Arbeitnehmers kann eine Kündigung im Regelfall nicht begründen, da die betriebliche Sphäre und das private Leben des Arbeitnehmers grundsätzlich streng voneinander zu trennen sind.'
+Node: außerordentlichen kündigung ist mit Node: verhaltensbedingte kündigung verbunden, durch die Edge: 'Eine außerordentliche Kündigung kann ohne weiteres zu einer verhaltensbedingten Kündigung führen.'
+
+2. Kontextuelle Nachbarn der vorherigen Nodes :
+Node: außerdienstliches verhalten
+ - Contextual Neighbor: verhaltensbedingte kündigung, Edge: außerdienstliches Verhalten, das das Arbeitsverhältnis konkret beeinträchtigt, rechtfertigt die Kündigung.,chunk contextual proximity, Combined Score: 1.4000000000000001
+ - Contextual Neighbor: alkohol, Edge: chunk contextual proximity, Combined Score: 0.6000000000000001
+Node: außerordentlichen kündigung
+ - Contextual Neighbor: arbeitnehmer, Edge: chunk contextual proximity, Combined Score: 0.4
+ - Contextual Neighbor: abmahnung, Edge: chunk contextual proximity, Combined Score: 0.30000000000000004
+
+
+3. Kürzester Weg durch den Graphen, der alle vector-searched nodes verbindet: 
+außerdienstliches verhalten - chunk contextual proximity - abmahnung
+
+4. Topic Clusters im graphen basierend auf query:
+krankheit - Der weitaus häufigste Fall der personenbedingten Kündigung ist die Krankheit.,chunk contextual proximity - personenbedingte kündigung
+außerordentliche kündigung - Ist eine ordentliche Kündigung durch Tarifvertrag ausgeschlossen, kann der Ausspruch einer außerordentlichen Kündigung in Betracht kommen.,chunk contextual proximity - personenbedingte kündigung
+kschg - Gesetzliche Grundlage für die personenbedingte Kündigung ist § 1 Abs. 2 KSchG.,chunk contextual proximity - personenbedingte kündigung
+
+5. weitere top_nodes für das query:
+
+
+6. kontextuelle Nachbarn der weiteren top_nodes:
+ Node: verhaltensbedingte kündigung
+ - Contextual Neighbor: interessenabwägung, Edge: Hinweise für die Interessenabwägung werden gegeben, die in jedem Fall vor Ausspruch der Kündigung durchzuführen sind.,chunk contextual proximity, Combined Score: 3.6
+ - Contextual Neighbor: personenbedingte kündigung, Edge: chunk contextual proximity, Combined Score: 2.0
+
+
+B. Kontext durch referenzierte Textstellen aus dem Corpus:
+H (Score: I)
+H (Score: I)
+H (Score: I)
+HI937059)
+Verhaltensbedingte Gründe rechtfertigen nach der Rechtsprechung die Kündigung des
+Arbeitsverhältnisses nach vorangegangener Abmahnung, wenn bei verständiger Würdigung in Abwägung
+der Interessen der Vertragsparteien und des Betriebs die Kündigung billigenswert und angemessen ist.
+Dabei ist nicht von dem Standpunkt des jeweiligen Arbeitgebers auszugehen. Es gilt vielmehr ein
+objektiver Maßstab. Als verhaltensbedingter Kündigungsgrund kommt nur ein solcher Umstand in
+Betracht, der einen ruhig und verständig urteilenden Arbeitgeber zur Kündigung bestimmen kann. Diese
+verhaltensbedingten Kündigungsgründe lassen sich in folgende Fallgruppen unterteilen:
+Pflichtwidrigkeiten im Leistungsbereich (Schlecht- oder Fehlleistungen),
+Verstöße gegen die betriebliche Ordnung (z. B. Verstöße gegen ein Rauch- oder ein
+Alkoholverbot),
+Störungen im Vertrauensbereich (z. B. Vollmachtsmissbrauch, Annahme von Schmiergeldern,
+überhöhte Spesenabrechnungen). Ein Fehlverhalten in diesem Bereich stellt in der Regel
+zugleich einen wichtigen Grund für eine außerordentliche Kündigung dar.
+Verletzung von arbeitsvertraglichen Nebenpflichten (z. B. Verstöße gegen die Gehorsams-,
+Treue- und Geheimhaltungspflicht),
+außerdienstliches Verhalten (strafbare Handlungen, die das Arbeitsverhältnis konkret
+beeinträchtigen, z. B. Betrugsstraftat bei einem Bankkassierer).
+2 Interessenabwägung
+( (Score: N/A)
+
+

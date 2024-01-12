@@ -3,6 +3,7 @@ numpy
 requests
 openai
 langchain
+langchain_openai
 networkx
 seaborn
 pyvis

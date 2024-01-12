@@ -8,6 +8,7 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
+from chromadb.utils import embedding_functions
 from langchain_community.document_loaders import TextLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.docstore.document import Document
@@ -981,7 +982,7 @@ def generate_response(query, fact_extract):
 
     # Get referenced text chunks
     similar_chunk_for_query = find_similar_text_chunks(query, text_vectorstore, k=5, parent_child_dict=parent_child_dict)
-    similar_chunks = list(set(find_similar_text_chunks(query, text_vectorstore, k=5, parent_child_dict=parent_child_dict) for query in fact_extract))
+    similar_chunks = [find_similar_text_chunks(query, text_vectorstore, k=1, parent_child_dict=parent_child_dict) for query in fact_extract]
     print("Apply similarity search for text chunks")
 
     # Format the referenced text chunks
@@ -1092,13 +1093,18 @@ for i, parent in enumerate(parent_texts):
 # Convert children_chunks into Document objects
 docs = [Document(page_content=chunk) for chunk in children_chunks]
 
+openai_ef = embedding_functions.OpenAIEmbeddingFunction(
+                api_key=api_key,
+                model_name="text-embedding-ada-002"
+            )
+
 # Check if the text vector store exists, if not create a new one
 if os.path.exists(text_vectorstore_path):
     print("Loading existing vectorstore for text chunks")
-    text_vectorstore = Chroma(persist_directory=text_vectorstore_path)
+    text_vectorstore = Chroma(persist_directory=text_vectorstore_path, embedding=OpenAIEmbeddings())
 else:
     print("Creating vectorstore for text chunks")
-    text_vectorstore = Chroma.from_documents(docs, OpenAIEmbeddings(), persist_directory=text_vectorstore_path)
+    text_vectorstore = Chroma.from_documents(docs, embedding=OpenAIEmbeddings(), persist_directory=text_vectorstore_path)
 
 # ==============================
 #vectorstore paths
