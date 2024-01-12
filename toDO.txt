@@ -39,8 +39,6 @@ done# Custom Algorithm for Context Generation: Develop a custom algorithm that s
 relevance and informativeness regarding the query, rather than just their proximity.
 -> combined scores of cos score, tf-idf score and centralized score
 
-
-
 Retreiver:
 
 #toDO: embed children (chunk size maybe 512, 256) and retreive but give HI as response
