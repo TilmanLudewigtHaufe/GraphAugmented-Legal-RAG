@@ -1,0 +1,723 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #1a1a1a;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 900px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="4 grunddaten">4 grunddaten</option>
+                                
+                                    <option value="betriebszugehörigkeit">betriebszugehörigkeit</option>
+                                
+                                    <option value="dringende betriebliche erfordernisse">dringende betriebliche erfordernisse</option>
+                                
+                                    <option value="lebensalter">lebensalter</option>
+                                
+                                    <option value="schwerbehinderung">schwerbehinderung</option>
+                                
+                                    <option value="sozialauswahl">sozialauswahl</option>
+                                
+                                    <option value="sozialauswahlkriterien">sozialauswahlkriterien</option>
+                                
+                                    <option value="unterhaltspflichten">unterhaltspflichten</option>
+                                
+                                    <option value="abgrenzung zu anderen kündigungsgründen">abgrenzung zu anderen kündigungsgründen</option>
+                                
+                                    <option value="außerordentliche personenbedingte kündigung">außerordentliche personenbedingte kündigung</option>
+                                
+                                    <option value="interessenabwägung">interessenabwägung</option>
+                                
+                                    <option value="kündigung">kündigung</option>
+                                
+                                    <option value="personenbedingte kündigung">personenbedingte kündigung</option>
+                                
+                                    <option value="abmahnung">abmahnung</option>
+                                
+                                    <option value="arbeitnehmer">arbeitnehmer</option>
+                                
+                                    <option value="arbeitsunfähigkeit">arbeitsunfähigkeit</option>
+                                
+                                    <option value="außerordentliche kündigung">außerordentliche kündigung</option>
+                                
+                                    <option value="einzelne kündigungsgründe">einzelne kündigungsgründe</option>
+                                
+                                    <option value="kündigungsgründe">kündigungsgründe</option>
+                                
+                                    <option value="ordentliche kündigung">ordentliche kündigung</option>
+                                
+                                    <option value="pflichtverletzung">pflichtverletzung</option>
+                                
+                                    <option value="rechtsprechung">rechtsprechung</option>
+                                
+                                    <option value="ultima-ratio-prinzip">ultima-ratio-prinzip</option>
+                                
+                                    <option value="verhaltensbedingte kündigung">verhaltensbedingte kündigung</option>
+                                
+                                    <option value="§ 1 abs. 2 kschg">§ 1 abs. 2 kschg</option>
+                                
+                                    <option value="§ 626 bgb">§ 626 bgb</option>
+                                
+                                    <option value="alkoholbedingte verfehlungen">alkoholbedingte verfehlungen</option>
+                                
+                                    <option value="alkoholgenuss">alkoholgenuss</option>
+                                
+                                    <option value="alkoholmissbrauch">alkoholmissbrauch</option>
+                                
+                                    <option value="allgemeiner kündigungsschutz">allgemeiner kündigungsschutz</option>
+                                
+                                    <option value="kündigungsverbote">kündigungsverbote</option>
+                                
+                                    <option value="alter des arbeitnehmers">alter des arbeitnehmers</option>
+                                
+                                    <option value="anzeigen gegen den arbeitgeber">anzeigen gegen den arbeitgeber</option>
+                                
+                                    <option value="arbeitgeber">arbeitgeber</option>
+                                
+                                    <option value="außerbetriebliche gründe">außerbetriebliche gründe</option>
+                                
+                                    <option value="betriebsbedingte kündigung">betriebsbedingte kündigung</option>
+                                
+                                    <option value="darlegungs- und beweislast">darlegungs- und beweislast</option>
+                                
+                                    <option value="kontrollrecht der internet- und e-mail-nutzung">kontrollrecht der internet- und e-mail-nutzung</option>
+                                
+                                    <option value="kschg">kschg</option>
+                                
+                                    <option value="soziale rechtfertigung">soziale rechtfertigung</option>
+                                
+                                    <option value="sozialwidrigkeit">sozialwidrigkeit</option>
+                                
+                                    <option value="änderungskündigung">änderungskündigung</option>
+                                
+                                    <option value="außerordentliche fristlose kündigung">außerordentliche fristlose kündigung</option>
+                                
+                                    <option value="berechtigte kündigungsgründe">berechtigte kündigungsgründe</option>
+                                
+                                    <option value="betriebsratsanhörung">betriebsratsanhörung</option>
+                                
+                                    <option value="bundesarbeitsgericht">bundesarbeitsgericht</option>
+                                
+                                    <option value="gerichtsentscheidungen">gerichtsentscheidungen</option>
+                                
+                                    <option value="hi3459808">hi3459808</option>
+                                
+                                    <option value="kasuistik">kasuistik</option>
+                                
+                                    <option value="krankheitsbedingte kündigung">krankheitsbedingte kündigung</option>
+                                
+                                    <option value="privatnutzung von internet und e-mail">privatnutzung von internet und e-mail</option>
+                                
+                                    <option value="verhaltensbedingte kündigungsgründe">verhaltensbedingte kündigungsgründe</option>
+                                
+                                    <option value="§ 102 betrvg">§ 102 betrvg</option>
+                                
+                                    <option value="personenbedingte gründe">personenbedingte gründe</option>
+                                
+                                    <option value="arbeitsplatz">arbeitsplatz</option>
+                                
+                                    <option value="arbeitsrichter">arbeitsrichter</option>
+                                
+                                    <option value="kündigungsschutzprozess">kündigungsschutzprozess</option>
+                                
+                                    <option value="arbeitsverhältnis">arbeitsverhältnis</option>
+                                
+                                    <option value="arbeitsverweigerung">arbeitsverweigerung</option>
+                                
+                                    <option value="auskunftspflicht des arbeitgebers">auskunftspflicht des arbeitgebers</option>
+                                
+                                    <option value="auswahlentscheidung">auswahlentscheidung</option>
+                                
+                                    <option value="betriebsrat">betriebsrat</option>
+                                
+                                    <option value="betriebsrat widerspruch">betriebsrat widerspruch</option>
+                                
+                                    <option value="innerbetriebliche gründe">innerbetriebliche gründe</option>
+                                
+                                    <option value="kündigungsschutzklage">kündigungsschutzklage</option>
+                                
+                                    <option value="mildernde mittel">mildernde mittel</option>
+                                
+                                    <option value="sozialdaten">sozialdaten</option>
+                                
+                                    <option value="verhältnismäßigkeit">verhältnismäßigkeit</option>
+                                
+                                    <option value="außerdienstliches verhalten">außerdienstliches verhalten</option>
+                                
+                                    <option value="krankheit">krankheit</option>
+                                
+                                    <option value="negative prognose">negative prognose</option>
+                                
+                                    <option value="sozialwidrigkeit der kündigung">sozialwidrigkeit der kündigung</option>
+                                
+                                    <option value="tarifvertrag">tarifvertrag</option>
+                                
+                                    <option value="verschulden">verschulden</option>
+                                
+                                    <option value="versetzung">versetzung</option>
+                                
+                                    <option value="weiterbeschäftigungsmöglichkeit">weiterbeschäftigungsmöglichkeit</option>
+                                
+                                    <option value="§ 626 abs. 2 satz 2 bgb">§ 626 abs. 2 satz 2 bgb</option>
+                                
+                                    <option value="berufsausbildung">berufsausbildung</option>
+                                
+                                    <option value="berufserfahrung">berufserfahrung</option>
+                                
+                                    <option value="betriebliche und wirtschaftliche auswirkungen der pflichtverletzung">betriebliche und wirtschaftliche auswirkungen der pflichtverletzung</option>
+                                
+                                    <option value="kündigung wegen alkoholerkrankung">kündigung wegen alkoholerkrankung</option>
+                                
+                                    <option value="betriebsverfassungsgesetz §23 (kschg)">betriebsverfassungsgesetz §23 (kschg)</option>
+                                
+                                    <option value="soziale auswahl nach §1 abs. 3">soziale auswahl nach §1 abs. 3</option>
+                                
+                                    <option value="betriebsänderung nach §111 des betrvg">betriebsänderung nach §111 des betrvg</option>
+                                
+                                    <option value="beweislast bei vorhandenem interessenausgleich">beweislast bei vorhandenem interessenausgleich</option>
+                                
+                                    <option value="dauer der betriebszugehörigkeit">dauer der betriebszugehörigkeit</option>
+                                
+                                    <option value="interessenausgleich mit namensliste">interessenausgleich mit namensliste</option>
+                                
+                                    <option value="schwerbehinderung des arbeitnehmers">schwerbehinderung des arbeitnehmers</option>
+                                
+                                    <option value="soziale auswahl">soziale auswahl</option>
+                                
+                                    <option value="vergleichbarkeit der arbeitnehmer">vergleichbarkeit der arbeitnehmer</option>
+                                
+                                    <option value="korrekte handhabung der geschäftsanweisungen">korrekte handhabung der geschäftsanweisungen</option>
+                                
+                                    <option value="pflichtwidrigkeiten im leistungsbereich">pflichtwidrigkeiten im leistungsbereich</option>
+                                
+                                    <option value="störungen im vertrauensbereich">störungen im vertrauensbereich</option>
+                                
+                                    <option value="unterhaltspflichten des arbeitnehmers">unterhaltspflichten des arbeitnehmers</option>
+                                
+                                    <option value="verletzung von arbeitsvertraglichen nebenpflichten">verletzung von arbeitsvertraglichen nebenpflichten</option>
+                                
+                                    <option value="verschulden des arbeitnehmers">verschulden des arbeitnehmers</option>
+                                
+                                    <option value="verstöße gegen betriebliche ordnung">verstöße gegen betriebliche ordnung</option>
+                                
+                                    <option value="voraussetzungen">voraussetzungen</option>
+                                
+                                    <option value="wiederholungsgefahr">wiederholungsgefahr</option>
+                                
+                                    <option value="ordentliche verhaltensbedingte kündigung">ordentliche verhaltensbedingte kündigung</option>
+                                
+                                    <option value="leistungsmängel">leistungsmängel</option>
+                                
+                                    <option value="lohnpfändungen">lohnpfändungen</option>
+                                
+                                    <option value="nebentätigkeit">nebentätigkeit</option>
+                                
+                                    <option value="nichterfüllung der anzeigepflicht bei krankheit">nichterfüllung der anzeigepflicht bei krankheit</option>
+                                
+                                    <option value="pflichtverletzungen bei krankheit">pflichtverletzungen bei krankheit</option>
+                                
+                                    <option value="pflichtwidrigkeiten bei krankheit">pflichtwidrigkeiten bei krankheit</option>
+                                
+                                    <option value="private internetnutzung">private internetnutzung</option>
+                                
+                                    <option value="schmiergelder">schmiergelder</option>
+                                
+                                    <option value="sexuelle belästigung">sexuelle belästigung</option>
+                                
+                                    <option value="vermögensdelikt zulasten des arbeitgebers">vermögensdelikt zulasten des arbeitgebers</option>
+                                
+                                    <option value="verstoß gegen nutzungsregelungen">verstoß gegen nutzungsregelungen</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"font": {"color": "#cccccc"}, "group": 1, "id": "4 grunddaten", "label": "4 grunddaten", "shape": "dot", "size": 7}, {"font": {"color": "#cccccc"}, "group": 1, "id": "betriebszugeh\u00f6rigkeit", "label": "betriebszugeh\u00f6rigkeit", "shape": "dot", "size": 32}, {"font": {"color": "#cccccc"}, "group": 1, "id": "dringende betriebliche erfordernisse", "label": "dringende betriebliche erfordernisse", "shape": "dot", "size": 41}, {"font": {"color": "#cccccc"}, "group": 1, "id": "lebensalter", "label": "lebensalter", "shape": "dot", "size": 29}, {"font": {"color": "#cccccc"}, "group": 1, "id": "schwerbehinderung", "label": "schwerbehinderung", "shape": "dot", "size": 29}, {"font": {"color": "#cccccc"}, "group": 1, "id": "sozialauswahl", "label": "sozialauswahl", "shape": "dot", "size": 30}, {"font": {"color": "#cccccc"}, "group": 1, "id": "sozialauswahlkriterien", "label": "sozialauswahlkriterien", "shape": "dot", "size": 29}, {"font": {"color": "#cccccc"}, "group": 1, "id": "unterhaltspflichten", "label": "unterhaltspflichten", "shape": "dot", "size": 29}, {"font": {"color": "#cccccc"}, "group": 2, "id": "abgrenzung zu anderen k\u00fcndigungsgr\u00fcnden", "label": "abgrenzung zu anderen k\u00fcndigungsgr\u00fcnden", "shape": "dot", "size": 4}, {"font": {"color": "#cccccc"}, "group": 2, "id": "au\u00dferordentliche personenbedingte k\u00fcndigung", "label": "au\u00dferordentliche personenbedingte k\u00fcndigung", "shape": "dot", "size": 23}, {"font": {"color": "#cccccc"}, "group": 2, "id": "interessenabw\u00e4gung", "label": "interessenabw\u00e4gung", "shape": "dot", "size": 47}, {"font": {"color": "#cccccc"}, "group": 2, "id": "k\u00fcndigung", "label": "k\u00fcndigung", "shape": "dot", "size": 54}, {"font": {"color": "#cccccc"}, "group": 2, "id": "personenbedingte k\u00fcndigung", "label": "personenbedingte k\u00fcndigung", "shape": "dot", "size": 23}, {"font": {"color": "#cccccc"}, "group": 2, "id": "abmahnung", "label": "abmahnung", "shape": "dot", "size": 16}, {"font": {"color": "#cccccc"}, "group": 2, "id": "arbeitnehmer", "label": "arbeitnehmer", "shape": "dot", "size": 41}, {"font": {"color": "#cccccc"}, "group": 2, "id": "arbeitsunf\u00e4higkeit", "label": "arbeitsunf\u00e4higkeit", "shape": "dot", "size": 23}, {"font": {"color": "#cccccc"}, "group": 2, "id": "au\u00dferordentliche k\u00fcndigung", "label": "au\u00dferordentliche k\u00fcndigung", "shape": "dot", "size": 12}, {"font": {"color": "#cccccc"}, "group": 2, "id": "einzelne k\u00fcndigungsgr\u00fcnde", "label": "einzelne k\u00fcndigungsgr\u00fcnde", "shape": "dot", "size": 23}, {"font": {"color": "#cccccc"}, "group": 3, "id": "k\u00fcndigungsgr\u00fcnde", "label": "k\u00fcndigungsgr\u00fcnde", "shape": "dot", "size": 48}, {"font": {"color": "#cccccc"}, "group": 2, "id": "ordentliche k\u00fcndigung", "label": "ordentliche k\u00fcndigung", "shape": "dot", "size": 25}, {"font": {"color": "#cccccc"}, "group": 2, "id": "pflichtverletzung", "label": "pflichtverletzung", "shape": "dot", "size": 23}, {"font": {"color": "#cccccc"}, "group": 2, "id": "rechtsprechung", "label": "rechtsprechung", "shape": "dot", "size": 19}, {"font": {"color": "#cccccc"}, "group": 2, "id": "ultima-ratio-prinzip", "label": "ultima-ratio-prinzip", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 2, "id": "verhaltensbedingte k\u00fcndigung", "label": "verhaltensbedingte k\u00fcndigung", "shape": "dot", "size": 41}, {"font": {"color": "#cccccc"}, "group": 2, "id": "\u00a7 1 abs. 2 kschg", "label": "\u00a7 1 abs. 2 kschg", "shape": "dot", "size": 16}, {"font": {"color": "#cccccc"}, "group": 2, "id": "\u00a7 626 bgb", "label": "\u00a7 626 bgb", "shape": "dot", "size": 16}, {"font": {"color": "#cccccc"}, "group": 3, "id": "alkoholbedingte verfehlungen", "label": "alkoholbedingte verfehlungen", "shape": "dot", "size": 1}, {"font": {"color": "#cccccc"}, "group": 3, "id": "alkoholgenuss", "label": "alkoholgenuss", "shape": "dot", "size": 1}, {"font": {"color": "#cccccc"}, "group": 2, "id": "alkoholmissbrauch", "label": "alkoholmissbrauch", "shape": "dot", "size": 7}, {"font": {"color": "#cccccc"}, "group": 1, "id": "allgemeiner k\u00fcndigungsschutz", "label": "allgemeiner k\u00fcndigungsschutz", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 1, "id": "k\u00fcndigungsverbote", "label": "k\u00fcndigungsverbote", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 2, "id": "alter des arbeitnehmers", "label": "alter des arbeitnehmers", "shape": "dot", "size": 3}, {"font": {"color": "#cccccc"}, "group": 3, "id": "anzeigen gegen den arbeitgeber", "label": "anzeigen gegen den arbeitgeber", "shape": "dot", "size": 1}, {"font": {"color": "#cccccc"}, "group": 1, "id": "arbeitgeber", "label": "arbeitgeber", "shape": "dot", "size": 22}, {"font": {"color": "#cccccc"}, "group": 1, "id": "au\u00dferbetriebliche gr\u00fcnde", "label": "au\u00dferbetriebliche gr\u00fcnde", "shape": "dot", "size": 19}, {"font": {"color": "#cccccc"}, "group": 1, "id": "betriebsbedingte k\u00fcndigung", "label": "betriebsbedingte k\u00fcndigung", "shape": "dot", "size": 24}, {"font": {"color": "#cccccc"}, "group": 1, "id": "darlegungs- und beweislast", "label": "darlegungs- und beweislast", "shape": "dot", "size": 27}, {"font": {"color": "#cccccc"}, "group": 3, "id": "kontrollrecht der internet- und e-mail-nutzung", "label": "kontrollrecht der internet- und e-mail-nutzung", "shape": "dot", "size": 2}, {"font": {"color": "#cccccc"}, "group": 1, "id": "kschg", "label": "kschg", "shape": "dot", "size": 11}, {"font": {"color": "#cccccc"}, "group": 1, "id": "soziale rechtfertigung", "label": "soziale rechtfertigung", "shape": "dot", "size": 24}, {"font": {"color": "#cccccc"}, "group": 1, "id": "sozialwidrigkeit", "label": "sozialwidrigkeit", "shape": "dot", "size": 13}, {"font": {"color": "#cccccc"}, "group": 1, "id": "\u00e4nderungsk\u00fcndigung", "label": "\u00e4nderungsk\u00fcndigung", "shape": "dot", "size": 14}, {"font": {"color": "#cccccc"}, "group": 2, "id": "au\u00dferordentliche fristlose k\u00fcndigung", "label": "au\u00dferordentliche fristlose k\u00fcndigung", "shape": "dot", "size": 12}, {"font": {"color": "#cccccc"}, "group": 2, "id": "berechtigte k\u00fcndigungsgr\u00fcnde", "label": "berechtigte k\u00fcndigungsgr\u00fcnde", "shape": "dot", "size": 7}, {"font": {"color": "#cccccc"}, "group": 2, "id": "betriebsratsanh\u00f6rung", "label": "betriebsratsanh\u00f6rung", "shape": "dot", "size": 14}, {"font": {"color": "#cccccc"}, "group": 2, "id": "bundesarbeitsgericht", "label": "bundesarbeitsgericht", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 2, "id": "gerichtsentscheidungen", "label": "gerichtsentscheidungen", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 2, "id": "hi3459808", "label": "hi3459808", "shape": "dot", "size": 7}, {"font": {"color": "#cccccc"}, "group": 2, "id": "kasuistik", "label": "kasuistik", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 2, "id": "krankheitsbedingte k\u00fcndigung", "label": "krankheitsbedingte k\u00fcndigung", "shape": "dot", "size": 7}, {"font": {"color": "#cccccc"}, "group": 2, "id": "privatnutzung von internet und e-mail", "label": "privatnutzung von internet und e-mail", "shape": "dot", "size": 13}, {"font": {"color": "#cccccc"}, "group": 2, "id": "verhaltensbedingte k\u00fcndigungsgr\u00fcnde", "label": "verhaltensbedingte k\u00fcndigungsgr\u00fcnde", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 2, "id": "\u00a7 102 betrvg", "label": "\u00a7 102 betrvg", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 2, "id": "personenbedingte gr\u00fcnde", "label": "personenbedingte gr\u00fcnde", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "arbeitsplatz", "label": "arbeitsplatz", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 2, "id": "arbeitsrichter", "label": "arbeitsrichter", "shape": "dot", "size": 4}, {"font": {"color": "#cccccc"}, "group": 2, "id": "k\u00fcndigungsschutzprozess", "label": "k\u00fcndigungsschutzprozess", "shape": "dot", "size": 4}, {"font": {"color": "#cccccc"}, "group": 2, "id": "arbeitsverh\u00e4ltnis", "label": "arbeitsverh\u00e4ltnis", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 3, "id": "arbeitsverweigerung", "label": "arbeitsverweigerung", "shape": "dot", "size": 1}, {"font": {"color": "#cccccc"}, "group": 1, "id": "auskunftspflicht des arbeitgebers", "label": "auskunftspflicht des arbeitgebers", "shape": "dot", "size": 7}, {"font": {"color": "#cccccc"}, "group": 1, "id": "auswahlentscheidung", "label": "auswahlentscheidung", "shape": "dot", "size": 7}, {"font": {"color": "#cccccc"}, "group": 1, "id": "betriebsrat", "label": "betriebsrat", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "betriebsrat widerspruch", "label": "betriebsrat widerspruch", "shape": "dot", "size": 6}, {"font": {"color": "#cccccc"}, "group": 1, "id": "innerbetriebliche gr\u00fcnde", "label": "innerbetriebliche gr\u00fcnde", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "k\u00fcndigungsschutzklage", "label": "k\u00fcndigungsschutzklage", "shape": "dot", "size": 6}, {"font": {"color": "#cccccc"}, "group": 1, "id": "mildernde mittel", "label": "mildernde mittel", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "sozialdaten", "label": "sozialdaten", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "verh\u00e4ltnism\u00e4\u00dfigkeit", "label": "verh\u00e4ltnism\u00e4\u00dfigkeit", "shape": "dot", "size": 6}, {"font": {"color": "#cccccc"}, "group": 2, "id": "au\u00dferdienstliches verhalten", "label": "au\u00dferdienstliches verhalten", "shape": "dot", "size": 3}, {"font": {"color": "#cccccc"}, "group": 2, "id": "krankheit", "label": "krankheit", "shape": "dot", "size": 4}, {"font": {"color": "#cccccc"}, "group": 2, "id": "negative prognose", "label": "negative prognose", "shape": "dot", "size": 4}, {"font": {"color": "#cccccc"}, "group": 2, "id": "sozialwidrigkeit der k\u00fcndigung", "label": "sozialwidrigkeit der k\u00fcndigung", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 2, "id": "tarifvertrag", "label": "tarifvertrag", "shape": "dot", "size": 4}, {"font": {"color": "#cccccc"}, "group": 2, "id": "verschulden", "label": "verschulden", "shape": "dot", "size": 4}, {"font": {"color": "#cccccc"}, "group": 2, "id": "versetzung", "label": "versetzung", "shape": "dot", "size": 4}, {"font": {"color": "#cccccc"}, "group": 2, "id": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "label": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 2, "id": "\u00a7 626 abs. 2 satz 2 bgb", "label": "\u00a7 626 abs. 2 satz 2 bgb", "shape": "dot", "size": 4}, {"font": {"color": "#cccccc"}, "group": 1, "id": "berufsausbildung", "label": "berufsausbildung", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 1, "id": "berufserfahrung", "label": "berufserfahrung", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 2, "id": "betriebliche und wirtschaftliche auswirkungen der pflichtverletzung", "label": "betriebliche und wirtschaftliche auswirkungen der pflichtverletzung", "shape": "dot", "size": 3}, {"font": {"color": "#cccccc"}, "group": 3, "id": "k\u00fcndigung wegen alkoholerkrankung", "label": "k\u00fcndigung wegen alkoholerkrankung", "shape": "dot", "size": 2}, {"font": {"color": "#cccccc"}, "group": 1, "id": "betriebsverfassungsgesetz \u00a723 (kschg)", "label": "betriebsverfassungsgesetz \u00a723 (kschg)", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 1, "id": "soziale auswahl nach \u00a71 abs. 3", "label": "soziale auswahl nach \u00a71 abs. 3", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 1, "id": "betriebs\u00e4nderung nach \u00a7111 des betrvg", "label": "betriebs\u00e4nderung nach \u00a7111 des betrvg", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 1, "id": "beweislast bei vorhandenem interessenausgleich", "label": "beweislast bei vorhandenem interessenausgleich", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 1, "id": "dauer der betriebszugeh\u00f6rigkeit", "label": "dauer der betriebszugeh\u00f6rigkeit", "shape": "dot", "size": 7}, {"font": {"color": "#cccccc"}, "group": 1, "id": "interessenausgleich mit namensliste", "label": "interessenausgleich mit namensliste", "shape": "dot", "size": 7}, {"font": {"color": "#cccccc"}, "group": 1, "id": "schwerbehinderung des arbeitnehmers", "label": "schwerbehinderung des arbeitnehmers", "shape": "dot", "size": 7}, {"font": {"color": "#cccccc"}, "group": 1, "id": "soziale auswahl", "label": "soziale auswahl", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 1, "id": "vergleichbarkeit der arbeitnehmer", "label": "vergleichbarkeit der arbeitnehmer", "shape": "dot", "size": 8}, {"font": {"color": "#cccccc"}, "group": 2, "id": "korrekte handhabung der gesch\u00e4ftsanweisungen", "label": "korrekte handhabung der gesch\u00e4ftsanweisungen", "shape": "dot", "size": 3}, {"font": {"color": "#cccccc"}, "group": 2, "id": "pflichtwidrigkeiten im leistungsbereich", "label": "pflichtwidrigkeiten im leistungsbereich", "shape": "dot", "size": 3}, {"font": {"color": "#cccccc"}, "group": 2, "id": "st\u00f6rungen im vertrauensbereich", "label": "st\u00f6rungen im vertrauensbereich", "shape": "dot", "size": 3}, {"font": {"color": "#cccccc"}, "group": 2, "id": "unterhaltspflichten des arbeitnehmers", "label": "unterhaltspflichten des arbeitnehmers", "shape": "dot", "size": 3}, {"font": {"color": "#cccccc"}, "group": 2, "id": "verletzung von arbeitsvertraglichen nebenpflichten", "label": "verletzung von arbeitsvertraglichen nebenpflichten", "shape": "dot", "size": 3}, {"font": {"color": "#cccccc"}, "group": 2, "id": "verschulden des arbeitnehmers", "label": "verschulden des arbeitnehmers", "shape": "dot", "size": 3}, {"font": {"color": "#cccccc"}, "group": 2, "id": "verst\u00f6\u00dfe gegen betriebliche ordnung", "label": "verst\u00f6\u00dfe gegen betriebliche ordnung", "shape": "dot", "size": 3}, {"font": {"color": "#cccccc"}, "group": 2, "id": "voraussetzungen", "label": "voraussetzungen", "shape": "dot", "size": 3}, {"font": {"color": "#cccccc"}, "group": 2, "id": "wiederholungsgefahr", "label": "wiederholungsgefahr", "shape": "dot", "size": 3}, {"font": {"color": "#cccccc"}, "group": 3, "id": "ordentliche verhaltensbedingte k\u00fcndigung", "label": "ordentliche verhaltensbedingte k\u00fcndigung", "shape": "dot", "size": 2}, {"font": {"color": "#cccccc"}, "group": 3, "id": "leistungsm\u00e4ngel", "label": "leistungsm\u00e4ngel", "shape": "dot", "size": 1}, {"font": {"color": "#cccccc"}, "group": 3, "id": "lohnpf\u00e4ndungen", "label": "lohnpf\u00e4ndungen", "shape": "dot", "size": 1}, {"font": {"color": "#cccccc"}, "group": 3, "id": "nebent\u00e4tigkeit", "label": "nebent\u00e4tigkeit", "shape": "dot", "size": 1}, {"font": {"color": "#cccccc"}, "group": 3, "id": "nichterf\u00fcllung der anzeigepflicht bei krankheit", "label": "nichterf\u00fcllung der anzeigepflicht bei krankheit", "shape": "dot", "size": 1}, {"font": {"color": "#cccccc"}, "group": 3, "id": "pflichtverletzungen bei krankheit", "label": "pflichtverletzungen bei krankheit", "shape": "dot", "size": 1}, {"font": {"color": "#cccccc"}, "group": 3, "id": "pflichtwidrigkeiten bei krankheit", "label": "pflichtwidrigkeiten bei krankheit", "shape": "dot", "size": 1}, {"font": {"color": "#cccccc"}, "group": 3, "id": "private internetnutzung", "label": "private internetnutzung", "shape": "dot", "size": 2}, {"font": {"color": "#cccccc"}, "group": 3, "id": "schmiergelder", "label": "schmiergelder", "shape": "dot", "size": 1}, {"font": {"color": "#cccccc"}, "group": 3, "id": "sexuelle bel\u00e4stigung", "label": "sexuelle bel\u00e4stigung", "shape": "dot", "size": 1}, {"font": {"color": "#cccccc"}, "group": 3, "id": "verm\u00f6gensdelikt zulasten des arbeitgebers", "label": "verm\u00f6gensdelikt zulasten des arbeitgebers", "shape": "dot", "size": 1}, {"font": {"color": "#cccccc"}, "group": 3, "id": "versto\u00df gegen nutzungsregelungen", "label": "versto\u00df gegen nutzungsregelungen", "shape": "dot", "size": 2}]);
+                  edges = new vis.DataSet([{"from": "4 grunddaten", "title": "contextual proximity", "to": "betriebszugeh\u00f6rigkeit", "width": 0.5}, {"from": "4 grunddaten", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "4 grunddaten", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "4 grunddaten", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "4 grunddaten", "title": "basiert auf den Kriterien der Dauer der Betriebszugeh\u00f6rigkeit, Lebensalter, Unterhaltspflichten und Schwerbehinderung,contextual proximity", "to": "sozialauswahl", "width": 1.75}, {"from": "4 grunddaten", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "4 grunddaten", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "abgrenzung zu anderen k\u00fcndigungsgr\u00fcnden", "title": "contextual proximity", "to": "au\u00dferordentliche personenbedingte k\u00fcndigung", "width": 0.5}, {"from": "abgrenzung zu anderen k\u00fcndigungsgr\u00fcnden", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "abgrenzung zu anderen k\u00fcndigungsgr\u00fcnden", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "abgrenzung zu anderen k\u00fcndigungsgr\u00fcnden", "title": "contextual proximity", "to": "personenbedingte k\u00fcndigung", "width": 2.5}, {"from": "abmahnung", "title": "contextual proximity", "to": "arbeitnehmer", "width": 0.75}, {"from": "abmahnung", "title": "contextual proximity", "to": "arbeitsunf\u00e4higkeit", "width": 0.5}, {"from": "abmahnung", "title": "contextual proximity", "to": "au\u00dferordentliche k\u00fcndigung", "width": 0.5}, {"from": "abmahnung", "title": "contextual proximity", "to": "au\u00dferordentliche personenbedingte k\u00fcndigung", "width": 0.5}, {"from": "abmahnung", "title": "contextual proximity", "to": "einzelne k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "abmahnung", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 2.75}, {"from": "abmahnung", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 1.25}, {"from": "abmahnung", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 1.25}, {"from": "abmahnung", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.75}, {"from": "abmahnung", "title": "entf\u00e4llt das Erfordernis einer Abmahnung, wenn der Arbeitnehmer die F\u00e4higkeit und Eignung zur Arbeitsleistung nicht steuern kann,contextual proximity", "to": "personenbedingte k\u00fcndigung", "width": 3.5}, {"from": "abmahnung", "title": "contextual proximity", "to": "pflichtverletzung", "width": 0.5}, {"from": "abmahnung", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "abmahnung", "title": "contextual proximity", "to": "ultima-ratio-prinzip", "width": 0.5}, {"from": "abmahnung", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 1.25}, {"from": "abmahnung", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 0.75}, {"from": "abmahnung", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 0.5}, {"from": "alkoholbedingte verfehlungen", "title": "Alkoholbedingte Verfehlungen k\u00f6nnen zur verhaltensbedingten K\u00fcndigung f\u00fchren.,contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 5.25}, {"from": "alkoholgenuss", "title": "Alkoholgenuss kann unter bestimmten Umst\u00e4nden als Versto\u00df gegen betriebliche Regelungen ein K\u00fcndigungsgrund sein.,contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 5.25}, {"from": "alkoholmissbrauch", "title": "contextual proximity", "to": "arbeitnehmer", "width": 0.5}, {"from": "alkoholmissbrauch", "title": "contextual proximity", "to": "arbeitsunf\u00e4higkeit", "width": 0.5}, {"from": "alkoholmissbrauch", "title": "contextual proximity", "to": "einzelne k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "alkoholmissbrauch", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "alkoholmissbrauch", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "alkoholmissbrauch", "title": "contextual proximity", "to": "pflichtverletzung", "width": 0.5}, {"from": "alkoholmissbrauch", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.75}, {"from": "allgemeiner k\u00fcndigungsschutz", "title": "contextual proximity", "to": "betriebszugeh\u00f6rigkeit", "width": 0.5}, {"from": "allgemeiner k\u00fcndigungsschutz", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "allgemeiner k\u00fcndigungsschutz", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "allgemeiner k\u00fcndigungsschutz", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "allgemeiner k\u00fcndigungsschutz", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.75}, {"from": "allgemeiner k\u00fcndigungsschutz", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "allgemeiner k\u00fcndigungsschutz", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "allgemeiner k\u00fcndigungsschutz", "title": "gehen dem allgemeinen K\u00fcndigungsschutz vor", "to": "k\u00fcndigungsverbote", "width": 1.0}, {"from": "alter des arbeitnehmers", "title": "Das Alter des Arbeitnehmers wird bei der Interessenabw\u00e4gung zugunsten des Arbeitnehmers ber\u00fccksichtigt.,contextual proximity", "to": "interessenabw\u00e4gung", "width": 3.25}, {"from": "alter des arbeitnehmers", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 1.25}, {"from": "alter des arbeitnehmers", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.5}, {"from": "anzeigen gegen den arbeitgeber", "title": "Anzeigen gegen den Arbeitgeber k\u00f6nnen unter bestimmten Umst\u00e4nden einen K\u00fcndigungsgrund darstellen.,contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 5.25}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "arbeitnehmer", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "au\u00dferbetriebliche gr\u00fcnde", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "au\u00dferordentliche personenbedingte k\u00fcndigung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 1.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "betriebszugeh\u00f6rigkeit", "width": 0.5}, {"from": "arbeitgeber", "title": "In einem K\u00fcndigungsschutzprozess liegt es am Arbeitgeber, das Vorliegen der K\u00fcndigungsgr\u00fcnde wie dringenden betrieblichen Erfordernisse oder die Unm\u00f6glichkeit anderweitiger Besch\u00e4ftigung nachzuweisen.,contextual proximity", "to": "darlegungs- und beweislast", "width": 2.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.75}, {"from": "arbeitgeber", "title": "Der Arbeitgeber hat das Kontrollrecht der Internet- und E-Mail-Nutzung der Mitarbeiter unter Beachtung der Datenschutzbestimmungen.", "to": "kontrollrecht der internet- und e-mail-nutzung", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "kschg", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 4.25}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "personenbedingte k\u00fcndigung", "width": 2.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "sozialauswahl", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "arbeitsunf\u00e4higkeit", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "au\u00dferbetriebliche gr\u00fcnde", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "au\u00dferordentliche fristlose k\u00fcndigung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "au\u00dferordentliche k\u00fcndigung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "au\u00dferordentliche personenbedingte k\u00fcndigung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "berechtigte k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 1.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "betriebsratsanh\u00f6rung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "betriebszugeh\u00f6rigkeit", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "bundesarbeitsgericht", "width": 0.5}, {"from": "arbeitnehmer", "title": "Der Arbeitnehmer tr\u00e4gt die Darlegungs- und Beweislast f\u00fcr Umst\u00e4nde, die darauf hindeuten, dass z.B. weniger gravierende Ma\u00dfnahmen als eine K\u00fcndigung m\u00f6glich gewesen w\u00e4ren.,contextual proximity", "to": "darlegungs- und beweislast", "width": 2.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "einzelne k\u00fcndigungsgr\u00fcnde", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "gerichtsentscheidungen", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "hi3459808", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "kasuistik", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "krankheitsbedingte k\u00fcndigung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 2.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "personenbedingte k\u00fcndigung", "width": 2.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "pflichtverletzung", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "privatnutzung von internet und e-mail", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "sozialauswahl", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 1.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "\u00a7 102 betrvg", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 0.5}, {"from": "arbeitnehmer", "title": "beruhen auf pers\u00f6nlichen Eigenschaften, F\u00e4higkeiten und Fertigkeiten des Arbeitnehmers", "to": "personenbedingte gr\u00fcnde", "width": 1.0}, {"from": "arbeitsplatz", "title": "contextual proximity", "to": "au\u00dferbetriebliche gr\u00fcnde", "width": 0.5}, {"from": "arbeitsplatz", "title": "Die betriebsbedingte K\u00fcndigung ist gerechtfertigt, wenn der Arbeitsplatz im Betrieb infolge dringender betrieblicher Erfordernisse weggefallen ist.,contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 2.25}, {"from": "arbeitsplatz", "title": "contextual proximity", "to": "darlegungs- und beweislast", "width": 0.5}, {"from": "arbeitsplatz", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "arbeitsplatz", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.5}, {"from": "arbeitsrichter", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 2.25}, {"from": "arbeitsrichter", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 1.25}, {"from": "arbeitsrichter", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.5}, {"from": "arbeitsrichter", "title": "Im K\u00fcndigungsschutzprozess hat der Arbeitsrichter einen Beurteilungsspielraum, der nur in beschr\u00e4nktem Umfang nachpr\u00fcfbar ist.", "to": "k\u00fcndigungsschutzprozess", "width": 1.0}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "au\u00dferordentliche fristlose k\u00fcndigung", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "au\u00dferordentliche k\u00fcndigung", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "berechtigte k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "betriebsratsanh\u00f6rung", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "bundesarbeitsgericht", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "einzelne k\u00fcndigungsgr\u00fcnde", "width": 1.0}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "gerichtsentscheidungen", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "hi3459808", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "kasuistik", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "krankheitsbedingte k\u00fcndigung", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 1.0}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 1.0}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "pflichtverletzung", "width": 1.0}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "privatnutzung von internet und e-mail", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 1.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "\u00a7 102 betrvg", "width": 0.5}, {"from": "arbeitsunf\u00e4higkeit", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 0.5}, {"from": "arbeitsverh\u00e4ltnis", "title": "contextual proximity", "to": "au\u00dferordentliche personenbedingte k\u00fcndigung", "width": 0.5}, {"from": "arbeitsverh\u00e4ltnis", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "arbeitsverh\u00e4ltnis", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "arbeitsverh\u00e4ltnis", "title": "contextual proximity", "to": "personenbedingte k\u00fcndigung", "width": 2.5}, {"from": "arbeitsverh\u00e4ltnis", "title": "hat Vorrang vor einer Beendigungsk\u00fcndigung, da sie das mildere Mittel darstellt", "to": "\u00e4nderungsk\u00fcndigung", "width": 1.0}, {"from": "arbeitsverweigerung", "title": "Die Weigerung eines Arbeitnehmers, die vertraglich geschuldete Leistung zu erbringen, kann zur K\u00fcndigung f\u00fchren.,contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 5.25}, {"from": "auskunftspflicht des arbeitgebers", "title": "contextual proximity", "to": "betriebszugeh\u00f6rigkeit", "width": 0.5}, {"from": "auskunftspflicht des arbeitgebers", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "auskunftspflicht des arbeitgebers", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "auskunftspflicht des arbeitgebers", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "auskunftspflicht des arbeitgebers", "title": "schlie\u00dft die Pflicht des Arbeitgebers ein, dem Arbeitnehmer Gr\u00fcnde f\u00fcr die getroffene Auswahl mitzuteilen,contextual proximity", "to": "sozialauswahl", "width": 1.75}, {"from": "auskunftspflicht des arbeitgebers", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "auskunftspflicht des arbeitgebers", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "auswahlentscheidung", "title": "contextual proximity", "to": "betriebszugeh\u00f6rigkeit", "width": 0.5}, {"from": "auswahlentscheidung", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "auswahlentscheidung", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "auswahlentscheidung", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "auswahlentscheidung", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.75}, {"from": "auswahlentscheidung", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "auswahlentscheidung", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 2.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "betriebsrat", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "betriebsrat widerspruch", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "darlegungs- und beweislast", "width": 1.0}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "Au\u00dferbetriebliche Gr\u00fcnde wie Auftragsmangel oder Umsatzr\u00fcckgang k\u00f6nnen die dringenden betrieblichen Erfordernisse begr\u00fcnden, wenn sie den Betrieb unmittelbar beeinflussen.,contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 2.0}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "innerbetriebliche gr\u00fcnde", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "k\u00fcndigungsschutzklage", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "mildernde mittel", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "sozialdaten", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.0}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "verh\u00e4ltnism\u00e4\u00dfigkeit", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 0.5}, {"from": "au\u00dferdienstliches verhalten", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 2.25}, {"from": "au\u00dferdienstliches verhalten", "title": "Ein au\u00dferdienstliches Verhalten, das das Arbeitsverh\u00e4ltnis beeintr\u00e4chtigt, kann einen K\u00fcndigungsgrund darstellen.,contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 2.25}, {"from": "au\u00dferdienstliches verhalten", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.5}, {"from": "au\u00dferordentliche fristlose k\u00fcndigung", "title": "contextual proximity", "to": "betriebsratsanh\u00f6rung", "width": 0.5}, {"from": "au\u00dferordentliche fristlose k\u00fcndigung", "title": "contextual proximity", "to": "einzelne k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "au\u00dferordentliche fristlose k\u00fcndigung", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "au\u00dferordentliche fristlose k\u00fcndigung", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 4.25}, {"from": "au\u00dferordentliche fristlose k\u00fcndigung", "title": "Die \u00dcbersicht der K\u00fcndigungsgr\u00fcnde gilt sowohl f\u00fcr die ordentliche verhaltensbedingte K\u00fcndigung als auch f\u00fcr die au\u00dferordentliche fristlose K\u00fcndigung.,contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 1.75}, {"from": "au\u00dferordentliche fristlose k\u00fcndigung", "title": "Eine Pflichtverletzung kann zu einer au\u00dferordentlichen K\u00fcndigung f\u00fchren, wenn diese so schwerwiegend ist, dass dem Arbeitgeber eine Fortf\u00fchrung des Arbeitsverh\u00e4ltnisses nicht zumutbar ist.,contextual proximity", "to": "pflichtverletzung", "width": 1.5}, {"from": "au\u00dferordentliche fristlose k\u00fcndigung", "title": "contextual proximity", "to": "privatnutzung von internet und e-mail", "width": 0.5}, {"from": "au\u00dferordentliche fristlose k\u00fcndigung", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "au\u00dferordentliche fristlose k\u00fcndigung", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 1.0}, {"from": "au\u00dferordentliche fristlose k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 0.5}, {"from": "au\u00dferordentliche k\u00fcndigung", "title": "contextual proximity", "to": "einzelne k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "au\u00dferordentliche k\u00fcndigung", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 2.25}, {"from": "au\u00dferordentliche k\u00fcndigung", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.75}, {"from": "au\u00dferordentliche k\u00fcndigung", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 1.25}, {"from": "au\u00dferordentliche k\u00fcndigung", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.75}, {"from": "au\u00dferordentliche k\u00fcndigung", "title": "contextual proximity", "to": "pflichtverletzung", "width": 0.5}, {"from": "au\u00dferordentliche k\u00fcndigung", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 1.25}, {"from": "au\u00dferordentliche k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 0.5}, {"from": "au\u00dferordentliche k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "darlegungs- und beweislast", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 1.0}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "krankheit", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 1.0}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "negative prognose", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "personenbedingte gr\u00fcnde", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "personenbedingte k\u00fcndigung", "width": 5.0}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "sozialwidrigkeit der k\u00fcndigung", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "tarifvertrag", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "ultima-ratio-prinzip", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "verschulden", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "versetzung", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 626 abs. 2 satz 2 bgb", "width": 0.5}, {"from": "au\u00dferordentliche personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 0.5}, {"from": "berechtigte k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "einzelne k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "berechtigte k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "berechtigte k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "berechtigte k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "pflichtverletzung", "width": 0.5}, {"from": "berechtigte k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.75}, {"from": "berufsausbildung", "title": "sind Kriterien f\u00fcr die Austauschbarkeit der Arbeitnehmer", "to": "berufserfahrung", "width": 1.0}, {"from": "berufsausbildung", "title": "contextual proximity", "to": "betriebszugeh\u00f6rigkeit", "width": 0.5}, {"from": "berufsausbildung", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "berufsausbildung", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "berufsausbildung", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "berufsausbildung", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.75}, {"from": "berufsausbildung", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "berufsausbildung", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "berufserfahrung", "title": "contextual proximity", "to": "betriebszugeh\u00f6rigkeit", "width": 0.5}, {"from": "berufserfahrung", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "berufserfahrung", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "berufserfahrung", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "berufserfahrung", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.75}, {"from": "berufserfahrung", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "berufserfahrung", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "betriebliche und wirtschaftliche auswirkungen der pflichtverletzung", "title": "Die betrieblichen und wirtschaftlichen Auswirkungen der Pflichtverletzung werden bei der Interessenabw\u00e4gung zulasten des Arbeitnehmers ber\u00fccksichtigt.,contextual proximity", "to": "interessenabw\u00e4gung", "width": 3.25}, {"from": "betriebliche und wirtschaftliche auswirkungen der pflichtverletzung", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 1.25}, {"from": "betriebliche und wirtschaftliche auswirkungen der pflichtverletzung", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "betriebsrat", "width": 1.25}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "betriebsrat widerspruch", "width": 1.25}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "betriebszugeh\u00f6rigkeit", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "darlegungs- und beweislast", "width": 2.75}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 3.0}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "innerbetriebliche gr\u00fcnde", "width": 1.25}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 1.25}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 1.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "k\u00fcndigungsschutzklage", "width": 1.25}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "mildernde mittel", "width": 1.25}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "Eine betriebsbedingte K\u00fcndigung ist trotz Vorliegens von dringenden betrieblichen Erfordernissen sozial ungerechtfertigt, wenn die Sozialauswahl, die die Grunddaten des Arbeitnehmers betrifft, nicht ausreichend durchgef\u00fchrt wurde.,contextual proximity", "to": "sozialauswahl", "width": 3.0}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "sozialdaten", "width": 1.25}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 2.75}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 1.25}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "verh\u00e4ltnism\u00e4\u00dfigkeit", "width": 1.25}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 1.25}, {"from": "betriebsrat", "title": "contextual proximity", "to": "darlegungs- und beweislast", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.5}, {"from": "betriebsrat widerspruch", "title": "contextual proximity", "to": "darlegungs- und beweislast", "width": 0.5}, {"from": "betriebsrat widerspruch", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "betriebsrat widerspruch", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.5}, {"from": "betriebsrat widerspruch", "title": "Ein Widerspruch des Betriebsrats gegen eine betriebsbedingte K\u00fcndigung aus bestimmten Gr\u00fcnden wie Versto\u00df gegen personelle Auswahlrichtlinien oder aus betrieblichen Gr\u00fcnden, kann einen absoluten Grund f\u00fcr die Sozialwidrigkeit darstellen.", "to": "sozialwidrigkeit", "width": 1.0}, {"from": "betriebsratsanh\u00f6rung", "title": "contextual proximity", "to": "einzelne k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "betriebsratsanh\u00f6rung", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "betriebsratsanh\u00f6rung", "title": "Bei einer K\u00fcndigung wegen Alkoholerkrankung muss der Betriebsrat ordnungsgem\u00e4\u00df nach \u00a7 102 BetrVG angeh\u00f6rt werden.", "to": "k\u00fcndigung wegen alkoholerkrankung", "width": 1.0}, {"from": "betriebsratsanh\u00f6rung", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 4.25}, {"from": "betriebsratsanh\u00f6rung", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.75}, {"from": "betriebsratsanh\u00f6rung", "title": "contextual proximity", "to": "pflichtverletzung", "width": 0.5}, {"from": "betriebsratsanh\u00f6rung", "title": "contextual proximity", "to": "privatnutzung von internet und e-mail", "width": 0.5}, {"from": "betriebsratsanh\u00f6rung", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "betriebsratsanh\u00f6rung", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 1.0}, {"from": "betriebsratsanh\u00f6rung", "title": "Die Betriebsratsanh\u00f6rung gem\u00e4\u00df \u00a7 102 des Betriebsverfassungsgesetzes (BetrVG) ist ein notwendiger Schritt im K\u00fcndigungsprozess.", "to": "\u00a7 102 betrvg", "width": 1.0}, {"from": "betriebsratsanh\u00f6rung", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 0.5}, {"from": "betriebsverfassungsgesetz \u00a723 (kschg)", "title": "contextual proximity", "to": "betriebszugeh\u00f6rigkeit", "width": 0.5}, {"from": "betriebsverfassungsgesetz \u00a723 (kschg)", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "betriebsverfassungsgesetz \u00a723 (kschg)", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "betriebsverfassungsgesetz \u00a723 (kschg)", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "betriebsverfassungsgesetz \u00a723 (kschg)", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.75}, {"from": "betriebsverfassungsgesetz \u00a723 (kschg)", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "betriebsverfassungsgesetz \u00a723 (kschg)", "title": "definiert die Basis f\u00fcr den k\u00fcndigungsschutzrechtlichen Betrieb", "to": "soziale auswahl nach \u00a71 abs. 3", "width": 1.0}, {"from": "betriebsverfassungsgesetz \u00a723 (kschg)", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "betriebs\u00e4nderung nach \u00a7111 des betrvg", "width": 0.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "beweislast bei vorhandenem interessenausgleich", "width": 0.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "darlegungs- und beweislast", "width": 0.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "dauer der betriebszugeh\u00f6rigkeit", "width": 0.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 1.0}, {"from": "betriebszugeh\u00f6rigkeit", "title": "Die Dauer der Betriebszugeh\u00f6rigkeit wird bei der Interessenabw\u00e4gung zugunsten des Arbeitnehmers ber\u00fccksichtigt.,contextual proximity", "to": "interessenabw\u00e4gung", "width": 3.25}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "interessenausgleich mit namensliste", "width": 0.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "kschg", "width": 0.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.75}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 1.25}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "k\u00fcndigungsverbote", "width": 0.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "lebensalter", "width": 1.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "sind beides Kriterien f\u00fcr die Sozialauswahl,contextual proximity", "to": "schwerbehinderung", "width": 2.0}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "schwerbehinderung des arbeitnehmers", "width": 0.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "sozialauswahl", "width": 1.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 1.0}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "soziale auswahl", "width": 0.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "soziale auswahl nach \u00a71 abs. 3", "width": 0.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 1.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "vergleichbarkeit der arbeitnehmer", "width": 0.5}, {"from": "betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.5}, {"from": "betriebs\u00e4nderung nach \u00a7111 des betrvg", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "betriebs\u00e4nderung nach \u00a7111 des betrvg", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "betriebs\u00e4nderung nach \u00a7111 des betrvg", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "betriebs\u00e4nderung nach \u00a7111 des betrvg", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.75}, {"from": "betriebs\u00e4nderung nach \u00a7111 des betrvg", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "betriebs\u00e4nderung nach \u00a7111 des betrvg", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "betriebs\u00e4nderung nach \u00a7111 des betrvg", "title": "legt gesetzliche Grundlage f\u00fcr Betriebs\u00e4nderungen fest", "to": "kschg", "width": 1.0}, {"from": "beweislast bei vorhandenem interessenausgleich", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "beweislast bei vorhandenem interessenausgleich", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "beweislast bei vorhandenem interessenausgleich", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "beweislast bei vorhandenem interessenausgleich", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.75}, {"from": "beweislast bei vorhandenem interessenausgleich", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "beweislast bei vorhandenem interessenausgleich", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "beweislast bei vorhandenem interessenausgleich", "title": "zeigt, dass bei Vorhandensein eines Interessenausgleichs der Arbeitgeber beweisen muss, dass die Namen der gek\u00fcndigten Arbeitnehmer dort aufgef\u00fchrt sind", "to": "darlegungs- und beweislast", "width": 1.0}, {"from": "bundesarbeitsgericht", "title": "contextual proximity", "to": "einzelne k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "bundesarbeitsgericht", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "bundesarbeitsgericht", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "bundesarbeitsgericht", "title": "contextual proximity", "to": "pflichtverletzung", "width": 0.5}, {"from": "bundesarbeitsgericht", "title": "Das Bundesarbeitsgericht hat Rechtsprechung zu verschiedenen verhaltensbedingten K\u00fcndigungsgr\u00fcnden entwickelt, welche f\u00fcr die Praxis von Bedeutung sind.", "to": "rechtsprechung", "width": 1.0}, {"from": "bundesarbeitsgericht", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.75}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 1.5}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "innerbetriebliche gr\u00fcnde", "width": 0.5}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 1.0}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 1.25}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "k\u00fcndigungsschutzklage", "width": 0.5}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "mildernde mittel", "width": 0.5}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "personenbedingte k\u00fcndigung", "width": 2.5}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "sozialauswahl", "width": 1.25}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "sozialdaten", "width": 0.5}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "verh\u00e4ltnism\u00e4\u00dfigkeit", "width": 0.5}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 0.75}, {"from": "dauer der betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "dauer der betriebszugeh\u00f6rigkeit", "title": "sind beides Sozialauswahlkriterien,contextual proximity", "to": "lebensalter", "width": 1.75}, {"from": "dauer der betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "dauer der betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.75}, {"from": "dauer der betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "dauer der betriebszugeh\u00f6rigkeit", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "innerbetriebliche gr\u00fcnde", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "f\u00fchrt zu Vermutung der Gerichte, dass die K\u00fcndigung durch dringende betriebliche Erfordernisse gerechtfertigt ist,contextual proximity", "to": "interessenausgleich mit namensliste", "width": 1.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "kschg", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 1.0}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "k\u00fcndigungsschutzklage", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "k\u00fcndigungsverbote", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "lebensalter", "width": 1.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "mildernde mittel", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "schwerbehinderung", "width": 1.0}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "schwerbehinderung des arbeitnehmers", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "sozialauswahl", "width": 2.0}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 1.0}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "sozialdaten", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "soziale auswahl", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "soziale auswahl nach \u00a71 abs. 3", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 1.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "vergleichbarkeit der arbeitnehmer", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "verh\u00e4ltnism\u00e4\u00dfigkeit", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 0.5}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "gerichtsentscheidungen", "width": 0.5}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "hi3459808", "width": 0.5}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "kasuistik", "width": 0.5}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "krankheitsbedingte k\u00fcndigung", "width": 0.5}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 1.0}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 1.0}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "pflichtverletzung", "width": 1.0}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "privatnutzung von internet und e-mail", "width": 0.5}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "Verhaltensbedingte K\u00fcndigung kann auf einzelne K\u00fcndigungsgr\u00fcnde zur\u00fcckgef\u00fchrt werden, die vom Verhalten des Arbeitnehmers herr\u00fchren.,contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 2.5}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 0.5}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "\u00a7 102 betrvg", "width": 0.5}, {"from": "einzelne k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 0.5}, {"from": "gerichtsentscheidungen", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "gerichtsentscheidungen", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "gerichtsentscheidungen", "title": "contextual proximity", "to": "pflichtverletzung", "width": 0.5}, {"from": "gerichtsentscheidungen", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.75}, {"from": "gerichtsentscheidungen", "title": "Die Kasuistik der Rechtsprechung umfasst umfangreiche Gerichtsentscheidungen, die vor einer K\u00fcndigung ber\u00fccksichtigt werden sollten.", "to": "kasuistik", "width": 1.0}, {"from": "hi3459808", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "hi3459808", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "hi3459808", "title": "contextual proximity", "to": "pflichtverletzung", "width": 0.5}, {"from": "hi3459808", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.75}, {"from": "innerbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "korrekte handhabung der gesch\u00e4ftsanweisungen", "width": 2.25}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "krankheit", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 3.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 11.25}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "k\u00fcndigungsschutzprozess", "width": 2.25}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "negative prognose", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 2.25}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "personenbedingte gr\u00fcnde", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "erfordert eine Abw\u00e4gung der Interessen von Arbeitgeber und Arbeitnehmer,contextual proximity", "to": "personenbedingte k\u00fcndigung", "width": 6.0}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "pflichtwidrigkeiten im leistungsbereich", "width": 2.25}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "Zur sozialen Rechtfertigung einer betriebsbedingten K\u00fcndigung geh\u00f6rt neben anderen Kriterien auch die umfassende Interessenabw\u00e4gung.,contextual proximity", "to": "soziale rechtfertigung", "width": 1.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "sozialwidrigkeit der k\u00fcndigung", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "st\u00f6rungen im vertrauensbereich", "width": 2.25}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "tarifvertrag", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "ultima-ratio-prinzip", "width": 2.75}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "unterhaltspflichten des arbeitnehmers", "width": 2.25}, {"from": "interessenabw\u00e4gung", "title": "Bei einer verhaltensbedingten K\u00fcndigung ist eine Interessenabw\u00e4gung erforderlich.,contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 5.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "verletzung von arbeitsvertraglichen nebenpflichten", "width": 2.25}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "verschulden", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "verschulden des arbeitnehmers", "width": 2.25}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "versetzung", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "verst\u00f6\u00dfe gegen betriebliche ordnung", "width": 2.25}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "voraussetzungen", "width": 2.25}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "wiederholungsgefahr", "width": 2.25}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 2.75}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "\u00a7 626 abs. 2 satz 2 bgb", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 2.25}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 0.75}, {"from": "interessenausgleich mit namensliste", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "interessenausgleich mit namensliste", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "interessenausgleich mit namensliste", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.75}, {"from": "interessenausgleich mit namensliste", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "interessenausgleich mit namensliste", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "kasuistik", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "kasuistik", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "kasuistik", "title": "contextual proximity", "to": "pflichtverletzung", "width": 0.5}, {"from": "kasuistik", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.75}, {"from": "kontrollrecht der internet- und e-mail-nutzung", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 4.25}, {"from": "korrekte handhabung der gesch\u00e4ftsanweisungen", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 1.25}, {"from": "korrekte handhabung der gesch\u00e4ftsanweisungen", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.5}, {"from": "krankheit", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "krankheit", "title": "contextual proximity", "to": "personenbedingte k\u00fcndigung", "width": 2.5}, {"from": "krankheitsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "krankheitsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "krankheitsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "pflichtverletzung", "width": 0.5}, {"from": "krankheitsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.75}, {"from": "kschg", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 4.25}, {"from": "kschg", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "kschg", "title": "F\u00fcr die ordentliche verhaltensbedingte K\u00fcndigung ist \u00a7 1 Abs. 2 KSchG die einschl\u00e4gige Norm.", "to": "ordentliche verhaltensbedingte k\u00fcndigung", "width": 1.0}, {"from": "kschg", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "kschg", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.75}, {"from": "kschg", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "kschg", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 1.25}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "negative prognose", "width": 0.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 1.25}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "personenbedingte gr\u00fcnde", "width": 0.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "personenbedingte k\u00fcndigung", "width": 5.0}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "pflichtverletzung", "width": 1.0}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "privatnutzung von internet und e-mail", "width": 0.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "rechtsprechung", "width": 1.0}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "sozialauswahl", "width": 1.0}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "sozialwidrigkeit der k\u00fcndigung", "width": 0.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "tarifvertrag", "width": 0.5}, {"from": "k\u00fcndigung", "title": "besagt, dass die K\u00fcndigung erst dann in Betracht kommt, wenn keine andere M\u00f6glichkeit zur anderweitigen Besch\u00e4ftigung besteht,contextual proximity", "to": "ultima-ratio-prinzip", "width": 1.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "k\u00fcndigung", "title": "Verhaltensbedingte K\u00fcndigung ist eine Form der K\u00fcndigung, die aufgrund von Pflichtverletzungen des Arbeitnehmers erfolgt.,contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 3.0}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "verschulden", "width": 0.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "versetzung", "width": 0.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 0.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 1.25}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 102 betrvg", "width": 0.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 626 abs. 2 satz 2 bgb", "width": 0.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 0.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 0.75}, {"from": "k\u00fcndigung", "title": "Die K\u00fcndigung wird wirksam, falls der Arbeitnehmer nicht innerhalb von 3 Wochen nach Zugang der K\u00fcndigung K\u00fcndigungsschutzklage erhebt, sofern nicht die Vers\u00e4umnis der Frist ohne eigenes Verschulden erfolgte.", "to": "k\u00fcndigungsschutzklage", "width": 1.0}, {"from": "k\u00fcndigung wegen alkoholerkrankung", "title": "contextual proximity", "to": "k\u00fcndigungsgr\u00fcnde", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "k\u00fcndigungsschutzprozess", "width": 1.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "leistungsm\u00e4ngel", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "lohnpf\u00e4ndungen", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "nebent\u00e4tigkeit", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "nichterf\u00fcllung der anzeigepflicht bei krankheit", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 5.5}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "ordentliche verhaltensbedingte k\u00fcndigung", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "pflichtverletzungen bei krankheit", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "pflichtwidrigkeiten bei krankheit", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "pflichtwidrigkeiten im leistungsbereich", "width": 1.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "private internetnutzung", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "privatnutzung von internet und e-mail", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "rechtsprechung", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "schmiergelder", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "sexuelle bel\u00e4stigung", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "st\u00f6rungen im vertrauensbereich", "width": 1.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "ultima-ratio-prinzip", "width": 1.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "unterhaltspflichten des arbeitnehmers", "width": 1.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "Verhaltensbedingte K\u00fcndigung wird durch spezifische K\u00fcndigungsgr\u00fcnde determiniert.,contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 7.75}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "verletzung von arbeitsvertraglichen nebenpflichten", "width": 1.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "verm\u00f6gensdelikt zulasten des arbeitgebers", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "verschulden des arbeitnehmers", "width": 1.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "versto\u00df gegen nutzungsregelungen", "width": 4.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "verst\u00f6\u00dfe gegen betriebliche ordnung", "width": 1.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "voraussetzungen", "width": 1.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "wiederholungsgefahr", "width": 1.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 1.25}, {"from": "k\u00fcndigungsgr\u00fcnde", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 5.5}, {"from": "k\u00fcndigungsschutzklage", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.5}, {"from": "k\u00fcndigungsschutzprozess", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.5}, {"from": "k\u00fcndigungsverbote", "title": "contextual proximity", "to": "lebensalter", "width": 0.75}, {"from": "k\u00fcndigungsverbote", "title": "contextual proximity", "to": "schwerbehinderung", "width": 0.5}, {"from": "k\u00fcndigungsverbote", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.75}, {"from": "k\u00fcndigungsverbote", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 0.5}, {"from": "k\u00fcndigungsverbote", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "lebensalter", "title": "contextual proximity", "to": "schwerbehinderung", "width": 1.5}, {"from": "lebensalter", "title": "contextual proximity", "to": "schwerbehinderung des arbeitnehmers", "width": 0.75}, {"from": "lebensalter", "title": "contextual proximity", "to": "sozialauswahl", "width": 2.25}, {"from": "lebensalter", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 1.5}, {"from": "lebensalter", "title": "contextual proximity", "to": "soziale auswahl", "width": 0.75}, {"from": "lebensalter", "title": "contextual proximity", "to": "soziale auswahl nach \u00a71 abs. 3", "width": 0.75}, {"from": "lebensalter", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.75}, {"from": "lebensalter", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 2.25}, {"from": "lebensalter", "title": "contextual proximity", "to": "vergleichbarkeit der arbeitnehmer", "width": 0.75}, {"from": "mildernde mittel", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.5}, {"from": "negative prognose", "title": "contextual proximity", "to": "personenbedingte k\u00fcndigung", "width": 2.5}, {"from": "ordentliche k\u00fcndigung", "title": "Eine ordentliche K\u00fcndigung kann aufgrund von Pflichtverletzungen erfolgen, die je nach Schweregrad der Verfehlung und nach Abmahnung ausgesprochen wird.,contextual proximity", "to": "pflichtverletzung", "width": 2.0}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "privatnutzung von internet und e-mail", "width": 0.75}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.75}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 2.25}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 0.75}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 102 betrvg", "width": 0.5}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 1.0}, {"from": "personenbedingte gr\u00fcnde", "title": "contextual proximity", "to": "personenbedingte k\u00fcndigung", "width": 2.5}, {"from": "personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "rechtsprechung", "width": 2.5}, {"from": "personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 2.5}, {"from": "personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "sozialwidrigkeit der k\u00fcndigung", "width": 2.5}, {"from": "personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "tarifvertrag", "width": 2.5}, {"from": "personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "ultima-ratio-prinzip", "width": 2.5}, {"from": "personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "verschulden", "width": 2.5}, {"from": "personenbedingte k\u00fcndigung", "title": "hat Vorrang vor der K\u00fcndigung, wenn diese m\u00f6glich und zumutbar ist,contextual proximity", "to": "versetzung", "width": 3.5}, {"from": "personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 2.5}, {"from": "personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 2.5}, {"from": "personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 626 abs. 2 satz 2 bgb", "width": 2.5}, {"from": "personenbedingte k\u00fcndigung", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 2.5}, {"from": "pflichtverletzung", "title": "contextual proximity", "to": "privatnutzung von internet und e-mail", "width": 0.5}, {"from": "pflichtverletzung", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "pflichtverletzung", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 1.5}, {"from": "pflichtverletzung", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigungsgr\u00fcnde", "width": 0.5}, {"from": "pflichtverletzung", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 0.5}, {"from": "pflichtverletzung", "title": "contextual proximity", "to": "\u00a7 102 betrvg", "width": 0.5}, {"from": "pflichtverletzung", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 0.5}, {"from": "pflichtwidrigkeiten im leistungsbereich", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.5}, {"from": "private internetnutzung", "title": "Die private Internetnutzung kann bei Verst\u00f6\u00dfen gegen betriebliche Nutzungsregelungen zu einer K\u00fcndigung f\u00fchren.", "to": "versto\u00df gegen nutzungsregelungen", "width": 1.0}, {"from": "privatnutzung von internet und e-mail", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "privatnutzung von internet und e-mail", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 1.0}, {"from": "privatnutzung von internet und e-mail", "title": "Die unzul\u00e4ssige Privatnutzung von Internet und E-Mail am Arbeitsplatz bildet einen eigenen Schwerpunkt unter den verhaltensbedingten K\u00fcndigungsgr\u00fcnden.", "to": "verhaltensbedingte k\u00fcndigungsgr\u00fcnde", "width": 1.0}, {"from": "privatnutzung von internet und e-mail", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 0.5}, {"from": "rechtsprechung", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 1.0}, {"from": "rechtsprechung", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 0.5}, {"from": "rechtsprechung", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 0.5}, {"from": "schwerbehinderung", "title": "contextual proximity", "to": "schwerbehinderung des arbeitnehmers", "width": 0.5}, {"from": "schwerbehinderung", "title": "contextual proximity", "to": "sozialauswahl", "width": 1.5}, {"from": "schwerbehinderung", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 1.0}, {"from": "schwerbehinderung", "title": "contextual proximity", "to": "soziale auswahl", "width": 0.5}, {"from": "schwerbehinderung", "title": "contextual proximity", "to": "soziale auswahl nach \u00a71 abs. 3", "width": 0.5}, {"from": "schwerbehinderung", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.5}, {"from": "schwerbehinderung", "title": "sind beides Kriterien f\u00fcr die Sozialauswahl,contextual proximity", "to": "unterhaltspflichten", "width": 2.5}, {"from": "schwerbehinderung", "title": "contextual proximity", "to": "vergleichbarkeit der arbeitnehmer", "width": 0.5}, {"from": "schwerbehinderung des arbeitnehmers", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.75}, {"from": "schwerbehinderung des arbeitnehmers", "title": "eine Schwerbehinderung ist eines der vier Sozialauswahlkriterien,contextual proximity", "to": "sozialauswahlkriterien", "width": 1.5}, {"from": "schwerbehinderung des arbeitnehmers", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "sozialauswahl", "title": "contextual proximity", "to": "sozialauswahlkriterien", "width": 1.5}, {"from": "sozialauswahl", "title": "contextual proximity", "to": "soziale auswahl", "width": 0.75}, {"from": "sozialauswahl", "title": "contextual proximity", "to": "soziale auswahl nach \u00a71 abs. 3", "width": 0.75}, {"from": "sozialauswahl", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "sozialauswahl", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 2.25}, {"from": "sozialauswahl", "title": "contextual proximity", "to": "vergleichbarkeit der arbeitnehmer", "width": 0.75}, {"from": "sozialauswahlkriterien", "title": "contextual proximity", "to": "soziale auswahl", "width": 0.5}, {"from": "sozialauswahlkriterien", "title": "contextual proximity", "to": "soziale auswahl nach \u00a71 abs. 3", "width": 0.5}, {"from": "sozialauswahlkriterien", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.5}, {"from": "sozialauswahlkriterien", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 1.5}, {"from": "sozialauswahlkriterien", "title": "contextual proximity", "to": "vergleichbarkeit der arbeitnehmer", "width": 0.5}, {"from": "sozialdaten", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.5}, {"from": "soziale auswahl", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "soziale auswahl", "title": "ist ein Kriterium f\u00fcr die Bestimmung des auswahlrelevanten Personenkreises", "to": "vergleichbarkeit der arbeitnehmer", "width": 1.0}, {"from": "soziale auswahl nach \u00a71 abs. 3", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "soziale rechtfertigung", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.5}, {"from": "soziale rechtfertigung", "title": "contextual proximity", "to": "unterhaltspflichten", "width": 0.75}, {"from": "soziale rechtfertigung", "title": "contextual proximity", "to": "verh\u00e4ltnism\u00e4\u00dfigkeit", "width": 0.5}, {"from": "soziale rechtfertigung", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 0.5}, {"from": "sozialwidrigkeit", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 0.5}, {"from": "sozialwidrigkeit der k\u00fcndigung", "title": "erfordert die Pr\u00fcfung auf m\u00f6gliche Weiterbesch\u00e4ftigung im selben oder anderen Betrieben des Unternehmens", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 1.0}, {"from": "st\u00f6rungen im vertrauensbereich", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.5}, {"from": "ultima-ratio-prinzip", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.5}, {"from": "ultima-ratio-prinzip", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 0.5}, {"from": "unterhaltspflichten", "title": "contextual proximity", "to": "vergleichbarkeit der arbeitnehmer", "width": 0.75}, {"from": "unterhaltspflichten des arbeitnehmers", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigung", "width": 0.5}, {"from": "verhaltensbedingte k\u00fcndigung", "title": "contextual proximity", "to": "verhaltensbedingte k\u00fcndigungsgr\u00fcnde", "width": 0.75}, {"from": "verhaltensbedingte k\u00fcndigung", "title": "contextual proximity", "to": "verletzung von arbeitsvertraglichen nebenpflichten", "width": 0.5}, {"from": "verhaltensbedingte k\u00fcndigung", "title": "contextual proximity", "to": "verschulden des arbeitnehmers", "width": 0.5}, {"from": "verhaltensbedingte k\u00fcndigung", "title": "contextual proximity", "to": "verst\u00f6\u00dfe gegen betriebliche ordnung", "width": 0.5}, {"from": "verhaltensbedingte k\u00fcndigung", "title": "contextual proximity", "to": "voraussetzungen", "width": 0.5}, {"from": "verhaltensbedingte k\u00fcndigung", "title": "contextual proximity", "to": "wiederholungsgefahr", "width": 0.5}, {"from": "verhaltensbedingte k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 kschg", "width": 1.25}, {"from": "verhaltensbedingte k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 102 betrvg", "width": 0.75}, {"from": "verhaltensbedingte k\u00fcndigung", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 1.5}, {"from": "verh\u00e4ltnism\u00e4\u00dfigkeit", "title": "Der Grundsatz der Verh\u00e4ltnism\u00e4\u00dfigkeit gebietet, dass eine \u00c4nderungsk\u00fcndigung Vorrang vor einer Beendigungsk\u00fcndigung hat, wenn eine zumutbare Weiterbesch\u00e4ftigung auf einem anderen Arbeitsplatz m\u00f6glich ist.", "to": "\u00e4nderungsk\u00fcndigung", "width": 1.0}, {"from": "\u00a7 1 abs. 2 kschg", "title": "contextual proximity", "to": "\u00a7 626 bgb", "width": 0.5}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.015,
+            "damping": 0.4,
+            "gravitationalConstant": -31,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,321 @@
+﻿Personenbedingte Kündigung: Voraussetzungen (HI515530)
+Fachlich geprüft/geändert am: 27.10.2023
+Personenbedingte Kündigung: Voraussetzungen
+(HI515530)
+Zusammenfassung
+Überblick
+Der Beitrag stellt die allgemeinen Voraussetzungen der personenbedingten Kündigung nach § 1 Abs. 2
+KSchG dar.
+Gesetze, Vorschriften und Rechtsprechung
+Gesetzliche Grundlage für die personenbedingte Kündigung ist § 1 Abs. 2 KSchG. Die weiteren
+Voraussetzungen werden maßgeblich von zahllosen Entscheidungen der Rechtsprechung festgelegt.
+1 Zulässigkeit der personenbedingten Kündigung
+(HI569919)
+1.1 Anwendungsbereich der personenbedingten Kündigung
+(HI853246)
+Personenbedingte Gründe zur Kündigung sind solche, die auf den persönlichen Eigenschaften, Fähigkeiten
+und Fertigkeiten des Arbeitnehmers, also auf einer in seiner Sphäre liegenden "Störquelle" beruhen.
+Da das Verhältnis von Leistung (Arbeitsleistung des Arbeitnehmers) und Gegenleistung (Vergütungspflicht
+des Arbeitgebers) im Arbeitsverhältnis ausgewogen sein soll (Austauschcharakter des
+Arbeitsverhältnisses), muss der Arbeitgeber die Möglichkeit erhalten, das Arbeitsverhältnis aufzulösen,
+wenn der Arbeitnehmer die geschuldete Arbeitsleistung nicht erbringen kann.
+Der personenbedingte Kündigungsgrund ist rein objektiv: Ein Verschulden ist nicht Voraussetzung.
+Personenbedingte Kündigungsgründe sind vielmehr dadurch gekennzeichnet, dass der Arbeitnehmer von
+seinen persönlichen Voraussetzungen her die Fähigkeit und Eignung verloren (oder nie besessen) hat, die
+geschuldete Arbeitsleistung zu erbringen. Das macht aber die Stellung des Arbeitgebers bei der bei jeder
+Kündigung vorzunehmenden Interessenabwägung schwerer: Gewisse Vertragsbeeinträchtigungen wird er
+eher hinnehmen müssen als bei einer verhaltensbedingten Kündigung. Trifft jedoch eine der
+Vertragsparteien am Leistungs- oder Eignungsverlust ein Verschulden (z. B. vom Arbeitnehmer
+selbstverschuldete Erkrankung oder vom Arbeitgeber verschuldeter Arbeitsunfall), ist dies bei der
+Interessenabwägung ebenfalls zu berücksichtigen.
+Praxis-Beispiel
+Selbstverschuldeter persönlicher Kündigungsgrund
+Ein Kraftfahrer verliert wegen einer Trunkenheitsfahrt mit anschließendem Unfall für 1½ Jahre die
+Fahrerlaubnis. Wenn der Arbeitgeber keine Möglichkeit hat, ihn anderweitig zu beschäftigen, wird eine
+Überbrückung dieser langen Zeit ihm kaum zumutbar sein. Schließlich hat der Arbeitnehmer den
+Kündigungsgrund selbst verschuldet.
+Personal Office Platin Seite 1
+Stand Produktdatenbank: 28.11.2023, Ausdruck vom 29.11.2023
+Personenbedingte Kündigung: Voraussetzungen (HI515530)
+Fachlich geprüft/geändert am: 27.10.2023
+Das Fehlen dieser Fähigkeit und Eignung ist in vielen Fällen vom Arbeitnehmer nicht oder nicht mehr
+steuerbar. Es kann von ihm nicht "abgestellt" werden. Deshalb entfällt in solchen Fällen auch das
+Erfordernis einer Abmahnung.
+Denkbar sind aber auch Fälle, in denen der Arbeitnehmer in der Lage wäre, die fehlende Fähigkeit und
+Eignung (wieder) zu erlangen:
+Der Arbeitnehmer kann die geschuldete Tätigkeit nicht mehr ordnungsgemäß verrichten, weil
+er den erforderlichen neuesten Kenntnisstand nicht hat. Eine Schulung könnte Abhilfe schaffen.
+Der ausländische Arbeitnehmer hat keine Arbeitserlaubnis mehr. Er könnte eine Verlängerung
+der Arbeitserlaubnis beantragen.
+Der Arbeitnehmer könnte eine Rehabilitationsmaßnahme beantragen, die seinen allgemeinen
+Gesundheitszustand voraussichtlich verbessern und zu weniger krankheitsbedingten Fehlzeiten
+führen würde.
+In solchen Fällen ist als milderes Mittel die Abmahnung auszusprechen, um den Arbeitnehmer zur
+Behebung der Störung des Arbeitsverhältnisses zu veranlassen. Aber auch andere mildere Mittel sind hier
+vor dem Ausspruch einer Kündigung auszuschöpfen.
+Die fehlende Steuerungsmöglichkeit ist keine Voraussetzung für einen personenbedingten
+Kündigungsgrund.
+Der weitaus häufigste Fall der personenbedingten Kündigung ist die Krankheit.
+1.2 Die außerordentliche personenbedingte Kündigung
+(HI853247)
+Ist eine ordentliche Kündigung durch Tarifvertrag ausgeschlossen, kann der Ausspruch einer
+außerordentlichen Kündigung ausnahmsweise in Betracht kommen. Gleiches gilt, wenn das Recht zur
+ordentlichen Kündigung – wie bei Betriebsratsmitgliedern – gesetzlich ausgeschlossen ist.
+In solchen Fällen muss der Arbeitgeber die für eine ordentliche Kündigung längste Kündigungsfrist (
+soziale Auslauffrist) wählen.
+Auch wegen Krankheit ist in diesen Fällen eine außerordentliche Kündigung grundsätzlich anerkannt. Bei
+einem Arbeitsverhältnis, bei dem feststeht, dass der Arbeitnehmer in Zukunft die geschuldete
+Arbeitsleistung überhaupt nicht mehr erbringen kann (sog. sinnentleertes Arbeitsverhältnis), ist das
+Arbeitsverhältnis ganz erheblich gestört – die auf das jeweilige Arbeitsverhältnis bezogene unzumutbare
+betriebliche Beeinträchtigung besteht dann darin, dass der Arbeitgeber damit rechnen muss, der
+Arbeitnehmer sei auf Dauer außerstande, die von ihm geschuldete Arbeitsleistung zu erbringen.
+Die außerordentliche Kündigung kann nur innerhalb einer Frist von 2 Wochen erfolgen (§ 626 Abs. 2
+Satz 2 BGB). Nach § 626 Abs. 2 Satz 2 BGB beginnt die Frist mit dem Zeitpunkt, in dem der
+Kündigungsberechtigte von den für die Kündigung maßgeblichen Tatsachen Kenntnis erlangt.
+Bei sog. Dauertatbeständen (z. B. außerordentlicher Kündigung eines tariflich Unkündbaren wegen
+dauernder krankheitsbedingter Arbeitsunfähigkeit) beginnt die Frist mit dem letzten Vorfall, der ein
+weiteres und letztes Glied in der Kette gleich gelagerter Ereignisse bildet.
+1.3 Die Sozialwidrigkeit der Kündigung nach dem KSchG
+(HI569921)
+Das KSchG verlangt vom Arbeitgeber die Rechtfertigung der Kündigungsgründe. Es nennt u. a. in § 1
+Abs. 2 KSchG die personenbedingte Kündigung. Zudem kommen nach § 1 Abs. 2 Sätze 2 und 3 KSchG
+noch die absoluten Gründe der Sozialwidrigkeit in Betracht. Hiernach ist eine Kündigung immer dann
+sozial ungerechtfertigt, wenn eine Weiterbeschäftigungsmöglichkeit für den Arbeitnehmer in demselben
+Betrieb oder in einem anderen Betrieb des Unternehmens (= der Rechtsträger) an einem anderen
+Personal Office Platin Seite 2
+Stand Produktdatenbank: 28.11.2023, Ausdruck vom 29.11.2023
+Personenbedingte Kündigung: Voraussetzungen (HI515530)
+Fachlich geprüft/geändert am: 27.10.2023
+Arbeitsplatz besteht. Dabei kommt es entgegen dem Wortlaut der Vorschrift nicht darauf an, ob der
+Betriebsrat deshalb tatsächlich der Kündigung widersprochen hat, weil sonst der Kündigungsschutz des
+Arbeitnehmers zu stark eingeschränkt wäre und der Betriebsrat eine Sperrfunktion hätte.
+Das Ultima-ratio-Prinzip
+Die Kündigung kommt nur als äußerstes Mittel erst dann in Betracht, wenn keine andere Möglichkeit zu
+einer anderweitigen Beschäftigung, unter Umständen auch mit schlechteren Arbeitsbedingungen besteht.
+Dabei können dem Arbeitgeber aber nur die milderen Mittel auferlegt werden, die ihm rechtlich und
+tatsächlich möglich und zumutbar sind. Vorrang vor der Beendigungskündigung haben Versetzung,
+Änderungskündigung, Abmahnung, Umschulung oder Fortbildung.
+Die Interessenabwägung hat bei personenbedingten Kündigungen eine besondere Funktion. Es geht
+darum, das Gewicht der Vertragsbeeinträchtigung festzustellen. Dies geschieht unter Berücksichtigung
+sozialer Erwägungen (z. B. Alter, Dauer der Betriebszugehörigkeit, beanstandungsfreie Arbeitsleistungen,
+Unterhaltsverpflichtungen, besondere Stresssituation, bei Krankheit z. B., ob ein Arbeitsunfall vorliegt).
+Darlegungs- und Beweislast
+Die Darlegungs- und Beweislast für die Tatsachen, die die personenbedingte Kündigung rechtfertigen,
+trägt nach § 1 Abs. 2 Satz 4 KSchG der Arbeitgeber.
+2 Prüfungsschritte für die personenbedingte Kündigung
+(HI569922)
+Es kommt auf folgende Prüfungsschritte an:
+Voraussetzungen der personenbedingten Kündigung:
+1. Gründe in der Person des Arbeitnehmers (persönliche Fähigkeiten oder Eigenschaften stehen
+künftiger Erfüllung arbeitsvertraglicher Verpflichtungen entgegen)
+2. Negative Prognose: Ist davon auszugehen, dass der Arbeitnehmer auch in Zukunft seine
+Arbeitsleistung ganz oder teilweise nicht mehr erbringen kann?
+3. Erhebliche Beeinträchtigung betrieblicher oder wirtschaftlicher Interessen durch die
+personenbedingten Gründe
+4. Fehlende Weiterbeschäftigungsmöglichkeit: Ist eine Versetzung auf einen anderen Arbeitsplatz
+möglich und zumutbar? Das kann einvernehmlich, durch Zuweisung aufgrund Direktionsrechts oder
+durch Änderungskündigung, u. U. nach zumutbaren Umschulungs- oder Fortbildungsmaßnahmen in
+Betracht kommen.
+5. Interessenabwägung
+2.1 Beispiele für Gründe in der Person des Arbeitnehmers
+(HI569923)
+Folgende nicht abschließend aufgeführte Gründe können für eine personenbedingte Kündigung in
+Betracht kommen:
+Aids/HIV
+Alkoholsucht
+Alter
+Arbeitserlaubnis
+Arbeitsunfall
+Berufskrankheit
+Drogensucht
+Druckkündigung
+Eheschließung, Ehescheidung
+Ehrenamt/politische Betätigung
+Fehlende oder mangelhafte Eignung
+Personal Office Platin Seite 3
+Stand Produktdatenbank: 28.11.2023, Ausdruck vom 29.11.2023
+Personenbedingte Kündigung: Voraussetzungen (HI515530)
+Fachlich geprüft/geändert am: 27.10.2023
+Freiheitsstrafe
+Führerscheinentzug
+Krankheit
+Untersuchungshaft
+In all diesen Fällen können die Gründe in der Person des Arbeitnehmers dazu führen, dass dieser die
+arbeitsvertraglich vereinbarten Pflichten nicht oder nur ungenügend erbringen kann.
+2.2 Negative Prognose
+(HI569924)
+Die Rechtmäßigkeit einer Kündigung wird für den Zeitpunkt ihres Zugangs untersucht. Die
+Kündigungsgründe sind aber ihrer Natur nach zukunftsbezogen, sie müssen auch für die Zukunft gelten.
+Denn § 1 Abs. 2 KSchG stellt darauf ab, ob die geltend gemachten Gründe einer "Weiterbeschäftigung"
+des Arbeitnehmers "entgegenstehen" (sog. negative Prognose). Es kommt damit darauf an, ob der
+Arbeitnehmer in Zukunft die geschuldete Arbeitsleistung ganz oder teilweise nicht erbringen kann.
+Die Prognose ist dann negativ, wenn ein objektiver, die Fakten kennender Betrachter (damit wirken sich
+Informationslücken des Arbeitgebers nicht zulasten des Arbeitnehmers aus) im Zeitpunkt des Zugangs der
+Kündigung davon ausgehen musste, dass mit einer baldigen (Wieder-)Herstellung der Fähigkeit und
+Eignung zur ordnungsgemäßen Verrichtung der geschuldeten Tätigkeit nicht gerechnet werden kann.
+2.3 Erhebliche Beeinträchtigung betrieblicher Interessen
+(HI569925)
+Die Gründe in der Person müssen konkrete Auswirkungen auf den Betrieb haben. Es müssen bereits
+konkrete und erhebliche Störungen eingetreten sein, die im Zeitpunkt der Kündigung noch andauern und
+wegen des Prognoseprinzips auch künftig zu erwarten sind.
+So kann die mangelnde Eignung zur deutlich vermehrten und nicht hinnehmbaren Ausschussproduktion,
+zu laufenden Kundenbeschwerden, zu Schadensersatz- oder Gewährleistungsforderungen, zur
+Herunterstufung in Lieferantenbewertungen, laufenden Systemabstürzen, Produktionsausfällen etc.
+geführt haben.
+Häufige Kurzerkrankungen können gerade bei Arbeitnehmern in Schlüsselpositionen zum Ausfall ganzer
+Schichten führen, weil so schnell qualifizierter Ersatz nicht gefunden werden kann.
+Entgeltfortzahlungskosten im Krankheitsfall können nicht mehr akzeptable Ausmaße angenommen haben.
+Eine genaue Dokumentation der Beeinträchtigung (insbesondere auch für die ordnungsgemäße
+Betriebsratsanhörung) ist unerlässlich.
+2.4 Vorrang von Versetzung und Änderungskündigung
+(HI569926)
+2.4.1 Kündigung als letztes Mittel
+(HI3615176)
+Die Kündigung ist letztes Mittel (ultima ratio). Deshalb muss zuerst eine Weiterbeschäftigung an einem
+freien Arbeitsplatz im Betrieb oder in einem anderen Betrieb des Unternehmens, ggf. auch nach
+zumutbarer Umschulung oder Fortbildung geprüft werden. Frei sind grundsätzlich nur solche
+Arbeitsplätze, die im Zeitpunkt des Zugangs der Kündigung unbesetzt sind. Kann der Arbeitgeber aber bei
+Ausspruch der Kündigung hinreichend sicher vorhersehen, dass ein Arbeitsplatz bis zum Ablauf der
+Kündigungsfrist zur Verfügung stehen wird, ist dieser ebenfalls "frei". Dabei spielt keine Rolle, ob der
+Arbeitgeber den Arbeitnehmer durch Direktionsrecht auf die freie Stelle versetzen kann oder erst eine
+Vertragsänderung, u. U. durch den Ausspruch einer Änderungskündigung, erforderlich ist. Als freier
+Arbeitsplatz kommt auch ein schlechterer als vorher in Betracht. Der Arbeitgeber muss dem Arbeitnehmer
+aber keine freie Beförderungsstelle anbieten.
+Hinsichtlich der Möglichkeit einer anderweitigen Weiterbeschäftigung gilt im Arbeitsgerichtsprozess eine
+abgestufte Darlegungs- und Beweislast: Es genügt zunächst der Vortrag des Arbeitgebers, eine
+Personal Office Platin Seite 4
+Stand Produktdatenbank: 28.11.2023, Ausdruck vom 29.11.2023
+Personenbedingte Kündigung: Voraussetzungen (HI515530)
+Fachlich geprüft/geändert am: 27.10.2023
+anderweitige Beschäftigung sei im Betrieb oder Unternehmen nicht möglich. Dann ist es Sache des
+Arbeitnehmers, konkrete Vorstellungen zur Möglichkeit anderweitiger Beschäftigung zu äußern. Erst dann
+muss der Arbeitgeber im Einzelnen erläutern und ggf. beweisen, aus welchen Gründen eine Umsetzung
+nicht möglich ist.
+2.4.2 Besonderheiten bei der Änderungskündigung
+(HI569927)
+Besteht für einen Arbeitnehmer, der an seinem Arbeitsplatz aus personenbedingten Gründen nicht mehr
+oder nicht mehr in bisherigem Umfang weiterbeschäftigt werden kann, eine
+Weiterbeschäftigungsmöglichkeit auf einem anderen Arbeitsplatz, der Tätigkeiten voraussetzt, die
+arbeitsvertraglich nicht geschuldet sind, und ist eine einvernehmliche Änderung des Arbeitsvertrags nicht
+zu erzielen, so hat der Arbeitgeber eine Änderungskündigung auszusprechen. Diese bezieht sich entweder
+nur auf die Reduktion der vereinbarten Arbeit (z. B. statt Vollzeit nunmehr Teilzeit) oder auf eine andere
+Tätigkeit (u. U. auch Teilzeittätigkeit). Sie hat grundsätzlich Vorrang vor einer Beendigungskündigung,
+weil sie das mildere Mittel (ultima ratio) ist. Das bedeutet:
+Wählt der Arbeitgeber statt einer möglichen Änderungskündigung die Beendigungskündigung, ist diese
+sozial ungerechtfertigt und damit unwirksam. Etwas anderes gilt, wenn die Weiterbeschäftigung für den
+Arbeitgeber nicht mehr zumutbar ist (was allerdings meist bei verhaltensbedingten Kündigungen in
+Betracht kommt).
+Nach § 2 KSchG besteht die Änderungskündigung aus einer Kündigung des bisherigen Arbeitsvertrags und
+einem damit verbundenen Angebot des Arbeitgebers zum Abschluss eines anderen Vertrags (§ 145 BGB).
+Da also die Änderungskündigung zunächst einmal der Ausspruch einer normalen Kündigung ist, gelten für
+sie dieselben Grundsätze, wie bei der Beendigungskündigung, allerdings mit der Maßgabe, dass nicht
+überprüft wird, ob die Kündigung sozial ungerechtfertigt ist, sondern ob die Änderung der
+Arbeitsbedingungen sozial ungerechtfertigt ist. Dies ergibt sich aus dem Wortlaut des § 2 KSchG. Bei
+Anwendung des KSchG müssen also personenbedingte Kündigungsgründe i. S. d. § 1 KSchG vorliegen.
+Gleichzeitig darf das Änderungsangebot nicht noch weitere, nicht mit dem Kündigungsgrund und dem
+neuen Arbeitsplatz zusammenhängende Regelungen enthalten.
+Praxis-Beispiel
+Änderungskündigung als Alternative zur Beendigungskündigung
+Der Kraftfahrer A hat die Fahrerlaubnis für längere Zeit verloren. Es besteht aber die Möglichkeit, ihn
+im Lager zu beschäftigen.
+Lösung
+Wenn der Arbeitgeber diese Lagertätigkeit dem A nicht durch Direktionsrecht zuweisen kann, ist eine
+Änderungskündigung auszusprechen. Diese wäre grundsätzlich sozial gerechtfertigt.
+Verknüpft aber der Arbeitgeber das Änderungsangebot mit einer grundlegenden Überarbeitung des
+Arbeitsvertrags (z. B. indem ein Freiwilligkeitsvorbehalt für zusätzliche Leistungen oder eine
+Vertragsstrafenregelung eingeführt werden), sind diese Punkte nicht sozial gerechtfertigt. Damit ist
+aber die gesamte Änderungskündigung unwirksam.
+Annahme oder Ablehnung des Änderungsangebots
+Nimmt der Arbeitnehmer das Änderungsangebot an, verändert der dadurch zustande gekommene
+Änderungsvertrag das Arbeitsverhältnis. Dieser geänderte Vertrag ist dann die individualrechtliche
+Grundlage für die Versetzung. Nimmt der Arbeitnehmer das Änderungsangebot nicht an, kommt der
+Personal Office Platin Seite 5
+Stand Produktdatenbank: 28.11.2023, Ausdruck vom 29.11.2023
+Personenbedingte Kündigung: Voraussetzungen (HI515530)
+Fachlich geprüft/geändert am: 27.10.2023
+Änderungsvertrag nicht zustande. Eine Weiterbeschäftigung des Arbeitnehmers auf dem angebotenen
+Arbeitsplatz ist dann nicht möglich. Das alte Arbeitsverhältnis ist jedoch gekündigt. Sollte der
+Arbeitnehmer gegen diese Kündigung rechtzeitig (§ 4 KSchG: grundsätzlich. 3 Wochen nach Zugang)
+Klage erheben, geht es bei dem Rechtsstreit nur noch um die Wirksamkeit dieser Beendigungskündigung.
+Annahme unter Vorbehalt
+§ 2 KSchG gibt dem Arbeitnehmer die zusätzliche Möglichkeit, innerhalb von 3 Wochen nach Zugang der
+Kündigung das Änderungsangebot unter Vorbehalt anzunehmen. In einem solchen Fall kommt der
+Änderungsvertrag unter der rückwirkenden auflösenden Bedingung der gerichtlichen Feststellung der
+Sozialwidrigkeit zustande. Diese Möglichkeit wird der Arbeitnehmer in den meisten Fällen wählen, da sie
+für ihn das geringste Risiko bietet.
+2.4.3 Umschulung und Fortbildungsmaßnahmen
+(HI569928)
+Die Umschulung hat das Ziel, dem Arbeitnehmer die notwendige fachliche Qualifikation für die Ausübung
+eines anderen Berufs zu vermitteln. Fortbildungsmaßnahmen bezwecken dagegen, den Arbeitnehmer in
+die Lage zu versetzen, den gestiegenen Anforderungen in seinem Beruf durch die Vermittlung der dafür
+notwendigen Kenntnisse und Fähigkeiten gerecht zu werden.
+Der Arbeitgeber muss aber nur dann umschulen oder fortbilden, wenn im Zeitpunkt des Zugangs der
+Kündigung feststeht oder mit hinreichender Sicherheit voraussehbar ist, dass nach Abschluss der
+Maßnahme ein geeigneter freier Arbeitsplatz im Betrieb oder in einem anderen Betrieb des
+Unternehmens vorhanden ist. Weil eine Umschulung nur mit Zustimmung des Arbeitnehmers erfolgen
+kann, kommt es nicht darauf an, ob der Arbeitgeber diesen nach der Maßnahme durch Direktionsrecht
+auf den neuen Arbeitsplatz versetzen könnte.
+Hat der Arbeitgeber Maßnahmen geplant oder durchgeführt, die dazu führen, dass sich die Tätigkeit der
+betroffenen Arbeitnehmer ändert und ihre beruflichen Kenntnisse und Fähigkeiten zur Erfüllung ihrer
+Aufgaben nicht mehr ausreichen, hat der Betriebsrat nach § 97 Abs. 2 BetrVG bei der Einführung von
+Maßnahmen der betrieblichen Berufsbildung ein erzwingbares Mitbestimmungsrecht.
+Was für den Arbeitgeber hinsichtlich einer Schulung oder Weiterbildung finanziell und zeitlich zumutbar
+ist, lässt das BAG offen. Zur Beantwortung dieser Frage muss eine Interessenabwägung vorgenommen
+werden. Zumindest ist eine Umschulung oder Fortbildung dann unzumutbar, wenn sie in angemessener
+Zeit offenbar keinen Erfolg verspricht bzw. sich über einen längeren Zeitraum (z. B. 2 Jahre) erstrecken
+müsste. Gleiches gilt, wenn der Erfolg der Maßnahme z. B. wegen des Bildungsstands des Arbeitnehmers
+oder wegen seines Alters ungewiss ist.
+2.5 Interessenabwägung
+(HI569929)
+Bei der Interessenabwägung ist zu prüfen, ob der Arbeitgeber die Störung im Arbeitsverhältnis
+billigerweise hinnehmen muss oder ob die Kündigung aus der Sicht eines verständigen Arbeitgebers als
+billigenswert und angemessen erscheint. Bei der personenbedingten Kündigung sind nach herrschender
+Meinung strenge Maßstäbe anzulegen. Schließlich ist dem Arbeitnehmer in der Regel kein Verschulden
+vorzuwerfen, das sich zu seinen Ungunsten auswirken würde. Zudem kann sich aus dem Kündigungsgrund
+eine besondere soziale Schutzbedürftigkeit des Arbeitnehmers ergeben, die nach den gesetzgeberischen
+Wertentscheidungen zu seinen Gunsten zu berücksichtigen ist: z. B. Arbeitsunfall, Krankheit,
+altersbedingter Leistungsabfall.
+Zugunsten des Arbeitnehmers sind zu berücksichtigen:
+Gründe in der Person sind auf betriebliche Umstände zurückzuführen (z. B. Betriebsunfall),
+Folge der jahrelangen Tätigkeit in diesem Betrieb; gesundheitsschädliche Arbeit,
+längere Betriebszugehörigkeit,
+fortgeschrittenes Lebensalter,
+Personal Office Platin Seite 6
+Stand Produktdatenbank: 28.11.2023, Ausdruck vom 29.11.2023
+Personenbedingte Kündigung: Voraussetzungen (HI515530)
+Fachlich geprüft/geändert am: 27.10.2023
+Unterhaltsverpflichtungen,
+evtl. besondere Belastungen durch Hausbau,
+bisheriger günstiger Verlauf des Arbeitsverhältnisses.
+Zuungunsten des Arbeitnehmers sind zu berücksichtigen:
+selbstverschuldete Herbeiführung des Leistungs- oder Eignungsmangels (z. B. grob fahrlässige
+Unfallverursachung; Entzug der Fahrerlaubnis eines Kraftfahrers wegen Trunkenheitsfahrt).
+Zugunsten des Arbeitgebers sind zu berücksichtigen:
+erhöhte wirtschaftliche Auswirkungen,
+Belastbarkeit des Betriebs,
+vergebliche Versuche, die Ausfälle zu kompensieren,
+vergebliche Versuche, durch organisatorische Maßnahmen, insbesondere durch ein betriebliches
+Eingliederungsmanagement, den Ausfällen zu begegnen.
+Zulasten des Arbeitgebers sind zu berücksichtigen:
+Verschulden des Arbeitgebers (z. B. unterlassene Sicherheitsmaßnahmen, Verletzung von
+Unfallverhütungsvorschriften),
+Möglichkeit, den Ausfall durch Springer oder sonstige Maßnahmen zu überbrücken.
+3 Abgrenzung zu anderen Kündigungsgründen
+(HI569930)
+Nach § 1 Abs. 2 KSchG muss die personenbedingte Kündigung zur betriebsbedingten und
+verhaltensbedingten Kündigung abgegrenzt werden.
+Die betriebsbedingte Kündigung betrifft den Arbeitsplatz. Dagegen beziehen sich die personen- und
+verhaltensbedingten Gründe auf den Arbeitnehmer selbst. Hier kann man unterscheiden zwischen den
+Eigenschaften des Arbeitnehmers (= personenbedingt) und dem Verhalten (= verhaltensbedingt).
+Eine genaue Abgrenzung zwischen der verhaltens- und personenbedingten Kündigung kann in
+Einzelfällen schwierig sein. Hilfreich ist hierbei die Erkenntnis, dass die personenbedingte Kündigung ein
+Auffangtatbestand für Sachverhalte ist, bei denen eine betriebs- oder verhaltensbedingte Kündigung
+nicht möglich ist.
+Die verhaltensbedingte Kündigung unterscheidet sich von der personenbedingten Kündigung dadurch,
+dass sie sich auf vertragswidriges Verhalten (Verstoß gegen arbeitsvertragliche Haupt- oder
+Nebenpflichten) des Arbeitnehmers bezieht. Liegt ein solches nicht vor, kommt allenfalls eine
+personenbedingte Kündigung in Betracht.
+Betrifft eine Kündigung mehrere Bereiche, liegt nach der Rechtsprechung ein Mischtatbestand vor. Hier
+muss gefragt werden, aus welchem Bereich die Störung des Arbeitsverhältnisses kommt.
+Personal Office Platin Seite 7
+Stand Produktdatenbank: 28.11.2023, Ausdruck vom 29.11.2023

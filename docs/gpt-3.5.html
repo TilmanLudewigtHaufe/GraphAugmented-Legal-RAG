@@ -1,0 +1,909 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 900px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="18.10.2012">18.10.2012</option>
+                                
+                                    <option value="alternative beschäftigungsmöglichkeit">alternative beschäftigungsmöglichkeit</option>
+                                
+                                    <option value="arbeitgeber">arbeitgeber</option>
+                                
+                                    <option value="arbeitnehmer">arbeitnehmer</option>
+                                
+                                    <option value="leiharbeitnehmer">leiharbeitnehmer</option>
+                                
+                                    <option value="urteil">urteil</option>
+                                
+                                    <option value="20.11.2023">20.11.2023</option>
+                                
+                                    <option value="betriebsrat">betriebsrat</option>
+                                
+                                    <option value="ordentliche kündigung">ordentliche kündigung</option>
+                                
+                                    <option value="sozialwidrigkeit">sozialwidrigkeit</option>
+                                
+                                    <option value="produktdatenbank">produktdatenbank</option>
+                                
+                                    <option value="27.11.2023">27.11.2023</option>
+                                
+                                    <option value="ausdruck">ausdruck</option>
+                                
+                                    <option value="3-wochen-frist des § 4 kschg">3-wochen-frist des § 4 kschg</option>
+                                
+                                    <option value="betriebsbedingte kündigung">betriebsbedingte kündigung</option>
+                                
+                                    <option value="ablauf der kündigungsfrist">ablauf der kündigungsfrist</option>
+                                
+                                    <option value="freie arbeitsplätze">freie arbeitsplätze</option>
+                                
+                                    <option value="abschluss des interessenausgleichs">abschluss des interessenausgleichs</option>
+                                
+                                    <option value="dringenden betrieblichen gründen">dringenden betrieblichen gründen</option>
+                                
+                                    <option value="sachlage">sachlage</option>
+                                
+                                    <option value="absoluten grund">absoluten grund</option>
+                                
+                                    <option value="arbeitsplätze">arbeitsplätze</option>
+                                
+                                    <option value="bag">bag</option>
+                                
+                                    <option value="bereich">bereich</option>
+                                
+                                    <option value="beschäftigung">beschäftigung</option>
+                                
+                                    <option value="clearingverfahren">clearingverfahren</option>
+                                
+                                    <option value="freier arbeitsplatz">freier arbeitsplatz</option>
+                                
+                                    <option value="konzerninternes stellenbesetzungsverfahren">konzerninternes stellenbesetzungsverfahren</option>
+                                
+                                    <option value="pflicht des arbeitgebers">pflicht des arbeitgebers</option>
+                                
+                                    <option value="weiterbeschäftigungsmöglichkeit">weiterbeschäftigungsmöglichkeit</option>
+                                
+                                    <option value="weitere beschäftigung">weitere beschäftigung</option>
+                                
+                                    <option value="anderen maßnahmen">anderen maßnahmen</option>
+                                
+                                    <option value="anforderungen an den stelleninhaber">anforderungen an den stelleninhaber</option>
+                                
+                                    <option value="unternehmerische entscheidung">unternehmerische entscheidung</option>
+                                
+                                    <option value="anforderungsprofil">anforderungsprofil</option>
+                                
+                                    <option value="freie unternehmerische entscheidung">freie unternehmerische entscheidung</option>
+                                
+                                    <option value="angebotene arbeitsplatz">angebotene arbeitsplatz</option>
+                                
+                                    <option value="ausspruch einer betriebsbedingten kündigung">ausspruch einer betriebsbedingten kündigung</option>
+                                
+                                    <option value="verhältnisse im beschäftigungsbetrieb">verhältnisse im beschäftigungsbetrieb</option>
+                                
+                                    <option value="arbeitsaufgabe">arbeitsaufgabe</option>
+                                
+                                    <option value="arbeitsgerichte">arbeitsgerichte</option>
+                                
+                                    <option value="arbeitsgerichten">arbeitsgerichten</option>
+                                
+                                    <option value="arbeitsplatz">arbeitsplatz</option>
+                                
+                                    <option value="arbeitssachen">arbeitssachen</option>
+                                
+                                    <option value="ausspruch der kündigung liegende umstände">ausspruch der kündigung liegende umstände</option>
+                                
+                                    <option value="außer- oder innerbetriebliche umstände">außer- oder innerbetriebliche umstände</option>
+                                
+                                    <option value="berufung">berufung</option>
+                                
+                                    <option value="berücksichtigung">berücksichtigung</option>
+                                
+                                    <option value="beschäftigungsbedürfnis">beschäftigungsbedürfnis</option>
+                                
+                                    <option value="beschäftigungsmöglichkeiten">beschäftigungsmöglichkeiten</option>
+                                
+                                    <option value="beschäftigungsmöglichkeiten von arbeitnehmern">beschäftigungsmöglichkeiten von arbeitnehmern</option>
+                                
+                                    <option value="besondere qualifikation">besondere qualifikation</option>
+                                
+                                    <option value="betriebliche erfordernisse">betriebliche erfordernisse</option>
+                                
+                                    <option value="betrieblichen notwendigkeit">betrieblichen notwendigkeit</option>
+                                
+                                    <option value="betriebsbedingte beendigungskündigung">betriebsbedingte beendigungskündigung</option>
+                                
+                                    <option value="betriebsbedingte kündigungen">betriebsbedingte kündigungen</option>
+                                
+                                    <option value="beweislastregel">beweislastregel</option>
+                                
+                                    <option value="bezug zur organisation der auszuführenden arbeiten">bezug zur organisation der auszuführenden arbeiten</option>
+                                
+                                    <option value="bindende unternehmerentscheidung">bindende unternehmerentscheidung</option>
+                                
+                                    <option value="des inhalts">des inhalts</option>
+                                
+                                    <option value="dringende betriebliche erfordernissen">dringende betriebliche erfordernissen</option>
+                                
+                                    <option value="dringende erfordernis">dringende erfordernis</option>
+                                
+                                    <option value="dringendes betriebliches erfordernis">dringendes betriebliches erfordernis</option>
+                                
+                                    <option value="einarbeitungszeiten">einarbeitungszeiten</option>
+                                
+                                    <option value="entscheidung des arbeitgebers">entscheidung des arbeitgebers</option>
+                                
+                                    <option value="frei">frei</option>
+                                
+                                    <option value="freie arbeitsplatz">freie arbeitsplatz</option>
+                                
+                                    <option value="freien unternehmerischen entscheidung">freien unternehmerischen entscheidung</option>
+                                
+                                    <option value="fremdvergabe">fremdvergabe</option>
+                                
+                                    <option value="fähigkeiten des arbeitnehmers">fähigkeiten des arbeitnehmers</option>
+                                
+                                    <option value="gerichte">gerichte</option>
+                                
+                                    <option value="gerichte für arbeitssachen">gerichte für arbeitssachen</option>
+                                
+                                    <option value="gerichtliche missbrauchskontrolle">gerichtliche missbrauchskontrolle</option>
+                                
+                                    <option value="gerichtliche prüfung">gerichtliche prüfung</option>
+                                
+                                    <option value="gewinnverfall">gewinnverfall</option>
+                                
+                                    <option value="grundsatz der freiheit der unternehmerentscheidung">grundsatz der freiheit der unternehmerentscheidung</option>
+                                
+                                    <option value="innerbetrieblichen strukturmaßnahmen">innerbetrieblichen strukturmaßnahmen</option>
+                                
+                                    <option value="interessenabwägung">interessenabwägung</option>
+                                
+                                    <option value="konkrete arbeitsaufgabe">konkrete arbeitsaufgabe</option>
+                                
+                                    <option value="kündigung">kündigung</option>
+                                
+                                    <option value="kündigungsfrist">kündigungsfrist</option>
+                                
+                                    <option value="kündigungsschutzprozess">kündigungsschutzprozess</option>
+                                
+                                    <option value="kündigungstatsachen">kündigungstatsachen</option>
+                                
+                                    <option value="leiharbeitskräfte">leiharbeitskräfte</option>
+                                
+                                    <option value="maßnahmen">maßnahmen</option>
+                                
+                                    <option value="mitbestimmungsrecht">mitbestimmungsrecht</option>
+                                
+                                    <option value="mögliches und zumutbares änderungsangebot">mögliches und zumutbares änderungsangebot</option>
+                                
+                                    <option value="niedriger qualifizierter arbeitsplatz">niedriger qualifizierter arbeitsplatz</option>
+                                
+                                    <option value="organisatorischer, technischer und wirtschaftlicher unternehmerentscheidungen">organisatorischer, technischer und wirtschaftlicher unternehmerentscheidungen</option>
+                                
+                                    <option value="personal office platin">personal office platin</option>
+                                
+                                    <option value="persönliche merkmale">persönliche merkmale</option>
+                                
+                                    <option value="qualifikationsmerkmale">qualifikationsmerkmale</option>
+                                
+                                    <option value="rechtsmissbrauchs">rechtsmissbrauchs</option>
+                                
+                                    <option value="sachgerechte erledigung">sachgerechte erledigung</option>
+                                
+                                    <option value="seite 2">seite 2</option>
+                                
+                                    <option value="selbstständige unternehmer">selbstständige unternehmer</option>
+                                
+                                    <option value="sozial ungerechtfertigt">sozial ungerechtfertigt</option>
+                                
+                                    <option value="soziale auswahl">soziale auswahl</option>
+                                
+                                    <option value="soziale rechtfertigung">soziale rechtfertigung</option>
+                                
+                                    <option value="stammarbeitnehmer">stammarbeitnehmer</option>
+                                
+                                    <option value="umsatzrückgang">umsatzrückgang</option>
+                                
+                                    <option value="umschulungs- oder fortbildungsmaßnahmen">umschulungs- oder fortbildungsmaßnahmen</option>
+                                
+                                    <option value="unternehmerentscheidung">unternehmerentscheidung</option>
+                                
+                                    <option value="unternehmerisches ermessen">unternehmerisches ermessen</option>
+                                
+                                    <option value="unwirksame kündigung">unwirksame kündigung</option>
+                                
+                                    <option value="vakante stelle">vakante stelle</option>
+                                
+                                    <option value="vergleichbarer arbeitsplatz">vergleichbarer arbeitsplatz</option>
+                                
+                                    <option value="vertraglich eingegangenen bindungen">vertraglich eingegangenen bindungen</option>
+                                
+                                    <option value="vertragsgemäß geschuldeten tätigkeit">vertragsgemäß geschuldeten tätigkeit</option>
+                                
+                                    <option value="voraussetzungen">voraussetzungen</option>
+                                
+                                    <option value="weiterarbeit auf anderen freien arbeitsplätzen">weiterarbeit auf anderen freien arbeitsplätzen</option>
+                                
+                                    <option value="weiterbeschäftigung">weiterbeschäftigung</option>
+                                
+                                    <option value="weniger belastende mittel">weniger belastende mittel</option>
+                                
+                                    <option value="§ 1 abs. 2 satz 4 kschg">§ 1 abs. 2 satz 4 kschg</option>
+                                
+                                    <option value="änderungs- und beendigungskündigung">änderungs- und beendigungskündigung</option>
+                                
+                                    <option value="änderungsangebot des arbeitgebers">änderungsangebot des arbeitgebers</option>
+                                
+                                    <option value="überbrückung dieses zeitraums">überbrückung dieses zeitraums</option>
+                                
+                                    <option value="beendigungskündigung">beendigungskündigung</option>
+                                
+                                    <option value="betriebliches erfordernis">betriebliches erfordernis</option>
+                                
+                                    <option value="betriebsbedingte gründe">betriebsbedingte gründe</option>
+                                
+                                    <option value="betriebsbedingten beendigungskündigung des arbeitgebers">betriebsbedingten beendigungskündigung des arbeitgebers</option>
+                                
+                                    <option value="betriebsbedingter kündigungsgrund">betriebsbedingter kündigungsgrund</option>
+                                
+                                    <option value="dringlichkeit">dringlichkeit</option>
+                                
+                                    <option value="durchführung der beweisaufnahme">durchführung der beweisaufnahme</option>
+                                
+                                    <option value="freien arbeitsplätzen">freien arbeitsplätzen</option>
+                                
+                                    <option value="gemachten entsprechenden vorschlag">gemachten entsprechenden vorschlag</option>
+                                
+                                    <option value="insolvenz">insolvenz</option>
+                                
+                                    <option value="insolvenzverwalter">insolvenzverwalter</option>
+                                
+                                    <option value="interessenausgleich">interessenausgleich</option>
+                                
+                                    <option value="maßnahme">maßnahme</option>
+                                
+                                    <option value="reinigungsarbeiten">reinigungsarbeiten</option>
+                                
+                                    <option value="reinigungskraft">reinigungskraft</option>
+                                
+                                    <option value="sachverhalt">sachverhalt</option>
+                                
+                                    <option value="sachvortrag">sachvortrag</option>
+                                
+                                    <option value="schwerwiegender persönlicher umstände">schwerwiegender persönlicher umstände</option>
+                                
+                                    <option value="sonderregelung">sonderregelung</option>
+                                
+                                    <option value="tätigkeiten">tätigkeiten</option>
+                                
+                                    <option value="unternehmen">unternehmen</option>
+                                
+                                    <option value="vertraglich eingegangene bindungen">vertraglich eingegangene bindungen</option>
+                                
+                                    <option value="vorherige verhandlungen">vorherige verhandlungen</option>
+                                
+                                    <option value="vortrag">vortrag</option>
+                                
+                                    <option value="zweifel">zweifel</option>
+                                
+                                    <option value="änderungskündigung">änderungskündigung</option>
+                                
+                                    <option value="prüfen">prüfen</option>
+                                
+                                    <option value="ausland">ausland</option>
+                                
+                                    <option value="bisher vertragsgemäß geschuldete tätigkeit">bisher vertragsgemäß geschuldete tätigkeit</option>
+                                
+                                    <option value="freien arbeitsplätze im unternehmen">freien arbeitsplätze im unternehmen</option>
+                                
+                                    <option value="freier arbeitsplatz zu geänderten (schlechteren) arbeitsbedingungen">freier arbeitsplatz zu geänderten (schlechteren) arbeitsbedingungen</option>
+                                
+                                    <option value="freier vergleichbarer (gleichwertiger) arbeitsplatz">freier vergleichbarer (gleichwertiger) arbeitsplatz</option>
+                                
+                                    <option value="innerbetriebliche maßnahmen">innerbetriebliche maßnahmen</option>
+                                
+                                    <option value="auswahlrichtlinien">auswahlrichtlinien</option>
+                                
+                                    <option value="gesetzlichen grundsätzen">gesetzlichen grundsätzen</option>
+                                
+                                    <option value="beabsichtigten kündigung">beabsichtigten kündigung</option>
+                                
+                                    <option value="beschäftigungsbedarfs">beschäftigungsbedarfs</option>
+                                
+                                    <option value="überhang an arbeitskräften">überhang an arbeitskräften</option>
+                                
+                                    <option value="beschäftigungsbedürfnisses">beschäftigungsbedürfnisses</option>
+                                
+                                    <option value="beschäftigungsbetrieb">beschäftigungsbetrieb</option>
+                                
+                                    <option value="verhältnisse">verhältnisse</option>
+                                
+                                    <option value="beschäftigungsbezogen">beschäftigungsbezogen</option>
+                                
+                                    <option value="kündigungsschutz">kündigungsschutz</option>
+                                
+                                    <option value="arbeitgeberseitige kündigungen">arbeitgeberseitige kündigungen</option>
+                                
+                                    <option value="definition">definition</option>
+                                
+                                    <option value="dringende betriebliche erfordernisse">dringende betriebliche erfordernisse</option>
+                                
+                                    <option value="fallgruppen herauszuarbeiten">fallgruppen herauszuarbeiten</option>
+                                
+                                    <option value="fristgerecht erhoben">fristgerecht erhoben</option>
+                                
+                                    <option value="innerhalb von 3 wochen nach zugang der kündigung">innerhalb von 3 wochen nach zugang der kündigung</option>
+                                
+                                    <option value="klage">klage</option>
+                                
+                                    <option value="konkreten bezug zu dem betrieb des arbeitgebers">konkreten bezug zu dem betrieb des arbeitgebers</option>
+                                
+                                    <option value="kündigungsschutzklage">kündigungsschutzklage</option>
+                                
+                                    <option value="personalbedarf">personalbedarf</option>
+                                
+                                    <option value="rechtsprechung">rechtsprechung</option>
+                                
+                                    <option value="sozial zu rechtfertigen">sozial zu rechtfertigen</option>
+                                
+                                    <option value="verspätet eingereichte">verspätet eingereichte</option>
+                                
+                                    <option value="§ 1 abs. 2 satz 1 kschg">§ 1 abs. 2 satz 1 kschg</option>
+                                
+                                    <option value="betrieblichen gründen">betrieblichen gründen</option>
+                                
+                                    <option value="betriebsbedingt">betriebsbedingt</option>
+                                
+                                    <option value="allgemeine arbeitsmarkt-, beschäftigungs- oder sozialpolitische erwägungen">allgemeine arbeitsmarkt-, beschäftigungs- oder sozialpolitische erwägungen</option>
+                                
+                                    <option value="betriebsbedingten kündigung">betriebsbedingten kündigung</option>
+                                
+                                    <option value="darlegungs- und beweislast">darlegungs- und beweislast</option>
+                                
+                                    <option value="betriebsexternen faktoren">betriebsexternen faktoren</option>
+                                
+                                    <option value="betrieb des arbeitgebers">betrieb des arbeitgebers</option>
+                                
+                                    <option value="einzelfallbezogene interessenabwägung">einzelfallbezogene interessenabwägung</option>
+                                
+                                    <option value="ordentlichen kündigung">ordentlichen kündigung</option>
+                                
+                                    <option value="personelle auswahlrichtlinien">personelle auswahlrichtlinien</option>
+                                
+                                    <option value="seite 5">seite 5</option>
+                                
+                                    <option value="seltenen ausnahmefällen">seltenen ausnahmefällen</option>
+                                
+                                    <option value="sonstige gründe">sonstige gründe</option>
+                                
+                                    <option value="verstoß">verstoß</option>
+                                
+                                    <option value="betriebsstätten">betriebsstätten</option>
+                                
+                                    <option value="arbeitgebers im ausland">arbeitgebers im ausland</option>
+                                
+                                    <option value="beurteilung der sozialen rechtfertigung">beurteilung der sozialen rechtfertigung</option>
+                                
+                                    <option value="existenz des unternehmens">existenz des unternehmens</option>
+                                
+                                    <option value="wirtschaftlichen gründen">wirtschaftlichen gründen</option>
+                                
+                                    <option value="gericht">gericht</option>
+                                
+                                    <option value="innerbetriebliche gründe">innerbetriebliche gründe</option>
+                                
+                                    <option value="weiterbeschäftigung eines oder mehrerer arbeitnehmer">weiterbeschäftigung eines oder mehrerer arbeitnehmer</option>
+                                
+                                    <option value="nachteilen">nachteilen</option>
+                                
+                                    <option value="vorteile">vorteile</option>
+                                
+                                    <option value="wirksamkeit">wirksamkeit</option>
+                                
+                                    <option value="zeitpunkt">zeitpunkt</option>
+                                
+                                    <option value="zusammenhang mit der der geschäftsführung zugrunde liegenden unternehmenspolitik">zusammenhang mit der der geschäftsführung zugrunde liegenden unternehmenspolitik</option>
+                                
+                                    <option value="sozialwidrige kündigung">sozialwidrige kündigung</option>
+                                
+                                    <option value="berufung auf das fehlen einer">berufung auf das fehlen einer</option>
+                                
+                                    <option value="konzernweite weiterbeschäftigungspflicht">konzernweite weiterbeschäftigungspflicht</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"group": 1, "id": "18.10.2012", "label": "18.10.2012", "shape": "dot", "size": 5}, {"group": 1, "id": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "label": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "shape": "dot", "size": 16}, {"group": 1, "id": "arbeitgeber", "label": "arbeitgeber", "shape": "dot", "size": 104}, {"group": 1, "id": "arbeitnehmer", "label": "arbeitnehmer", "shape": "dot", "size": 108}, {"group": 1, "id": "leiharbeitnehmer", "label": "leiharbeitnehmer", "shape": "dot", "size": 16}, {"group": 1, "id": "urteil", "label": "urteil", "shape": "dot", "size": 17}, {"group": 1, "id": "20.11.2023", "label": "20.11.2023", "shape": "dot", "size": 4}, {"group": 1, "id": "betriebsrat", "label": "betriebsrat", "shape": "dot", "size": 29}, {"group": 1, "id": "ordentliche k\u00fcndigung", "label": "ordentliche k\u00fcndigung", "shape": "dot", "size": 29}, {"group": 1, "id": "sozialwidrigkeit", "label": "sozialwidrigkeit", "shape": "dot", "size": 33}, {"group": 1, "id": "produktdatenbank", "label": "produktdatenbank", "shape": "dot", "size": 4}, {"group": 1, "id": "27.11.2023", "label": "27.11.2023", "shape": "dot", "size": 4}, {"group": 1, "id": "ausdruck", "label": "ausdruck", "shape": "dot", "size": 4}, {"group": 1, "id": "3-wochen-frist des \u00a7 4 kschg", "label": "3-wochen-frist des \u00a7 4 kschg", "shape": "dot", "size": 2}, {"group": 1, "id": "betriebsbedingte k\u00fcndigung", "label": "betriebsbedingte k\u00fcndigung", "shape": "dot", "size": 19}, {"group": 1, "id": "ablauf der k\u00fcndigungsfrist", "label": "ablauf der k\u00fcndigungsfrist", "shape": "dot", "size": 2}, {"group": 1, "id": "freie arbeitspl\u00e4tze", "label": "freie arbeitspl\u00e4tze", "shape": "dot", "size": 8}, {"group": 1, "id": "abschluss des interessenausgleichs", "label": "abschluss des interessenausgleichs", "shape": "dot", "size": 3}, {"group": 1, "id": "dringenden betrieblichen gr\u00fcnden", "label": "dringenden betrieblichen gr\u00fcnden", "shape": "dot", "size": 16}, {"group": 1, "id": "sachlage", "label": "sachlage", "shape": "dot", "size": 3}, {"group": 1, "id": "absoluten grund", "label": "absoluten grund", "shape": "dot", "size": 3}, {"group": 1, "id": "arbeitspl\u00e4tze", "label": "arbeitspl\u00e4tze", "shape": "dot", "size": 10}, {"group": 1, "id": "bag", "label": "bag", "shape": "dot", "size": 8}, {"group": 1, "id": "bereich", "label": "bereich", "shape": "dot", "size": 5}, {"group": 1, "id": "besch\u00e4ftigung", "label": "besch\u00e4ftigung", "shape": "dot", "size": 5}, {"group": 1, "id": "clearingverfahren", "label": "clearingverfahren", "shape": "dot", "size": 6}, {"group": 1, "id": "freier arbeitsplatz", "label": "freier arbeitsplatz", "shape": "dot", "size": 5}, {"group": 1, "id": "konzerninternes stellenbesetzungsverfahren", "label": "konzerninternes stellenbesetzungsverfahren", "shape": "dot", "size": 6}, {"group": 1, "id": "pflicht des arbeitgebers", "label": "pflicht des arbeitgebers", "shape": "dot", "size": 6}, {"group": 1, "id": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "label": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "shape": "dot", "size": 9}, {"group": 1, "id": "weitere besch\u00e4ftigung", "label": "weitere besch\u00e4ftigung", "shape": "dot", "size": 5}, {"group": 1, "id": "anderen ma\u00dfnahmen", "label": "anderen ma\u00dfnahmen", "shape": "dot", "size": 2}, {"group": 1, "id": "anforderungen an den stelleninhaber", "label": "anforderungen an den stelleninhaber", "shape": "dot", "size": 3}, {"group": 1, "id": "unternehmerische entscheidung", "label": "unternehmerische entscheidung", "shape": "dot", "size": 23}, {"group": 1, "id": "anforderungsprofil", "label": "anforderungsprofil", "shape": "dot", "size": 3}, {"group": 1, "id": "freie unternehmerische entscheidung", "label": "freie unternehmerische entscheidung", "shape": "dot", "size": 3}, {"group": 2, "id": "angebotene arbeitsplatz", "label": "angebotene arbeitsplatz", "shape": "dot", "size": 3}, {"group": 2, "id": "ausspruch einer betriebsbedingten k\u00fcndigung", "label": "ausspruch einer betriebsbedingten k\u00fcndigung", "shape": "dot", "size": 9}, {"group": 2, "id": "verh\u00e4ltnisse im besch\u00e4ftigungsbetrieb", "label": "verh\u00e4ltnisse im besch\u00e4ftigungsbetrieb", "shape": "dot", "size": 9}, {"group": 1, "id": "arbeitsaufgabe", "label": "arbeitsaufgabe", "shape": "dot", "size": 3}, {"group": 1, "id": "arbeitsgerichte", "label": "arbeitsgerichte", "shape": "dot", "size": 7}, {"group": 1, "id": "arbeitsgerichten", "label": "arbeitsgerichten", "shape": "dot", "size": 16}, {"group": 1, "id": "arbeitsplatz", "label": "arbeitsplatz", "shape": "dot", "size": 2}, {"group": 1, "id": "arbeitssachen", "label": "arbeitssachen", "shape": "dot", "size": 2}, {"group": 1, "id": "ausspruch der k\u00fcndigung liegende umst\u00e4nde", "label": "ausspruch der k\u00fcndigung liegende umst\u00e4nde", "shape": "dot", "size": 2}, {"group": 1, "id": "au\u00dfer- oder innerbetriebliche umst\u00e4nde", "label": "au\u00dfer- oder innerbetriebliche umst\u00e4nde", "shape": "dot", "size": 1}, {"group": 1, "id": "berufung", "label": "berufung", "shape": "dot", "size": 2}, {"group": 1, "id": "ber\u00fccksichtigung", "label": "ber\u00fccksichtigung", "shape": "dot", "size": 2}, {"group": 1, "id": "besch\u00e4ftigungsbed\u00fcrfnis", "label": "besch\u00e4ftigungsbed\u00fcrfnis", "shape": "dot", "size": 19}, {"group": 1, "id": "besch\u00e4ftigungsm\u00f6glichkeiten", "label": "besch\u00e4ftigungsm\u00f6glichkeiten", "shape": "dot", "size": 1}, {"group": 1, "id": "besch\u00e4ftigungsm\u00f6glichkeiten von arbeitnehmern", "label": "besch\u00e4ftigungsm\u00f6glichkeiten von arbeitnehmern", "shape": "dot", "size": 5}, {"group": 1, "id": "besondere qualifikation", "label": "besondere qualifikation", "shape": "dot", "size": 2}, {"group": 4, "id": "betriebliche erfordernisse", "label": "betriebliche erfordernisse", "shape": "dot", "size": 22}, {"group": 1, "id": "betrieblichen notwendigkeit", "label": "betrieblichen notwendigkeit", "shape": "dot", "size": 2}, {"group": 1, "id": "betriebsbedingte beendigungsk\u00fcndigung", "label": "betriebsbedingte beendigungsk\u00fcndigung", "shape": "dot", "size": 3}, {"group": 1, "id": "betriebsbedingte k\u00fcndigungen", "label": "betriebsbedingte k\u00fcndigungen", "shape": "dot", "size": 3}, {"group": 1, "id": "beweislastregel", "label": "beweislastregel", "shape": "dot", "size": 3}, {"group": 1, "id": "bezug zur organisation der auszuf\u00fchrenden arbeiten", "label": "bezug zur organisation der auszuf\u00fchrenden arbeiten", "shape": "dot", "size": 3}, {"group": 1, "id": "bindende unternehmerentscheidung", "label": "bindende unternehmerentscheidung", "shape": "dot", "size": 5}, {"group": 1, "id": "des inhalts", "label": "des inhalts", "shape": "dot", "size": 5}, {"group": 1, "id": "dringende betriebliche erfordernissen", "label": "dringende betriebliche erfordernissen", "shape": "dot", "size": 2}, {"group": 1, "id": "dringende erfordernis", "label": "dringende erfordernis", "shape": "dot", "size": 1}, {"group": 1, "id": "dringendes betriebliches erfordernis", "label": "dringendes betriebliches erfordernis", "shape": "dot", "size": 6}, {"group": 1, "id": "einarbeitungszeiten", "label": "einarbeitungszeiten", "shape": "dot", "size": 2}, {"group": 1, "id": "entscheidung des arbeitgebers", "label": "entscheidung des arbeitgebers", "shape": "dot", "size": 3}, {"group": 1, "id": "frei", "label": "frei", "shape": "dot", "size": 2}, {"group": 1, "id": "freie arbeitsplatz", "label": "freie arbeitsplatz", "shape": "dot", "size": 2}, {"group": 1, "id": "freien unternehmerischen entscheidung", "label": "freien unternehmerischen entscheidung", "shape": "dot", "size": 2}, {"group": 1, "id": "fremdvergabe", "label": "fremdvergabe", "shape": "dot", "size": 17}, {"group": 1, "id": "f\u00e4higkeiten des arbeitnehmers", "label": "f\u00e4higkeiten des arbeitnehmers", "shape": "dot", "size": 2}, {"group": 1, "id": "gerichte", "label": "gerichte", "shape": "dot", "size": 2}, {"group": 1, "id": "gerichte f\u00fcr arbeitssachen", "label": "gerichte f\u00fcr arbeitssachen", "shape": "dot", "size": 5}, {"group": 1, "id": "gerichtliche missbrauchskontrolle", "label": "gerichtliche missbrauchskontrolle", "shape": "dot", "size": 5}, {"group": 1, "id": "gerichtliche pr\u00fcfung", "label": "gerichtliche pr\u00fcfung", "shape": "dot", "size": 16}, {"group": 1, "id": "gewinnverfall", "label": "gewinnverfall", "shape": "dot", "size": 2}, {"group": 1, "id": "grundsatz der freiheit der unternehmerentscheidung", "label": "grundsatz der freiheit der unternehmerentscheidung", "shape": "dot", "size": 6}, {"group": 1, "id": "innerbetrieblichen strukturma\u00dfnahmen", "label": "innerbetrieblichen strukturma\u00dfnahmen", "shape": "dot", "size": 5}, {"group": 1, "id": "interessenabw\u00e4gung", "label": "interessenabw\u00e4gung", "shape": "dot", "size": 3}, {"group": 1, "id": "konkrete arbeitsaufgabe", "label": "konkrete arbeitsaufgabe", "shape": "dot", "size": 3}, {"group": 1, "id": "k\u00fcndigung", "label": "k\u00fcndigung", "shape": "dot", "size": 31}, {"group": 1, "id": "k\u00fcndigungsfrist", "label": "k\u00fcndigungsfrist", "shape": "dot", "size": 2}, {"group": 1, "id": "k\u00fcndigungsschutzprozess", "label": "k\u00fcndigungsschutzprozess", "shape": "dot", "size": 6}, {"group": 1, "id": "k\u00fcndigungstatsachen", "label": "k\u00fcndigungstatsachen", "shape": "dot", "size": 2}, {"group": 1, "id": "leiharbeitskr\u00e4fte", "label": "leiharbeitskr\u00e4fte", "shape": "dot", "size": 3}, {"group": 1, "id": "ma\u00dfnahmen", "label": "ma\u00dfnahmen", "shape": "dot", "size": 1}, {"group": 1, "id": "mitbestimmungsrecht", "label": "mitbestimmungsrecht", "shape": "dot", "size": 3}, {"group": 1, "id": "m\u00f6gliches und zumutbares \u00e4nderungsangebot", "label": "m\u00f6gliches und zumutbares \u00e4nderungsangebot", "shape": "dot", "size": 3}, {"group": 1, "id": "niedriger qualifizierter arbeitsplatz", "label": "niedriger qualifizierter arbeitsplatz", "shape": "dot", "size": 2}, {"group": 1, "id": "organisatorischer, technischer und wirtschaftlicher unternehmerentscheidungen", "label": "organisatorischer, technischer und wirtschaftlicher unternehmerentscheidungen", "shape": "dot", "size": 5}, {"group": 1, "id": "personal office platin", "label": "personal office platin", "shape": "dot", "size": 11}, {"group": 1, "id": "pers\u00f6nliche merkmale", "label": "pers\u00f6nliche merkmale", "shape": "dot", "size": 3}, {"group": 1, "id": "qualifikationsmerkmale", "label": "qualifikationsmerkmale", "shape": "dot", "size": 3}, {"group": 1, "id": "rechtsmissbrauchs", "label": "rechtsmissbrauchs", "shape": "dot", "size": 3}, {"group": 1, "id": "sachgerechte erledigung", "label": "sachgerechte erledigung", "shape": "dot", "size": 3}, {"group": 1, "id": "seite 2", "label": "seite 2", "shape": "dot", "size": 6}, {"group": 1, "id": "selbstst\u00e4ndige unternehmer", "label": "selbstst\u00e4ndige unternehmer", "shape": "dot", "size": 4}, {"group": 4, "id": "sozial ungerechtfertigt", "label": "sozial ungerechtfertigt", "shape": "dot", "size": 6}, {"group": 1, "id": "soziale auswahl", "label": "soziale auswahl", "shape": "dot", "size": 2}, {"group": 1, "id": "soziale rechtfertigung", "label": "soziale rechtfertigung", "shape": "dot", "size": 3}, {"group": 1, "id": "stammarbeitnehmer", "label": "stammarbeitnehmer", "shape": "dot", "size": 8}, {"group": 1, "id": "umsatzr\u00fcckgang", "label": "umsatzr\u00fcckgang", "shape": "dot", "size": 2}, {"group": 1, "id": "umschulungs- oder fortbildungsma\u00dfnahmen", "label": "umschulungs- oder fortbildungsma\u00dfnahmen", "shape": "dot", "size": 2}, {"group": 1, "id": "unternehmerentscheidung", "label": "unternehmerentscheidung", "shape": "dot", "size": 36}, {"group": 1, "id": "unternehmerisches ermessen", "label": "unternehmerisches ermessen", "shape": "dot", "size": 9}, {"group": 1, "id": "unwirksame k\u00fcndigung", "label": "unwirksame k\u00fcndigung", "shape": "dot", "size": 3}, {"group": 1, "id": "vakante stelle", "label": "vakante stelle", "shape": "dot", "size": 3}, {"group": 1, "id": "vergleichbarer arbeitsplatz", "label": "vergleichbarer arbeitsplatz", "shape": "dot", "size": 2}, {"group": 1, "id": "vertraglich eingegangenen bindungen", "label": "vertraglich eingegangenen bindungen", "shape": "dot", "size": 2}, {"group": 1, "id": "vertragsgem\u00e4\u00df geschuldeten t\u00e4tigkeit", "label": "vertragsgem\u00e4\u00df geschuldeten t\u00e4tigkeit", "shape": "dot", "size": 2}, {"group": 1, "id": "voraussetzungen", "label": "voraussetzungen", "shape": "dot", "size": 6}, {"group": 1, "id": "weiterarbeit auf anderen freien arbeitspl\u00e4tzen", "label": "weiterarbeit auf anderen freien arbeitspl\u00e4tzen", "shape": "dot", "size": 2}, {"group": 1, "id": "weiterbesch\u00e4ftigung", "label": "weiterbesch\u00e4ftigung", "shape": "dot", "size": 9}, {"group": 1, "id": "weniger belastende mittel", "label": "weniger belastende mittel", "shape": "dot", "size": 2}, {"group": 1, "id": "\u00a7 1 abs. 2 satz 4 kschg", "label": "\u00a7 1 abs. 2 satz 4 kschg", "shape": "dot", "size": 3}, {"group": 1, "id": "\u00e4nderungs- und beendigungsk\u00fcndigung", "label": "\u00e4nderungs- und beendigungsk\u00fcndigung", "shape": "dot", "size": 3}, {"group": 1, "id": "\u00e4nderungsangebot des arbeitgebers", "label": "\u00e4nderungsangebot des arbeitgebers", "shape": "dot", "size": 3}, {"group": 1, "id": "\u00fcberbr\u00fcckung dieses zeitraums", "label": "\u00fcberbr\u00fcckung dieses zeitraums", "shape": "dot", "size": 1}, {"group": 1, "id": "beendigungsk\u00fcndigung", "label": "beendigungsk\u00fcndigung", "shape": "dot", "size": 3}, {"group": 1, "id": "betriebliches erfordernis", "label": "betriebliches erfordernis", "shape": "dot", "size": 4}, {"group": 1, "id": "betriebsbedingte gr\u00fcnde", "label": "betriebsbedingte gr\u00fcnde", "shape": "dot", "size": 4}, {"group": 1, "id": "betriebsbedingten beendigungsk\u00fcndigung des arbeitgebers", "label": "betriebsbedingten beendigungsk\u00fcndigung des arbeitgebers", "shape": "dot", "size": 2}, {"group": 1, "id": "betriebsbedingter k\u00fcndigungsgrund", "label": "betriebsbedingter k\u00fcndigungsgrund", "shape": "dot", "size": 3}, {"group": 1, "id": "dringlichkeit", "label": "dringlichkeit", "shape": "dot", "size": 4}, {"group": 1, "id": "durchf\u00fchrung der beweisaufnahme", "label": "durchf\u00fchrung der beweisaufnahme", "shape": "dot", "size": 3}, {"group": 1, "id": "freien arbeitspl\u00e4tzen", "label": "freien arbeitspl\u00e4tzen", "shape": "dot", "size": 2}, {"group": 1, "id": "gemachten entsprechenden vorschlag", "label": "gemachten entsprechenden vorschlag", "shape": "dot", "size": 2}, {"group": 1, "id": "insolvenz", "label": "insolvenz", "shape": "dot", "size": 3}, {"group": 1, "id": "insolvenzverwalter", "label": "insolvenzverwalter", "shape": "dot", "size": 3}, {"group": 1, "id": "interessenausgleich", "label": "interessenausgleich", "shape": "dot", "size": 3}, {"group": 1, "id": "ma\u00dfnahme", "label": "ma\u00dfnahme", "shape": "dot", "size": 3}, {"group": 1, "id": "reinigungsarbeiten", "label": "reinigungsarbeiten", "shape": "dot", "size": 3}, {"group": 1, "id": "reinigungskraft", "label": "reinigungskraft", "shape": "dot", "size": 4}, {"group": 1, "id": "sachverhalt", "label": "sachverhalt", "shape": "dot", "size": 3}, {"group": 1, "id": "sachvortrag", "label": "sachvortrag", "shape": "dot", "size": 2}, {"group": 1, "id": "schwerwiegender pers\u00f6nlicher umst\u00e4nde", "label": "schwerwiegender pers\u00f6nlicher umst\u00e4nde", "shape": "dot", "size": 4}, {"group": 1, "id": "sonderregelung", "label": "sonderregelung", "shape": "dot", "size": 3}, {"group": 1, "id": "t\u00e4tigkeiten", "label": "t\u00e4tigkeiten", "shape": "dot", "size": 3}, {"group": 1, "id": "unternehmen", "label": "unternehmen", "shape": "dot", "size": 3}, {"group": 1, "id": "vertraglich eingegangene bindungen", "label": "vertraglich eingegangene bindungen", "shape": "dot", "size": 4}, {"group": 1, "id": "vorherige verhandlungen", "label": "vorherige verhandlungen", "shape": "dot", "size": 2}, {"group": 1, "id": "vortrag", "label": "vortrag", "shape": "dot", "size": 3}, {"group": 1, "id": "zweifel", "label": "zweifel", "shape": "dot", "size": 3}, {"group": 2, "id": "\u00e4nderungsk\u00fcndigung", "label": "\u00e4nderungsk\u00fcndigung", "shape": "dot", "size": 5}, {"group": 1, "id": "pr\u00fcfen", "label": "pr\u00fcfen", "shape": "dot", "size": 3}, {"group": 1, "id": "ausland", "label": "ausland", "shape": "dot", "size": 1}, {"group": 2, "id": "bisher vertragsgem\u00e4\u00df geschuldete t\u00e4tigkeit", "label": "bisher vertragsgem\u00e4\u00df geschuldete t\u00e4tigkeit", "shape": "dot", "size": 3}, {"group": 2, "id": "freien arbeitspl\u00e4tze im unternehmen", "label": "freien arbeitspl\u00e4tze im unternehmen", "shape": "dot", "size": 3}, {"group": 2, "id": "freier arbeitsplatz zu ge\u00e4nderten (schlechteren) arbeitsbedingungen", "label": "freier arbeitsplatz zu ge\u00e4nderten (schlechteren) arbeitsbedingungen", "shape": "dot", "size": 3}, {"group": 2, "id": "freier vergleichbarer (gleichwertiger) arbeitsplatz", "label": "freier vergleichbarer (gleichwertiger) arbeitsplatz", "shape": "dot", "size": 3}, {"group": 2, "id": "innerbetriebliche ma\u00dfnahmen", "label": "innerbetriebliche ma\u00dfnahmen", "shape": "dot", "size": 2}, {"group": 1, "id": "auswahlrichtlinien", "label": "auswahlrichtlinien", "shape": "dot", "size": 4}, {"group": 1, "id": "gesetzlichen grunds\u00e4tzen", "label": "gesetzlichen grunds\u00e4tzen", "shape": "dot", "size": 4}, {"group": 1, "id": "beabsichtigten k\u00fcndigung", "label": "beabsichtigten k\u00fcndigung", "shape": "dot", "size": 3}, {"group": 6, "id": "besch\u00e4ftigungsbedarfs", "label": "besch\u00e4ftigungsbedarfs", "shape": "dot", "size": 1}, {"group": 6, "id": "\u00fcberhang an arbeitskr\u00e4ften", "label": "\u00fcberhang an arbeitskr\u00e4ften", "shape": "dot", "size": 1}, {"group": 1, "id": "besch\u00e4ftigungsbed\u00fcrfnisses", "label": "besch\u00e4ftigungsbed\u00fcrfnisses", "shape": "dot", "size": 3}, {"group": 1, "id": "besch\u00e4ftigungsbetrieb", "label": "besch\u00e4ftigungsbetrieb", "shape": "dot", "size": 3}, {"group": 1, "id": "verh\u00e4ltnisse", "label": "verh\u00e4ltnisse", "shape": "dot", "size": 3}, {"group": 1, "id": "besch\u00e4ftigungsbezogen", "label": "besch\u00e4ftigungsbezogen", "shape": "dot", "size": 3}, {"group": 1, "id": "k\u00fcndigungsschutz", "label": "k\u00fcndigungsschutz", "shape": "dot", "size": 3}, {"group": 4, "id": "arbeitgeberseitige k\u00fcndigungen", "label": "arbeitgeberseitige k\u00fcndigungen", "shape": "dot", "size": 1}, {"group": 4, "id": "definition", "label": "definition", "shape": "dot", "size": 3}, {"group": 4, "id": "dringende betriebliche erfordernisse", "label": "dringende betriebliche erfordernisse", "shape": "dot", "size": 16}, {"group": 4, "id": "fallgruppen herauszuarbeiten", "label": "fallgruppen herauszuarbeiten", "shape": "dot", "size": 4}, {"group": 4, "id": "fristgerecht erhoben", "label": "fristgerecht erhoben", "shape": "dot", "size": 3}, {"group": 4, "id": "innerhalb von 3 wochen nach zugang der k\u00fcndigung", "label": "innerhalb von 3 wochen nach zugang der k\u00fcndigung", "shape": "dot", "size": 4}, {"group": 4, "id": "klage", "label": "klage", "shape": "dot", "size": 16}, {"group": 4, "id": "konkreten bezug zu dem betrieb des arbeitgebers", "label": "konkreten bezug zu dem betrieb des arbeitgebers", "shape": "dot", "size": 4}, {"group": 4, "id": "k\u00fcndigungsschutzklage", "label": "k\u00fcndigungsschutzklage", "shape": "dot", "size": 4}, {"group": 4, "id": "personalbedarf", "label": "personalbedarf", "shape": "dot", "size": 4}, {"group": 4, "id": "rechtsprechung", "label": "rechtsprechung", "shape": "dot", "size": 6}, {"group": 4, "id": "sozial zu rechtfertigen", "label": "sozial zu rechtfertigen", "shape": "dot", "size": 3}, {"group": 4, "id": "versp\u00e4tet eingereichte", "label": "versp\u00e4tet eingereichte", "shape": "dot", "size": 3}, {"group": 4, "id": "\u00a7 1 abs. 2 satz 1 kschg", "label": "\u00a7 1 abs. 2 satz 1 kschg", "shape": "dot", "size": 3}, {"group": 1, "id": "betrieblichen gr\u00fcnden", "label": "betrieblichen gr\u00fcnden", "shape": "dot", "size": 3}, {"group": 1, "id": "betriebsbedingt", "label": "betriebsbedingt", "shape": "dot", "size": 3}, {"group": 1, "id": "allgemeine arbeitsmarkt-, besch\u00e4ftigungs- oder sozialpolitische erw\u00e4gungen", "label": "allgemeine arbeitsmarkt-, besch\u00e4ftigungs- oder sozialpolitische erw\u00e4gungen", "shape": "dot", "size": 1}, {"group": 1, "id": "betriebsbedingten k\u00fcndigung", "label": "betriebsbedingten k\u00fcndigung", "shape": "dot", "size": 4}, {"group": 1, "id": "darlegungs- und beweislast", "label": "darlegungs- und beweislast", "shape": "dot", "size": 4}, {"group": 7, "id": "betriebsexternen faktoren", "label": "betriebsexternen faktoren", "shape": "dot", "size": 1}, {"group": 7, "id": "betrieb des arbeitgebers", "label": "betrieb des arbeitgebers", "shape": "dot", "size": 1}, {"group": 1, "id": "einzelfallbezogene interessenabw\u00e4gung", "label": "einzelfallbezogene interessenabw\u00e4gung", "shape": "dot", "size": 4}, {"group": 1, "id": "ordentlichen k\u00fcndigung", "label": "ordentlichen k\u00fcndigung", "shape": "dot", "size": 3}, {"group": 1, "id": "personelle auswahlrichtlinien", "label": "personelle auswahlrichtlinien", "shape": "dot", "size": 4}, {"group": 1, "id": "seite 5", "label": "seite 5", "shape": "dot", "size": 4}, {"group": 1, "id": "seltenen ausnahmef\u00e4llen", "label": "seltenen ausnahmef\u00e4llen", "shape": "dot", "size": 4}, {"group": 1, "id": "sonstige gr\u00fcnde", "label": "sonstige gr\u00fcnde", "shape": "dot", "size": 3}, {"group": 1, "id": "versto\u00df", "label": "versto\u00df", "shape": "dot", "size": 4}, {"group": 3, "id": "betriebsst\u00e4tten", "label": "betriebsst\u00e4tten", "shape": "dot", "size": 1}, {"group": 3, "id": "arbeitgebers im ausland", "label": "arbeitgebers im ausland", "shape": "dot", "size": 1}, {"group": 1, "id": "beurteilung der sozialen rechtfertigung", "label": "beurteilung der sozialen rechtfertigung", "shape": "dot", "size": 2}, {"group": 1, "id": "existenz des unternehmens", "label": "existenz des unternehmens", "shape": "dot", "size": 3}, {"group": 1, "id": "wirtschaftlichen gr\u00fcnden", "label": "wirtschaftlichen gr\u00fcnden", "shape": "dot", "size": 3}, {"group": 1, "id": "gericht", "label": "gericht", "shape": "dot", "size": 2}, {"group": 8, "id": "innerbetriebliche gr\u00fcnde", "label": "innerbetriebliche gr\u00fcnde", "shape": "dot", "size": 1}, {"group": 8, "id": "weiterbesch\u00e4ftigung eines oder mehrerer arbeitnehmer", "label": "weiterbesch\u00e4ftigung eines oder mehrerer arbeitnehmer", "shape": "dot", "size": 1}, {"group": 1, "id": "nachteilen", "label": "nachteilen", "shape": "dot", "size": 3}, {"group": 1, "id": "vorteile", "label": "vorteile", "shape": "dot", "size": 3}, {"group": 1, "id": "wirksamkeit", "label": "wirksamkeit", "shape": "dot", "size": 2}, {"group": 1, "id": "zeitpunkt", "label": "zeitpunkt", "shape": "dot", "size": 3}, {"group": 1, "id": "zusammenhang mit der der gesch\u00e4ftsf\u00fchrung zugrunde liegenden unternehmenspolitik", "label": "zusammenhang mit der der gesch\u00e4ftsf\u00fchrung zugrunde liegenden unternehmenspolitik", "shape": "dot", "size": 3}, {"group": 5, "id": "sozialwidrige k\u00fcndigung", "label": "sozialwidrige k\u00fcndigung", "shape": "dot", "size": 1}, {"group": 5, "id": "berufung auf das fehlen einer", "label": "berufung auf das fehlen einer", "shape": "dot", "size": 1}, {"group": 1, "id": "konzernweite weiterbesch\u00e4ftigungspflicht", "label": "konzernweite weiterbesch\u00e4ftigungspflicht", "shape": "dot", "size": 1}]);
+                  edges = new vis.DataSet([{"from": "18.10.2012", "title": "contextual proximity", "to": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "width": 0.5}, {"from": "18.10.2012", "title": "contextual proximity", "to": "arbeitgeber", "width": 0.5}, {"from": "18.10.2012", "title": "contextual proximity", "to": "arbeitnehmer", "width": 0.5}, {"from": "18.10.2012", "title": "contextual proximity", "to": "leiharbeitnehmer", "width": 1.0}, {"from": "18.10.2012", "title": "In seinem Urteil vom 18.10.2012,contextual proximity", "to": "urteil", "width": 1.5}, {"from": "20.11.2023", "title": "contextual proximity", "to": "betriebsrat", "width": 0.5}, {"from": "20.11.2023", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "20.11.2023", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "20.11.2023", "title": "Stand Produktdatenbank: 20.11.2023", "to": "produktdatenbank", "width": 1.0}, {"from": "27.11.2023", "title": "contextual proximity", "to": "betriebsrat", "width": 0.5}, {"from": "27.11.2023", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "27.11.2023", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "27.11.2023", "title": "Ausdruck vom 27.11.2023", "to": "ausdruck", "width": 1.0}, {"from": "3-wochen-frist des \u00a7 4 kschg", "title": "contextual proximity", "to": "arbeitnehmer", "width": 0.75}, {"from": "3-wochen-frist des \u00a7 4 kschg", "title": "Die \u00dcberlegungsfrist f\u00fcr eine betriebsbedingte K\u00fcndigung betr\u00e4gt l\u00e4ngstens 3 Wochen gem\u00e4\u00df \u00a7 4 KSchG.,contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 1.5}, {"from": "ablauf der k\u00fcndigungsfrist", "title": "contextual proximity", "to": "arbeitgeber", "width": 0.5}, {"from": "ablauf der k\u00fcndigungsfrist", "title": "Als frei gelten auch solche Arbeitspl\u00e4tze, die in absehbarer Zeit nach Ablauf der K\u00fcndigungsfrist frei werden", "to": "freie arbeitspl\u00e4tze", "width": 1.0}, {"from": "abschluss des interessenausgleichs", "title": "contextual proximity", "to": "arbeitnehmer", "width": 0.75}, {"from": "abschluss des interessenausgleichs", "title": "contextual proximity", "to": "dringenden betrieblichen gr\u00fcnden", "width": 0.5}, {"from": "abschluss des interessenausgleichs", "title": "sich nach Abschluss des Interessenausgleichs wesentlich ge\u00e4ndert", "to": "sachlage", "width": 1.0}, {"from": "absoluten grund", "title": "contextual proximity", "to": "betriebsrat", "width": 0.5}, {"from": "absoluten grund", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "absoluten grund", "title": "Betriebsrat widersprochen stellt dies einen absoluten Grund f\u00fcr die Sozialwidrigkeit dar,contextual proximity", "to": "sozialwidrigkeit", "width": 1.75}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "arbeitgeber", "width": 1.0}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "arbeitnehmer", "width": 1.0}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "arbeitspl\u00e4tze", "width": 0.5}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "bag", "width": 0.5}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "bereich", "width": 0.5}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "besch\u00e4ftigung", "width": 0.5}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "clearingverfahren", "width": 0.5}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "freie arbeitspl\u00e4tze", "width": 0.5}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "freier arbeitsplatz", "width": 0.5}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "konzerninternes stellenbesetzungsverfahren", "width": 0.5}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "leiharbeitnehmer", "width": 2.0}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "pflicht des arbeitgebers", "width": 0.5}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "urteil", "width": 1.0}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 0.5}, {"from": "alternative besch\u00e4ftigungsm\u00f6glichkeit", "title": "contextual proximity", "to": "weitere besch\u00e4ftigung", "width": 0.5}, {"from": "anderen ma\u00dfnahmen", "title": "andere Ma\u00dfnahmen waren nicht m\u00f6glich oder zumutbar,contextual proximity", "to": "arbeitgeber", "width": 2.75}, {"from": "anderen ma\u00dfnahmen", "title": "contextual proximity", "to": "arbeitnehmer", "width": 0.5}, {"from": "anforderungen an den stelleninhaber", "title": "contextual proximity", "to": "arbeitgeber", "width": 0.5}, {"from": "anforderungen an den stelleninhaber", "title": "contextual proximity", "to": "arbeitnehmer", "width": 0.5}, {"from": "anforderungen an den stelleninhaber", "title": "Die unternehmerische Entscheidung bestimmt, welche Anforderungen an den Stelleninhaber gestellt werden.", "to": "unternehmerische entscheidung", "width": 1.0}, {"from": "anforderungsprofil", "title": "contextual proximity", "to": "arbeitgeber", "width": 0.5}, {"from": "anforderungsprofil", "title": "contextual proximity", "to": "arbeitnehmer", "width": 0.5}, {"from": "anforderungsprofil", "title": "Die freie unternehmerische Entscheidung kann genutzt werden, um das Anforderungsprofil f\u00fcr einen eingerichteten Arbeitsplatz festzulegen.", "to": "freie unternehmerische entscheidung", "width": 1.0}, {"from": "angebotene arbeitsplatz", "title": "Ob der angebotene Arbeitsplatz zumutbar ist, ist die alleinige Entscheidung des Arbeitnehmers.", "to": "arbeitnehmer", "width": 1.0}, {"from": "angebotene arbeitsplatz", "title": "contextual proximity", "to": "ausspruch einer betriebsbedingten k\u00fcndigung", "width": 0.5}, {"from": "angebotene arbeitsplatz", "title": "contextual proximity", "to": "verh\u00e4ltnisse im besch\u00e4ftigungsbetrieb", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "arbeitnehmer", "width": 11.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "arbeitsaufgabe", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "arbeitsgerichte", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "arbeitsgerichten", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "arbeitsplatz", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "arbeitspl\u00e4tze", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "arbeitssachen", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "ausspruch der k\u00fcndigung liegende umst\u00e4nde", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "au\u00dfer- oder innerbetriebliche umst\u00e4nde", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "bag", "width": 2.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "bereich", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "berufung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "ber\u00fccksichtigung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "besch\u00e4ftigung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "besch\u00e4ftigungsbed\u00fcrfnis", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "besch\u00e4ftigungsm\u00f6glichkeiten", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "besch\u00e4ftigungsm\u00f6glichkeiten von arbeitnehmern", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "besondere qualifikation", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "betriebliche erfordernisse", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "betrieblichen notwendigkeit", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "betriebsbedingte beendigungsk\u00fcndigung", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 1.25}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigungen", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "betriebsrat", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "beweislastregel", "width": 1.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "bezug zur organisation der auszuf\u00fchrenden arbeiten", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "bindende unternehmerentscheidung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "clearingverfahren", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "des inhalts", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "dringende betriebliche erfordernissen", "width": 1.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "dringende erfordernis", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "dringenden betrieblichen gr\u00fcnden", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "dringendes betriebliches erfordernis", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "einarbeitungszeiten", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "entscheidung des arbeitgebers", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "frei", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "freie arbeitsplatz", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "freie arbeitspl\u00e4tze", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "freie unternehmerische entscheidung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "freien unternehmerischen entscheidung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "freier arbeitsplatz", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "fremdvergabe", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "f\u00e4higkeiten des arbeitnehmers", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "gerichte", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "gerichte f\u00fcr arbeitssachen", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "gerichtliche missbrauchskontrolle", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "gerichtliche pr\u00fcfung", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "gewinnverfall", "width": 1.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "grundsatz der freiheit der unternehmerentscheidung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "innerbetrieblichen strukturma\u00dfnahmen", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "konkrete arbeitsaufgabe", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "konzerninternes stellenbesetzungsverfahren", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 1.25}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "k\u00fcndigungsfrist", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "k\u00fcndigungsschutzprozess", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "k\u00fcndigungstatsachen", "width": 1.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "leiharbeitnehmer", "width": 2.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "leiharbeitskr\u00e4fte", "width": 0.75}, {"from": "arbeitgeber", "title": "Zu den weniger belastenden Ma\u00dfnahmen, die der Arbeitgeber zur Vermeidung von K\u00fcndigungen zu ergreifen hat, kann auch die Aussch\u00f6pfung einer Regelung zur Flexibilisierung der Jahresarbeitszeit z\u00e4hlen,contextual proximity", "to": "ma\u00dfnahmen", "width": 1.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "mitbestimmungsrecht", "width": 0.5}, {"from": "arbeitgeber", "title": "Wenn der Arbeitgeber es unterl\u00e4sst, dem Arbeitnehmer vor Ausspruch einer Beendigungsk\u00fcndigung ein m\u00f6gliches und zumutbares \u00c4nderungsangebot zu unterbreiten, dann ist die K\u00fcndigung sozial ungerechtfertigt.", "to": "m\u00f6gliches und zumutbares \u00e4nderungsangebot", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "niedriger qualifizierter arbeitsplatz", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "organisatorischer, technischer und wirtschaftlicher unternehmerentscheidungen", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "personal office platin", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "pers\u00f6nliche merkmale", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "pflicht des arbeitgebers", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "qualifikationsmerkmale", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "rechtsmissbrauchs", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "sachgerechte erledigung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "seite 2", "width": 0.5}, {"from": "arbeitgeber", "title": "Arbeitgeber l\u00e4sst T\u00e4tigkeiten durch selbstst\u00e4ndige Unternehmer ausf\u00fchren", "to": "selbstst\u00e4ndige unternehmer", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "sozial ungerechtfertigt", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "soziale auswahl", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "stammarbeitnehmer", "width": 1.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "umsatzr\u00fcckgang", "width": 1.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "umschulungs- oder fortbildungsma\u00dfnahmen", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 1.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 2.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "unternehmerisches ermessen", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "unwirksame k\u00fcndigung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "urteil", "width": 1.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "vakante stelle", "width": 0.5}, {"from": "arbeitgeber", "title": "Ein vergleichbarer Arbeitsplatz liegt vor, wenn der Arbeitgeber den Arbeitnehmer einseitig, ohne \u00c4nderung seines Arbeitsvertrags, im Betrieb oder in einem anderen Betrieb des Unternehmens weiterbesch\u00e4ftigen kann.,contextual proximity", "to": "vergleichbarer arbeitsplatz", "width": 1.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "vertraglich eingegangenen bindungen", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "vertragsgem\u00e4\u00df geschuldeten t\u00e4tigkeit", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "voraussetzungen", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "weiterarbeit auf anderen freien arbeitspl\u00e4tzen", "width": 1.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigung", "width": 1.25}, {"from": "arbeitgeber", "title": "Der Arbeitgeber ist verpflichtet, dem Arbeitnehmer eine Weiterbesch\u00e4ftigungsm\u00f6glichkeit anzubieten, wenn keine Gr\u00fcnde dagegen sprechen.,contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 2.0}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "weitere besch\u00e4ftigung", "width": 0.5}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "weniger belastende mittel", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 satz 4 kschg", "width": 1.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "\u00e4nderungs- und beendigungsk\u00fcndigung", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "\u00e4nderungsangebot des arbeitgebers", "width": 0.75}, {"from": "arbeitgeber", "title": "contextual proximity", "to": "\u00fcberbr\u00fcckung dieses zeitraums", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "arbeitsaufgabe", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "arbeitsgerichte", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "arbeitsgerichten", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "arbeitspl\u00e4tze", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "ausspruch einer betriebsbedingten k\u00fcndigung", "width": 0.5}, {"from": "arbeitnehmer", "title": "BAG: Arbeitnehmer muss darlegen, dass Kurzarbeit m\u00f6glich gewesen w\u00e4re,contextual proximity", "to": "bag", "width": 2.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "beendigungsk\u00fcndigung", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "bereich", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "berufung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "besch\u00e4ftigung", "width": 0.5}, {"from": "arbeitnehmer", "title": "Besch\u00e4ftigungsbed\u00fcrfnis entf\u00e4llt f\u00fcr Arbeitnehmer,contextual proximity", "to": "besch\u00e4ftigungsbed\u00fcrfnis", "width": 2.25}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "besondere qualifikation", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "betriebliche erfordernisse", "width": 1.25}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "betriebliches erfordernis", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "betriebsbedingte beendigungsk\u00fcndigung", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "betriebsbedingte gr\u00fcnde", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 2.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigungen", "width": 0.5}, {"from": "arbeitnehmer", "title": "Wenn der Arbeitnehmer unter Ber\u00fccksichtigung der \u00dcberlegungsfrist, die der K\u00fcndigungsfrist entspricht, das Angebot endg\u00fcltig und vorbehaltlos ablehnt, f\u00fchrt dies zur betriebsbedingten Beendigungsk\u00fcndigung des Arbeitgebers.,contextual proximity", "to": "betriebsbedingten beendigungsk\u00fcndigung des arbeitgebers", "width": 1.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "betriebsbedingter k\u00fcndigungsgrund", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "betriebsrat", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "beweislastregel", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "bezug zur organisation der auszuf\u00fchrenden arbeiten", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "bindende unternehmerentscheidung", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "clearingverfahren", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "dringende betriebliche erfordernissen", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "dringenden betrieblichen gr\u00fcnden", "width": 1.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "dringendes betriebliches erfordernis", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "dringlichkeit", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "durchf\u00fchrung der beweisaufnahme", "width": 0.75}, {"from": "arbeitnehmer", "title": "Einarbeitungszeiten, die der Arbeitnehmer ben\u00f6tigt, schaden nicht.,contextual proximity", "to": "einarbeitungszeiten", "width": 1.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "entscheidung des arbeitgebers", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "freie arbeitspl\u00e4tze", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "freie unternehmerische entscheidung", "width": 0.5}, {"from": "arbeitnehmer", "title": "nicht m\u00f6glich gewesen ist,contextual proximity", "to": "freien arbeitspl\u00e4tzen", "width": 1.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "freier arbeitsplatz", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "fremdvergabe", "width": 1.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "gemachten entsprechenden vorschlag", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "gerichtliche pr\u00fcfung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "gewinnverfall", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "insolvenz", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "insolvenzverwalter", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "interessenausgleich", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "konkrete arbeitsaufgabe", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "konzerninternes stellenbesetzungsverfahren", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 2.25}, {"from": "arbeitnehmer", "title": "Bei einer beschlossenen und tats\u00e4chlich durchgef\u00fchrten Unternehmerentscheidung besteht eine Vermutung daf\u00fcr, dass sie aus sachlichen Gr\u00fcnden erfolgte, mit der Folge, dass der Arbeitnehmer im K\u00fcndigungsschutzprozess die Umst\u00e4nde darzulegen und bei Bestreiten des Arbeitgebers zu beweisen hat, aus denen sich ergibt, dass die getroffenen innerbetrieblichen Strukturma\u00dfnahmen offenbar unsachlich, unvern\u00fcnftig oder willk\u00fcrlich sind.", "to": "k\u00fcndigungsschutzprozess", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "k\u00fcndigungstatsachen", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "leiharbeitnehmer", "width": 2.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "leiharbeitskr\u00e4fte", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "ma\u00dfnahme", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "mitbestimmungsrecht", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "m\u00f6gliches und zumutbares \u00e4nderungsangebot", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 1.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "personal office platin", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "pers\u00f6nliche merkmale", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "pflicht des arbeitgebers", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "qualifikationsmerkmale", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "rechtsmissbrauchs", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "reinigungsarbeiten", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "reinigungskraft", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "sachgerechte erledigung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "sachlage", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "sachverhalt", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "sachvortrag", "width": 0.75}, {"from": "arbeitnehmer", "title": "Arbeitnehmer aufgrund schwerwiegender pers\u00f6nlicher Umst\u00e4nde besonders schutzbed\u00fcrftig", "to": "schwerwiegender pers\u00f6nlicher umst\u00e4nde", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "selbstst\u00e4ndige unternehmer", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "sonderregelung", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "sozial ungerechtfertigt", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "soziale auswahl", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 1.25}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "stammarbeitnehmer", "width": 1.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "t\u00e4tigkeiten", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "umsatzr\u00fcckgang", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "umschulungs- oder fortbildungsma\u00dfnahmen", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "unternehmen", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 1.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "unternehmerisches ermessen", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "unwirksame k\u00fcndigung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "urteil", "width": 1.25}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "vakante stelle", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "vergleichbarer arbeitsplatz", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "verh\u00e4ltnisse im besch\u00e4ftigungsbetrieb", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "vertraglich eingegangene bindungen", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "voraussetzungen", "width": 1.25}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "vorherige verhandlungen", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "vortrag", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "weiterarbeit auf anderen freien arbeitspl\u00e4tzen", "width": 0.5}, {"from": "arbeitnehmer", "title": "Es muss gepr\u00fcft werden, f\u00fcr welche Arbeitnehmer oder Arbeitnehmergruppen das Bed\u00fcrfnis zur Weiterbesch\u00e4ftigung entf\u00e4llt.,contextual proximity", "to": "weiterbesch\u00e4ftigung", "width": 3.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 1.25}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "weitere besch\u00e4ftigung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "zweifel", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 satz 4 kschg", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "\u00e4nderungs- und beendigungsk\u00fcndigung", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "\u00e4nderungsangebot des arbeitgebers", "width": 0.75}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 1.0}, {"from": "arbeitsaufgabe", "title": "F\u00fcr die sachgerechte Erledigung einer Arbeitsaufgabe k\u00f6nnen bestimmte pers\u00f6nliche oder sachliche Voraussetzungen erforderlich sein.", "to": "sachgerechte erledigung", "width": 1.0}, {"from": "arbeitsgerichte", "title": "Die Entscheidung des Arbeitgebers, bestimmte T\u00e4tigkeiten nur von Arbeitnehmern mit besonderer Qualifikation ausf\u00fchren zu lassen, wird von den Arbeitsgerichten grunds\u00e4tzlich respektiert.", "to": "entscheidung des arbeitgebers", "width": 1.0}, {"from": "arbeitsgerichte", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.75}, {"from": "arbeitsgerichte", "title": "von den Arbeitsgerichten nicht zu pr\u00fcfen ist", "to": "pr\u00fcfen", "width": 1.0}, {"from": "arbeitsgerichte", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "arbeitsgerichte", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 0.5}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "besch\u00e4ftigungsm\u00f6glichkeiten von arbeitnehmern", "width": 0.5}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "des inhalts", "width": 0.5}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "gerichte f\u00fcr arbeitssachen", "width": 0.5}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "gerichtliche missbrauchskontrolle", "width": 0.5}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "gerichtliche pr\u00fcfung", "width": 1.0}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "grundsatz der freiheit der unternehmerentscheidung", "width": 0.5}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "innerbetrieblichen strukturma\u00dfnahmen", "width": 0.5}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "k\u00fcndigungsschutzprozess", "width": 0.5}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "organisatorischer, technischer und wirtschaftlicher unternehmerentscheidungen", "width": 0.5}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "personal office platin", "width": 0.5}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "seite 2", "width": 0.5}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 1.0}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 1.0}, {"from": "arbeitsgerichten", "title": "contextual proximity", "to": "unternehmerisches ermessen", "width": 0.5}, {"from": "arbeitsplatz", "title": "Als frei sind solche Arbeitspl\u00e4tze anzusehen, die zum Zeitpunkt des Zugangs der K\u00fcndigung unbesetzt sind. Dem steht es gleich, wenn ein Arbeitsplatz bis zum Ablauf der K\u00fcndigungsfrist frei wird.", "to": "k\u00fcndigungsfrist", "width": 1.0}, {"from": "arbeitspl\u00e4tze", "title": "freie Arbeitspl\u00e4tze im Ausland ausnahmsweise doch zur Unwirksamkeit der K\u00fcndigung f\u00fchren, wenn der ganze Betrieb ins Ausland verlagert wird oder wenn die Wegstrecke zwischen bisherigem Einsatzort und ausl\u00e4ndischem Betrieb kurz ist", "to": "ausland", "width": 1.0}, {"from": "arbeitspl\u00e4tze", "title": "contextual proximity", "to": "bag", "width": 0.5}, {"from": "arbeitspl\u00e4tze", "title": "contextual proximity", "to": "freie arbeitspl\u00e4tze", "width": 0.5}, {"from": "arbeitspl\u00e4tze", "title": "contextual proximity", "to": "leiharbeitnehmer", "width": 1.0}, {"from": "arbeitspl\u00e4tze", "title": "contextual proximity", "to": "urteil", "width": 0.75}, {"from": "arbeitspl\u00e4tze", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 0.5}, {"from": "arbeitspl\u00e4tze", "title": "Als frei sind solche Arbeitspl\u00e4tze anzusehen, die zum Zeitpunkt des Zugangs der K\u00fcndigung unbesetzt sind. Dem steht es gleich, wenn ein Arbeitsplatz bis zum Ablauf der K\u00fcndigungsfrist frei wird.", "to": "frei", "width": 1.0}, {"from": "arbeitssachen", "title": "Die grunds\u00e4tzliche Freiheit der Unternehmerentscheidung erkennen auch die Gerichte f\u00fcr Arbeitssachen", "to": "gerichte", "width": 1.0}, {"from": "ausdruck", "title": "contextual proximity", "to": "betriebsrat", "width": 0.5}, {"from": "ausdruck", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "ausdruck", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "ausspruch der k\u00fcndigung liegende umst\u00e4nde", "title": "Auch vor Ausspruch der K\u00fcndigung liegende Umst\u00e4nde k\u00f6nnen Ber\u00fccksichtigung finden.", "to": "ber\u00fccksichtigung", "width": 1.0}, {"from": "ausspruch einer betriebsbedingten k\u00fcndigung", "title": "contextual proximity", "to": "bisher vertragsgem\u00e4\u00df geschuldete t\u00e4tigkeit", "width": 0.5}, {"from": "ausspruch einer betriebsbedingten k\u00fcndigung", "title": "contextual proximity", "to": "freien arbeitspl\u00e4tze im unternehmen", "width": 0.5}, {"from": "ausspruch einer betriebsbedingten k\u00fcndigung", "title": "contextual proximity", "to": "freier arbeitsplatz zu ge\u00e4nderten (schlechteren) arbeitsbedingungen", "width": 0.5}, {"from": "ausspruch einer betriebsbedingten k\u00fcndigung", "title": "contextual proximity", "to": "freier vergleichbarer (gleichwertiger) arbeitsplatz", "width": 0.5}, {"from": "ausspruch einer betriebsbedingten k\u00fcndigung", "title": "contextual proximity", "to": "innerbetriebliche ma\u00dfnahmen", "width": 0.5}, {"from": "ausspruch einer betriebsbedingten k\u00fcndigung", "title": "Vor Ausspruch einer betriebsbedingten K\u00fcndigung muss der Arbeitgeber von sich aus dem Arbeitnehmer eine beiden Parteien zumutbare Weiterbesch\u00e4ftigung auf einem freien Arbeitsplatz auch zu ge\u00e4nderten Arbeitsbedingungen anbieten.,contextual proximity", "to": "verh\u00e4ltnisse im besch\u00e4ftigungsbetrieb", "width": 2.0}, {"from": "ausspruch einer betriebsbedingten k\u00fcndigung", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 0.5}, {"from": "auswahlrichtlinien", "title": "contextual proximity", "to": "betriebsrat", "width": 0.5}, {"from": "auswahlrichtlinien", "title": "Auswahlrichtlinien den gesetzlichen Grunds\u00e4tzen \u00fcber die soziale Auswahl entsprechen", "to": "gesetzlichen grunds\u00e4tzen", "width": 1.0}, {"from": "auswahlrichtlinien", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "auswahlrichtlinien", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "bag", "title": "contextual proximity", "to": "freie arbeitspl\u00e4tze", "width": 0.5}, {"from": "bag", "title": "nach dem BAG grunds\u00e4tzlich der freien unternehmerischen Entscheidung unterliegt, das Anforderungsprofil f\u00fcr einen", "to": "freien unternehmerischen entscheidung", "width": 1.0}, {"from": "bag", "title": "contextual proximity", "to": "leiharbeitnehmer", "width": 1.0}, {"from": "bag", "title": "hat das BAG deutlich gemacht,contextual proximity", "to": "urteil", "width": 1.5}, {"from": "beabsichtigten k\u00fcndigung", "title": "Betriebsrat frist- und ordnungsgem\u00e4\u00df widersprochen hat der beabsichtigten K\u00fcndigung,contextual proximity", "to": "betriebsrat", "width": 1.5}, {"from": "beabsichtigten k\u00fcndigung", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "beabsichtigten k\u00fcndigung", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "beendigungsk\u00fcndigung", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 0.5}, {"from": "beendigungsk\u00fcndigung", "title": "Der Arbeitgeber kann eine \u00c4nderungsk\u00fcndigung aussprechen, indem er Angebot und K\u00fcndigung miteinander verbindet.", "to": "\u00e4nderungsk\u00fcndigung", "width": 1.0}, {"from": "bereich", "title": "contextual proximity", "to": "leiharbeitnehmer", "width": 1.0}, {"from": "bereich", "title": "contextual proximity", "to": "urteil", "width": 0.5}, {"from": "besch\u00e4ftigung", "title": "contextual proximity", "to": "leiharbeitnehmer", "width": 1.0}, {"from": "besch\u00e4ftigung", "title": "contextual proximity", "to": "urteil", "width": 0.5}, {"from": "besch\u00e4ftigungsbedarfs", "title": "Entf\u00e4llt das Bed\u00fcrfnis zur Weiterbesch\u00e4ftigung eines oder mehrerer Arbeitnehmer", "to": "\u00fcberhang an arbeitskr\u00e4ften", "width": 1.0}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "betriebliche erfordernisse", "width": 0.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "betriebliches erfordernis", "width": 0.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 0.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "Betriebsbedingter K\u00fcndigungsgrund liegt vor, wenn das Besch\u00e4ftigungsbed\u00fcrfnis entf\u00e4llt,contextual proximity", "to": "betriebsbedingter k\u00fcndigungsgrund", "width": 1.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "dringendes betriebliches erfordernis", "width": 0.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "dringlichkeit", "width": 0.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "fremdvergabe", "width": 1.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 1.25}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "ma\u00dfnahme", "width": 0.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "reinigungsarbeiten", "width": 0.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "reinigungskraft", "width": 0.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "selbstst\u00e4ndige unternehmer", "width": 0.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "t\u00e4tigkeiten", "width": 0.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 0.75}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "contextual proximity", "to": "vertraglich eingegangene bindungen", "width": 0.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnis", "title": "das Besch\u00e4ftigungsbed\u00fcrfnis f\u00fcr die Weiterbesch\u00e4ftigung eines oder mehrerer Arbeitnehmer entf\u00e4llt", "to": "weiterbesch\u00e4ftigung", "width": 1.0}, {"from": "besch\u00e4ftigungsbed\u00fcrfnisses", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.75}, {"from": "besch\u00e4ftigungsbed\u00fcrfnisses", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "besch\u00e4ftigungsbed\u00fcrfnisses", "title": "Besch\u00e4ftigungsbed\u00fcrfnisses zugrundeliegende unternehmerische Entscheidung", "to": "unternehmerische entscheidung", "width": 1.0}, {"from": "besch\u00e4ftigungsbetrieb", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.75}, {"from": "besch\u00e4ftigungsbetrieb", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "besch\u00e4ftigungsbetrieb", "title": "zum vorgenannten Zeitpunkt vorliegenden Verh\u00e4ltnisse im Besch\u00e4ftigungsbetrieb ma\u00dfgeblich", "to": "verh\u00e4ltnisse", "width": 1.0}, {"from": "besch\u00e4ftigungsbezogen", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.75}, {"from": "besch\u00e4ftigungsbezogen", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "besch\u00e4ftigungsbezogen", "title": "der allgemeine K\u00fcndigungsschutz grunds\u00e4tzlich betriebsbezogen ausgestaltet ist", "to": "k\u00fcndigungsschutz", "width": 1.0}, {"from": "besch\u00e4ftigungsm\u00f6glichkeiten von arbeitnehmern", "title": "contextual proximity", "to": "gerichtliche pr\u00fcfung", "width": 0.5}, {"from": "besch\u00e4ftigungsm\u00f6glichkeiten von arbeitnehmern", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "besch\u00e4ftigungsm\u00f6glichkeiten von arbeitnehmern", "title": "des Inhalts, ob die Unternehmerentscheidung offensichtlich unsachlich, unvern\u00fcnftig oder willk\u00fcrlich ist.,contextual proximity", "to": "unternehmerische entscheidung", "width": 1.5}, {"from": "betriebliche erfordernisse", "title": "dringende betriebliche Erfordernisse", "to": "arbeitgeberseitige k\u00fcndigungen", "width": 1.0}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "definition", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 1.0}, {"from": "betriebliche erfordernisse", "title": "Betriebliche Erfordernisse m\u00fcssen dringend sein", "to": "dringlichkeit", "width": 1.0}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "fallgruppen herauszuarbeiten", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "fremdvergabe", "width": 0.75}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "fristgerecht erhoben", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "innerhalb von 3 wochen nach zugang der k\u00fcndigung", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "klage", "width": 1.0}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "konkreten bezug zu dem betrieb des arbeitgebers", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.75}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "k\u00fcndigungsschutzklage", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "personalbedarf", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "sozial ungerechtfertigt", "width": 0.75}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "sozial zu rechtfertigen", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "versp\u00e4tet eingereichte", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 satz 1 kschg", "width": 0.5}, {"from": "betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "betriebsrat", "width": 0.5}, {"from": "betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "betrieblichen gr\u00fcnden", "title": "Sozialwidrigkeit einer aus betrieblichen Gr\u00fcnden erkl\u00e4rten K\u00fcndigung,contextual proximity", "to": "sozialwidrigkeit", "width": 1.75}, {"from": "betrieblichen notwendigkeit", "title": "Daran fehlt es, wenn der betrieblichen Notwendigkeit durch weniger belastende Mittel auf technischem, organisatorischem oder wirtschaftlichem Gebiet entsprochen werden kann", "to": "weniger belastende mittel", "width": 1.0}, {"from": "betriebliches erfordernis", "title": "contextual proximity", "to": "fremdvergabe", "width": 0.75}, {"from": "betriebliches erfordernis", "title": "Betriebliches Erfordernis muss durch unternehmerische Entscheidung gest\u00fctzt werden", "to": "unternehmerische entscheidung", "width": 1.0}, {"from": "betriebsbedingt", "title": "contextual proximity", "to": "betriebsrat", "width": 0.5}, {"from": "betriebsbedingt", "title": "ordentliche K\u00fcndigung wegen einer bindenden Unternehmerentscheidung ist betriebsbedingt,contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 1.5}, {"from": "betriebsbedingt", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "betriebsbedingte beendigungsk\u00fcndigung", "title": "contextual proximity", "to": "stammarbeitnehmer", "width": 0.5}, {"from": "betriebsbedingte gr\u00fcnde", "title": "nicht mit Erfolg eine ordentliche K\u00fcndigung st\u00fctzen", "to": "allgemeine arbeitsmarkt-, besch\u00e4ftigungs- oder sozialpolitische erw\u00e4gungen", "width": 1.0}, {"from": "betriebsbedingte gr\u00fcnde", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 0.5}, {"from": "betriebsbedingte gr\u00fcnde", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "betriebsbedingten beendigungsk\u00fcndigung des arbeitgebers", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "betriebsrat", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "fremdvergabe", "width": 0.75}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "gemachten entsprechenden vorschlag", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "m\u00f6gliches und zumutbares \u00e4nderungsangebot", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 1.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "Ordentlich unk\u00fcndbare Reinigungskraft kann au\u00dferordentlich betriebsbedingt gek\u00fcndigt werden", "to": "reinigungskraft", "width": 1.0}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 1.25}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "unternehmen", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "voraussetzungen", "width": 1.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "vorherige verhandlungen", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigung", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigungen", "title": "Auch bei betriebsbedingten K\u00fcndigungen ist eine einzelfallbezogene Interessenabw\u00e4gung erforderlich, um die Interessen des Arbeitnehmers und des Arbeitgebers gegeneinander abzuw\u00e4gen.", "to": "interessenabw\u00e4gung", "width": 1.0}, {"from": "betriebsbedingten k\u00fcndigung", "title": "contextual proximity", "to": "betriebsrat", "width": 0.5}, {"from": "betriebsbedingten k\u00fcndigung", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "betriebsbedingten k\u00fcndigung", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "betriebsbedingten k\u00fcndigung", "title": "Bei einer betriebsbedingten K\u00fcndigung besteht eine abgestufte Verteilung der Darlegungs- und Beweislast zwischen Arbeitgeber und Arbeitnehmer", "to": "darlegungs- und beweislast", "width": 1.0}, {"from": "betriebsbedingter k\u00fcndigungsgrund", "title": "contextual proximity", "to": "fremdvergabe", "width": 0.75}, {"from": "betriebsexternen faktoren", "title": "unmittelbar auswirken", "to": "betrieb des arbeitgebers", "width": 1.0}, {"from": "betriebsrat", "title": "contextual proximity", "to": "bindende unternehmerentscheidung", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "darlegungs- und beweislast", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "einzelfallbezogene interessenabw\u00e4gung", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "gesetzlichen grunds\u00e4tzen", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 1.0}, {"from": "betriebsrat", "title": "contextual proximity", "to": "ordentlichen k\u00fcndigung", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "personal office platin", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "personelle auswahlrichtlinien", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "produktdatenbank", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "schwerwiegender pers\u00f6nlicher umst\u00e4nde", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "seite 5", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "seltenen ausnahmef\u00e4llen", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "sonstige gr\u00fcnde", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 1.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "versto\u00df", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "voraussetzungen", "width": 0.5}, {"from": "betriebsrat", "title": "Es besteht kein Mitbestimmungsrecht des Betriebsrats bei der Festlegung des Anforderungsprofils f\u00fcr einen Arbeitsplatz.", "to": "mitbestimmungsrecht", "width": 1.0}, {"from": "betriebsst\u00e4tten", "title": "es auf Betriebsst\u00e4tten des Arbeitgebers im Ausland im Allgemeinen nicht ankommt", "to": "arbeitgebers im ausland", "width": 1.0}, {"from": "beurteilung der sozialen rechtfertigung", "title": "auch bei einer betriebsbedingten K\u00fcndigung der Zugang der K\u00fcndigung der ma\u00dfgebliche Zeitpunkt f\u00fcr die Beurteilung der sozialen Rechtfertigung.,contextual proximity", "to": "k\u00fcndigung", "width": 1.75}, {"from": "beurteilung der sozialen rechtfertigung", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "beweislastregel", "title": "Beweislastregel enthalten in \u00a7 1 Abs. 2 Satz 4 KSchG", "to": "\u00a7 1 abs. 2 satz 4 kschg", "width": 1.0}, {"from": "bezug zur organisation der auszuf\u00fchrenden arbeiten", "title": "Die Qualifikationsmerkmale sollten einen nachvollziehbaren Bezug zur Organisation der auszuf\u00fchrenden Arbeiten haben.", "to": "qualifikationsmerkmale", "width": 1.0}, {"from": "bindende unternehmerentscheidung", "title": "Eine ordentliche K\u00fcndigung aufgrund einer bindenden Unternehmerentscheidung...,ordentliche K\u00fcndigung wegen einer bindenden Unternehmerentscheidung,contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 2.75}, {"from": "bindende unternehmerentscheidung", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "bisher vertragsgem\u00e4\u00df geschuldete t\u00e4tigkeit", "title": "contextual proximity", "to": "verh\u00e4ltnisse im besch\u00e4ftigungsbetrieb", "width": 0.5}, {"from": "bisher vertragsgem\u00e4\u00df geschuldete t\u00e4tigkeit", "title": "Daher sind grunds\u00e4tzlich alle freien Arbeitspl\u00e4tze im Unternehmen auf gleicher oder niedrigerer Ebene im Vergleich zur bisher vertragsgem\u00e4\u00df geschuldeten T\u00e4tigkeit anzubieten.", "to": "freien arbeitspl\u00e4tze im unternehmen", "width": 1.0}, {"from": "clearingverfahren", "title": "contextual proximity", "to": "konzerninternes stellenbesetzungsverfahren", "width": 0.5}, {"from": "clearingverfahren", "title": "contextual proximity", "to": "leiharbeitnehmer", "width": 1.0}, {"from": "clearingverfahren", "title": "contextual proximity", "to": "urteil", "width": 0.5}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "definition", "title": "Das Gesetz enth\u00e4lt keine Definition der \u0027dringenden betrieblichen Erfordernisse\u0027,contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 1.5}, {"from": "definition", "title": "contextual proximity", "to": "klage", "width": 0.5}, {"from": "des inhalts", "title": "contextual proximity", "to": "gerichtliche pr\u00fcfung", "width": 0.5}, {"from": "des inhalts", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "des inhalts", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "fallgruppen herauszuarbeiten", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "fristgerecht erhoben", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "innerhalb von 3 wochen nach zugang der k\u00fcndigung", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "klage", "width": 1.0}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "konkreten bezug zu dem betrieb des arbeitgebers", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "k\u00fcndigungsschutzklage", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "personalbedarf", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "sozial ungerechtfertigt", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "sozial zu rechtfertigen", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "versp\u00e4tet eingereichte", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 satz 1 kschg", "width": 0.5}, {"from": "dringenden betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "durchf\u00fchrung der beweisaufnahme", "width": 0.5}, {"from": "dringenden betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "freien arbeitspl\u00e4tzen", "width": 0.5}, {"from": "dringenden betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "insolvenz", "width": 0.5}, {"from": "dringenden betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "insolvenzverwalter", "width": 0.5}, {"from": "dringenden betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "interessenausgleich", "width": 0.5}, {"from": "dringenden betrieblichen gr\u00fcnden", "title": "gilt die Vermutung, dass die K\u00fcndigung aus dringenden betrieblichen Gr\u00fcnden bedingt war, nicht mehr,contextual proximity", "to": "k\u00fcndigung", "width": 1.5}, {"from": "dringenden betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "sachlage", "width": 0.5}, {"from": "dringenden betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "sachverhalt", "width": 0.5}, {"from": "dringenden betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "sachvortrag", "width": 0.5}, {"from": "dringenden betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "sonderregelung", "width": 0.5}, {"from": "dringenden betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "vortrag", "width": 0.5}, {"from": "dringenden betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigung", "width": 0.5}, {"from": "dringenden betrieblichen gr\u00fcnden", "title": "contextual proximity", "to": "zweifel", "width": 0.5}, {"from": "dringendes betriebliches erfordernis", "title": "contextual proximity", "to": "fremdvergabe", "width": 0.75}, {"from": "dringendes betriebliches erfordernis", "title": "Dringendes betriebliches Erfordernis kann nicht durch unber\u00fccksichtigte vertragliche Bindungen gest\u00fctzt werden", "to": "vertraglich eingegangene bindungen", "width": 1.0}, {"from": "dringendes betriebliches erfordernis", "title": "Die dringenden betrieblichen Erfordernisse m\u00fcssen eine K\u00fcndigung unvermeidbar machen", "to": "vertraglich eingegangenen bindungen", "width": 1.0}, {"from": "dringlichkeit", "title": "contextual proximity", "to": "fremdvergabe", "width": 0.75}, {"from": "durchf\u00fchrung der beweisaufnahme", "title": "Verbleibende Zweifel nach Durchf\u00fchrung der Beweisaufnahme gehen zulasten des Arbeitnehmers", "to": "zweifel", "width": 1.0}, {"from": "einzelfallbezogene interessenabw\u00e4gung", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "einzelfallbezogene interessenabw\u00e4gung", "title": "einzelfallbezogene Interessenabw\u00e4gung nur in seltenen Ausnahmef\u00e4llen zugunsten des Arbeitnehmers", "to": "seltenen ausnahmef\u00e4llen", "width": 1.0}, {"from": "einzelfallbezogene interessenabw\u00e4gung", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "existenz des unternehmens", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.75}, {"from": "existenz des unternehmens", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "existenz des unternehmens", "title": "etwa aus wirtschaftlichen Gr\u00fcnden, dringend war oder die Existenz des Unternehmens auch ohne sie nicht gef\u00e4hrdet gewesen w\u00e4re", "to": "wirtschaftlichen gr\u00fcnden", "width": 1.0}, {"from": "fallgruppen herauszuarbeiten", "title": "contextual proximity", "to": "klage", "width": 0.5}, {"from": "fallgruppen herauszuarbeiten", "title": "Die Rechtsprechung war daher gezwungen, Fallgruppen herauszuarbeiten, bei deren Vorliegen die Betriebsbedingtheit einer K\u00fcndigung anzunehmen ist", "to": "rechtsprechung", "width": 1.0}, {"from": "freie arbeitsplatz", "title": "Der freie Arbeitsplatz muss den F\u00e4higkeiten des Arbeitnehmers entsprechen", "to": "f\u00e4higkeiten des arbeitnehmers", "width": 1.0}, {"from": "freie arbeitspl\u00e4tze", "title": "contextual proximity", "to": "leiharbeitnehmer", "width": 1.0}, {"from": "freie arbeitspl\u00e4tze", "title": "contextual proximity", "to": "urteil", "width": 0.5}, {"from": "freien arbeitspl\u00e4tze im unternehmen", "title": "contextual proximity", "to": "verh\u00e4ltnisse im besch\u00e4ftigungsbetrieb", "width": 0.5}, {"from": "freier arbeitsplatz", "title": "contextual proximity", "to": "leiharbeitnehmer", "width": 1.0}, {"from": "freier arbeitsplatz", "title": "contextual proximity", "to": "urteil", "width": 0.5}, {"from": "freier arbeitsplatz zu ge\u00e4nderten (schlechteren) arbeitsbedingungen", "title": "contextual proximity", "to": "verh\u00e4ltnisse im besch\u00e4ftigungsbetrieb", "width": 0.5}, {"from": "freier arbeitsplatz zu ge\u00e4nderten (schlechteren) arbeitsbedingungen", "title": "Das setzt voraus, dass ein freier vergleichbarer (gleichwertiger) Arbeitsplatz oder ein freier Arbeitsplatz zu ge\u00e4nderten (schlechteren) Arbeitsbedingungen im Unternehmen vorhanden ist.", "to": "freier vergleichbarer (gleichwertiger) arbeitsplatz", "width": 1.0}, {"from": "freier vergleichbarer (gleichwertiger) arbeitsplatz", "title": "contextual proximity", "to": "verh\u00e4ltnisse im besch\u00e4ftigungsbetrieb", "width": 0.5}, {"from": "fremdvergabe", "title": "K\u00fcndigung kann erfolgen, bevor die Fremdvergabe tats\u00e4chlich ist,contextual proximity", "to": "k\u00fcndigung", "width": 1.75}, {"from": "fremdvergabe", "title": "Ma\u00dfnahme der Fremdvergabe ist beabsichtigt und gebildet worden,contextual proximity", "to": "ma\u00dfnahme", "width": 1.75}, {"from": "fremdvergabe", "title": "contextual proximity", "to": "reinigungsarbeiten", "width": 0.75}, {"from": "fremdvergabe", "title": "contextual proximity", "to": "reinigungskraft", "width": 0.75}, {"from": "fremdvergabe", "title": "contextual proximity", "to": "selbstst\u00e4ndige unternehmer", "width": 0.75}, {"from": "fremdvergabe", "title": "contextual proximity", "to": "t\u00e4tigkeiten", "width": 0.75}, {"from": "fremdvergabe", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 0.75}, {"from": "fremdvergabe", "title": "contextual proximity", "to": "vertraglich eingegangene bindungen", "width": 0.75}, {"from": "fristgerecht erhoben", "title": "Wird die Klage nicht fristgerecht erhoben, wird die K\u00fcndigung wirksam,contextual proximity", "to": "klage", "width": 1.5}, {"from": "gericht", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.75}, {"from": "gericht", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "gerichte f\u00fcr arbeitssachen", "title": "contextual proximity", "to": "gerichtliche pr\u00fcfung", "width": 0.5}, {"from": "gerichte f\u00fcr arbeitssachen", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "gerichte f\u00fcr arbeitssachen", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 0.5}, {"from": "gerichtliche missbrauchskontrolle", "title": "Nach der st\u00e4ndigen Rechtsprechung des BAG beschr\u00e4nkt sich die gerichtliche Pr\u00fcfung organisatorischer, technischer und wirtschaftlicher Unternehmerentscheidungen, die sich konkret nachteilig auf die Beschaftigungm\u00f6glichkeiten von Arbeitnehmern auswirken, auf eine gerichtliche Missbrauchskontrolle.,contextual proximity", "to": "gerichtliche pr\u00fcfung", "width": 1.5}, {"from": "gerichtliche missbrauchskontrolle", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "gerichtliche missbrauchskontrolle", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 0.5}, {"from": "gerichtliche pr\u00fcfung", "title": "contextual proximity", "to": "grundsatz der freiheit der unternehmerentscheidung", "width": 0.5}, {"from": "gerichtliche pr\u00fcfung", "title": "contextual proximity", "to": "innerbetrieblichen strukturma\u00dfnahmen", "width": 0.5}, {"from": "gerichtliche pr\u00fcfung", "title": "contextual proximity", "to": "k\u00fcndigungsschutzprozess", "width": 0.5}, {"from": "gerichtliche pr\u00fcfung", "title": "contextual proximity", "to": "organisatorischer, technischer und wirtschaftlicher unternehmerentscheidungen", "width": 0.5}, {"from": "gerichtliche pr\u00fcfung", "title": "contextual proximity", "to": "personal office platin", "width": 0.5}, {"from": "gerichtliche pr\u00fcfung", "title": "contextual proximity", "to": "seite 2", "width": 0.5}, {"from": "gerichtliche pr\u00fcfung", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 1.0}, {"from": "gerichtliche pr\u00fcfung", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 1.0}, {"from": "gerichtliche pr\u00fcfung", "title": "contextual proximity", "to": "unternehmerisches ermessen", "width": 0.5}, {"from": "gesetzlichen grunds\u00e4tzen", "title": "contextual proximity", "to": "ordentliche k\u00fcndigung", "width": 0.5}, {"from": "gesetzlichen grunds\u00e4tzen", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "grundsatz der freiheit der unternehmerentscheidung", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "grundsatz der freiheit der unternehmerentscheidung", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 0.5}, {"from": "grundsatz der freiheit der unternehmerentscheidung", "title": "Die grunds\u00e4tzliche Freiheit der Unternehmerentscheidung erkennen auch die Gerichte f\u00fcr Arbeitssachen an, indem sie darauf verzichten, die unternehmerische Entscheidung auf ihre Notwendigkeit und Zweckm\u00e4\u00dfigkeit zu \u00fcberpr\u00fcfen.", "to": "unternehmerisches ermessen", "width": 1.0}, {"from": "innerbetriebliche gr\u00fcnde", "title": "das Bed\u00fcrfnis f\u00fcr die Weiterbesch\u00e4ftigung entf\u00e4llt", "to": "weiterbesch\u00e4ftigung eines oder mehrerer arbeitnehmer", "width": 1.0}, {"from": "innerbetriebliche ma\u00dfnahmen", "title": "z. B. Rationalisierungsma\u00dfnahmen, Stilllegung von Betriebsabteilungen,contextual proximity", "to": "verh\u00e4ltnisse im besch\u00e4ftigungsbetrieb", "width": 1.5}, {"from": "innerbetrieblichen strukturma\u00dfnahmen", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "innerbetrieblichen strukturma\u00dfnahmen", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 0.5}, {"from": "innerhalb von 3 wochen nach zugang der k\u00fcndigung", "title": "contextual proximity", "to": "klage", "width": 0.5}, {"from": "innerhalb von 3 wochen nach zugang der k\u00fcndigung", "title": "muss er innerhalb von 3 Wochen nach Zugang der K\u00fcndigung K\u00fcndigungsschutzklage erheben", "to": "k\u00fcndigungsschutzklage", "width": 1.0}, {"from": "insolvenz", "title": "Nach \u00a7 125 InsO gilt diese Sonderregelung auch im Falle der Insolvenz", "to": "sonderregelung", "width": 1.0}, {"from": "insolvenzverwalter", "title": "wenn in einem Interessenausgleich zwischen Insolvenzverwalter und Betriebsrat zu k\u00fcndigende Arbeitnehmer namentlich aufgef\u00fchrt sind", "to": "interessenausgleich", "width": 1.0}, {"from": "klage", "title": "contextual proximity", "to": "konkreten bezug zu dem betrieb des arbeitgebers", "width": 0.5}, {"from": "klage", "title": "contextual proximity", "to": "k\u00fcndigung", "width": 0.5}, {"from": "klage", "title": "contextual proximity", "to": "k\u00fcndigungsschutzklage", "width": 0.5}, {"from": "klage", "title": "contextual proximity", "to": "personalbedarf", "width": 0.5}, {"from": "klage", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "klage", "title": "contextual proximity", "to": "sozial ungerechtfertigt", "width": 0.5}, {"from": "klage", "title": "contextual proximity", "to": "sozial zu rechtfertigen", "width": 0.5}, {"from": "klage", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.5}, {"from": "klage", "title": "contextual proximity", "to": "versp\u00e4tet eingereichte", "width": 0.5}, {"from": "klage", "title": "contextual proximity", "to": "\u00a7 1 abs. 2 satz 1 kschg", "width": 0.5}, {"from": "konkrete arbeitsaufgabe", "title": "Bei rein pers\u00f6nlichen Merkmalen sollte ein hinreichender Bezug zur konkreten Arbeitsaufgabe vorhanden sein.", "to": "pers\u00f6nliche merkmale", "width": 1.0}, {"from": "konkreten bezug zu dem betrieb des arbeitgebers", "title": "Der Personalbedarf eines Betriebs oder Unternehmens ist von zahlreichen externen und internen Faktoren abh\u00e4ngig. Als k\u00fcndigungsschutzrechtlich relevante au\u00dferbetriebliche Umst\u00e4nde kommen nur solche in Betracht, die einen konkreten Bezug zu dem Betrieb des Arbeitgebers haben", "to": "personalbedarf", "width": 1.0}, {"from": "konzerninternes stellenbesetzungsverfahren", "title": "contextual proximity", "to": "leiharbeitnehmer", "width": 1.0}, {"from": "konzerninternes stellenbesetzungsverfahren", "title": "contextual proximity", "to": "urteil", "width": 0.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "k\u00fcndigungsschutz", "width": 0.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "nachteilen", "width": 0.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "pr\u00fcfen", "width": 0.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "rechtsprechung", "width": 0.5}, {"from": "k\u00fcndigung", "title": "eine K\u00fcndigung sozial ungerechtfertigt ist", "to": "sozial ungerechtfertigt", "width": 1.0}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 1.0}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 1.5}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 1.0}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "unternehmerisches ermessen", "width": 0.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "verh\u00e4ltnisse", "width": 0.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "vorteile", "width": 0.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigung", "width": 1.25}, {"from": "k\u00fcndigung", "title": "Unerheblich f\u00fcr die Wirksamkeit der K\u00fcndigung ist,contextual proximity", "to": "wirksamkeit", "width": 1.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "wirtschaftlichen gr\u00fcnden", "width": 0.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "zeitpunkt", "width": 0.75}, {"from": "k\u00fcndigung", "title": "contextual proximity", "to": "zusammenhang mit der der gesch\u00e4ftsf\u00fchrung zugrunde liegenden unternehmenspolitik", "width": 0.75}, {"from": "k\u00fcndigungsschutz", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "k\u00fcndigungsschutzprozess", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "k\u00fcndigungsschutzprozess", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 0.5}, {"from": "leiharbeitnehmer", "title": "contextual proximity", "to": "pflicht des arbeitgebers", "width": 1.0}, {"from": "leiharbeitnehmer", "title": "contextual proximity", "to": "urteil", "width": 2.0}, {"from": "leiharbeitnehmer", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 1.0}, {"from": "leiharbeitnehmer", "title": "die weitere Besch\u00e4ftigung von Leiharbeitnehmern im Betrieb einer betriebsbedingten K\u00fcndigung von eigenen Arbeitnehmern nicht generell entgegensteht,contextual proximity", "to": "weitere besch\u00e4ftigung", "width": 2.0}, {"from": "leiharbeitskr\u00e4fte", "title": "der Arbeitgeber von vornherein, in einem bestimmten Bereich nach einem unternehmerischen Konzept nur oder zu einem bestimmten Prozentsatz Leiharbeitskr\u00e4fte einzusetzen,contextual proximity", "to": "stammarbeitnehmer", "width": 1.5}, {"from": "nachteilen", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "nachteilen", "title": "Vorteile in einem vern\u00fcnftigen Verh\u00e4ltnis zu den Nachteilen stehen", "to": "vorteile", "width": 1.0}, {"from": "niedriger qualifizierter arbeitsplatz", "title": "Nur in offensichtlich unzumutbaren F\u00e4llen muss ein niedriger qualifizierter Arbeitsplatz nicht angeboten werden.", "to": "vertragsgem\u00e4\u00df geschuldeten t\u00e4tigkeit", "width": 1.0}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "ordentlichen k\u00fcndigung", "width": 0.5}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "personal office platin", "width": 0.5}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "personelle auswahlrichtlinien", "width": 0.5}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "produktdatenbank", "width": 0.5}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "schwerwiegender pers\u00f6nlicher umst\u00e4nde", "width": 0.5}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "seite 5", "width": 0.5}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "seltenen ausnahmef\u00e4llen", "width": 0.5}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "sonstige gr\u00fcnde", "width": 0.5}, {"from": "ordentliche k\u00fcndigung", "title": "Die Sozialwidrigkeit einer aus betrieblichen Gr\u00fcnden erkl\u00e4rten ordentlichen K\u00fcndigung kann sich auch aus einem begr\u00fcndeten Widerspruch des Betriebsrats ergeben.,contextual proximity", "to": "sozialwidrigkeit", "width": 3.0}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "versto\u00df", "width": 0.5}, {"from": "ordentliche k\u00fcndigung", "title": "contextual proximity", "to": "voraussetzungen", "width": 1.0}, {"from": "ordentlichen k\u00fcndigung", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "organisatorischer, technischer und wirtschaftlicher unternehmerentscheidungen", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "organisatorischer, technischer und wirtschaftlicher unternehmerentscheidungen", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 0.5}, {"from": "personal office platin", "title": "Stand Produktdatenbank: 20.11.2023, Ausdruck vom 27.11.2023", "to": "seite 2", "width": 1.0}, {"from": "personal office platin", "title": "Personal Office Platin Seite 5", "to": "seite 5", "width": 1.0}, {"from": "personal office platin", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "personal office platin", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "personal office platin", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 0.5}, {"from": "personelle auswahlrichtlinien", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "personelle auswahlrichtlinien", "title": "Versto\u00df gegen personelle Auswahlrichtlinien", "to": "versto\u00df", "width": 1.0}, {"from": "pflicht des arbeitgebers", "title": "contextual proximity", "to": "urteil", "width": 0.5}, {"from": "pflicht des arbeitgebers", "title": "ersetzt nicht die Pflicht des Arbeitgebers, eine Weiterbesch\u00e4ftigungsm\u00f6glichkeit zu pr\u00fcfen und gegebenenfalls anzubieten", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 1.0}, {"from": "produktdatenbank", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "pr\u00fcfen", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "rechtsmissbrauchs", "title": "die unternehmerische Entscheidung bis zur Grenze des Rechtsmissbrauchs von den Gerichten zu respektieren,contextual proximity", "to": "stammarbeitnehmer", "width": 1.5}, {"from": "rechtsprechung", "title": "In einem aktuellen Urteil hat das BAG seine bisherige Rechtsprechung best\u00e4tigt", "to": "urteil", "width": 1.0}, {"from": "sachverhalt", "title": "F\u00fcr diesen Vortrag tr\u00e4gt der Arbeitnehmer wiederum die Darlegungs- und Beweislast", "to": "vortrag", "width": 1.0}, {"from": "schwerwiegender pers\u00f6nlicher umst\u00e4nde", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "seite 2", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "seite 2", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 0.5}, {"from": "seite 5", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "seltenen ausnahmef\u00e4llen", "title": "contextual proximity", "to": "sozialwidrigkeit", "width": 0.75}, {"from": "sonstige gr\u00fcnde", "title": "Sonstige Gr\u00fcnde der Sozialwidrigkeit,contextual proximity", "to": "sozialwidrigkeit", "width": 1.75}, {"from": "soziale rechtfertigung", "title": "contextual proximity", "to": "stammarbeitnehmer", "width": 0.5}, {"from": "sozialwidrige k\u00fcndigung", "title": "sozialwidrige K\u00fcndigung liegt auch dann vor, wenn im K\u00fcndigungszeitpunkt zwar keine Weiterbesch\u00e4ftigungsm\u00f6glichkeit mehr besteht, dem Arbeitgeber aber die Berufung auf das Fehlen einer", "to": "berufung auf das fehlen einer", "width": 1.0}, {"from": "sozialwidrigkeit", "title": "contextual proximity", "to": "unternehmerentscheidung", "width": 0.5}, {"from": "sozialwidrigkeit", "title": "contextual proximity", "to": "versto\u00df", "width": 0.75}, {"from": "sozialwidrigkeit", "title": "contextual proximity", "to": "voraussetzungen", "width": 1.0}, {"from": "sozialwidrigkeit", "title": "Zeitpunkt f\u00fcr Beurteilung der Sozialwidrigkeit", "to": "zeitpunkt", "width": 1.0}, {"from": "stammarbeitnehmer", "title": "contextual proximity", "to": "\u00e4nderungs- und beendigungsk\u00fcndigung", "width": 0.5}, {"from": "stammarbeitnehmer", "title": "contextual proximity", "to": "\u00e4nderungsangebot des arbeitgebers", "width": 0.5}, {"from": "unternehmen", "title": "nicht betriebs-, sondern unternehmensbezogen zu pr\u00fcfen,contextual proximity", "to": "weiterbesch\u00e4ftigung", "width": 1.5}, {"from": "unternehmerentscheidung", "title": "contextual proximity", "to": "unternehmerische entscheidung", "width": 1.5}, {"from": "unternehmerentscheidung", "title": "contextual proximity", "to": "unternehmerisches ermessen", "width": 1.0}, {"from": "unternehmerentscheidung", "title": "contextual proximity", "to": "verh\u00e4ltnisse", "width": 0.5}, {"from": "unternehmerentscheidung", "title": "contextual proximity", "to": "vorteile", "width": 0.5}, {"from": "unternehmerentscheidung", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigung", "width": 0.5}, {"from": "unternehmerentscheidung", "title": "contextual proximity", "to": "wirksamkeit", "width": 0.5}, {"from": "unternehmerentscheidung", "title": "contextual proximity", "to": "wirtschaftlichen gr\u00fcnden", "width": 0.5}, {"from": "unternehmerentscheidung", "title": "contextual proximity", "to": "zeitpunkt", "width": 0.5}, {"from": "unternehmerentscheidung", "title": "contextual proximity", "to": "zusammenhang mit der der gesch\u00e4ftsf\u00fchrung zugrunde liegenden unternehmenspolitik", "width": 0.5}, {"from": "unternehmerische entscheidung", "title": "contextual proximity", "to": "unternehmerisches ermessen", "width": 0.75}, {"from": "unternehmerisches ermessen", "title": "Begriff des unternehmerischen Ermessens hat keinen f\u00fcr alle k\u00fcnftigen F\u00e4lle feststehenden Inhalt; er ist stets im Hinblick auf den Zusammenhang mit der der Gesch\u00e4ftsf\u00fchrung zugrunde liegenden Unternehmenspolitik zu bestimmen", "to": "zusammenhang mit der der gesch\u00e4ftsf\u00fchrung zugrunde liegenden unternehmenspolitik", "width": 1.0}, {"from": "unwirksame k\u00fcndigung", "title": "Der Arbeitgeber darf eine durch unwirksame K\u00fcndigung entstandene vakante Stelle nicht anderweitig wiederbesetzen und dem r\u00fcckkehrenden Arbeitnehmer wegen \u00dcberbesetzung k\u00fcndigen.", "to": "vakante stelle", "width": 1.0}, {"from": "urteil", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 0.75}, {"from": "urteil", "title": "contextual proximity", "to": "weitere besch\u00e4ftigung", "width": 0.5}, {"from": "verh\u00e4ltnisse im besch\u00e4ftigungsbetrieb", "title": "contextual proximity", "to": "\u00e4nderungsk\u00fcndigung", "width": 0.5}, {"from": "weiterbesch\u00e4ftigung", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 0.5}, {"from": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "title": "Voraussetzung hierf\u00fcr ist, dass sich ein anderes Konzernunternehmen ausdr\u00fccklich zur \u00dcbernahme des Arbeitnehmers bereit erkl\u00e4rt hat oder sich seine \u00dcbernahmeverpflichtung unmittelbar aus dem Arbeitsvertrag oder anderen vertraglichen Absprachen ergibt und das vertragsschlie\u00dfende Unternehmen einen bestimmenden Einfluss auf die \u0027Versetzung\u0027 hat", "to": "konzernweite weiterbesch\u00e4ftigungspflicht", "width": 1.0}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.015,
+            "damping": 0.4,
+            "gravitationalConstant": -31,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

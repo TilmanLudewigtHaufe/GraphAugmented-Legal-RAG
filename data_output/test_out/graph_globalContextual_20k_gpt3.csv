@@ -1,0 +1,67 @@
+node_1|node_2|edge|chunk_id
+betriebsbedingte kündigung|voraussetzungen|betriebsbedingte Kündigung: Voraussetzungen werden behandelt|45d15af3d3ff40abb23e766f23a884bb
+arbeitnehmer|allgemeinen kündigungsschutzes|Arbeitnehmer fällt unter den Geltungsbereich des allgemeinen Kündigungsschutzes|45d15af3d3ff40abb23e766f23a884bb
+ordentliche kündigung|sozial gerechtfertigt|ordentliche Kündigung ist sozial gerechtfertigt, wenn sie durch dringende betriebliche Erfordernisse bedingt ist|45d15af3d3ff40abb23e766f23a884bb
+betriebsbedingte kündigung|sozial gerechtfertigt|betriebsbedingte Kündigung ist sozial gerechtfertigt, wenn der Arbeitsplatz im Betrieb infolge dringender betrieblicher Erfordernisse weggefallen ist|45d15af3d3ff40abb23e766f23a884bb
+betriebsbedingte kündigung|sozialwidrigkeit|Sozialwidrigkeit einer betriebsbedingten Kündigung kann sich aus einem begründeten Widerspruch des Betriebsrats ergeben|45d15af3d3ff40abb23e766f23a884bb
+begründeten widerspruch|betriebsrat|Sozialwidrigkeit einer betriebsbedingten Kündigung kann sich aus einem begründeten Widerspruch des Betriebsrats ergeben|45d15af3d3ff40abb23e766f23a884bb
+kündigung|sozial ungerechtfertigt|Klage muss innerhalb von 3 Wochen nach Zugang der Kündigung erhoben werden, sonst wird die Kündigung wirksam|45d15af3d3ff40abb23e766f23a884bb
+arbeitsgericht|nachträglich zugelassen|verspätet eingereichte Klage wird dann vom Arbeitsgericht auf Antrag des Arbeitnehmers nachträglich zugelassen|45d15af3d3ff40abb23e766f23a884bb
+außerbetriebliche umstände|betriebliche kündigung|außerbetriebliche Umstände sind nur dann geeignet, eine ordentliche Kündigung sozial zu rechtfertigen, wenn sie als 'dringende betriebliche Erfordernisse' anzusehen sind|45d15af3d3ff40abb23e766f23a884bb
+betriebseinschränkung|betriebsbedingter kündigungsgrund|Betriebseinschränkung kann ein betriebsbedingter Kündigungsgrund sein|45d15af3d3ff40abb23e766f23a884bb
+betriebsbedingte kündigung|einzelfallbezogenen interessenabwägung|Bei betriebsbedingten Kündigungen bedarf es einer einzelfallbezogenen Interessenabwägung|ee260fd92a5144209d7a38e6b27c3d8f
+ordentliche kündigung|einzelfallbezogenen interessenabwägung|Ist eine ordentliche Kündigung wegen einer bindenden Unternehmerentscheidung 'an sich' betriebsbedingt, so kann sich die einzelfallbezogene Interessenabwägung nur in seltenen Ausnahmefällen zugunsten des Arbeitnehmers auswirken.|ee260fd92a5144209d7a38e6b27c3d8f
+ordentliche kündigung|betriebsbedingte kündigung|eine ordentliche Kündigung wegen einer bindenden Unternehmerentscheidung 'an sich' betriebsbedingt|ee260fd92a5144209d7a38e6b27c3d8f
+betriebsrat|ordentliche kündigung|Hat der Betriebsrat einer aus betrieblichen Gründen erklärten ordentlichen Kündigung zu Recht widersprochen, so stellt dies einen absoluten Grund für die Sozialwidrigkeit dar, d. h. es bedarf keiner fallbezogenen Interessenabwägung.|ee260fd92a5144209d7a38e6b27c3d8f
+personelle auswahlrichtlinien|sozialwidrigkeit|Ein Verstoß gegen personelle Auswahlrichtlinien führt nur dann zur absoluten Sozialwidrigkeit einer aus betrieblichen Gründen erklärten Kündigung, wenn der Betriebsrat aus diesem Grunde der beabsichtigten Kündigung frist- und ordnungsgemäß widersprochen hat.|ee260fd92a5144209d7a38e6b27c3d8f
+betriebsbedingte kündigung|darlegungs- und beweislast|Bei einer betriebsbedingten Kündigung besteht eine abgestufte Verteilung der Darlegungs- und Beweislast zwischen Arbeitgeber und Arbeitnehmer.|ee260fd92a5144209d7a38e6b27c3d8f
+arbeitgeber|kündigungstatsachen|der Arbeitgeber die Kündigungstatsachen zu beweisen hat|ee260fd92a5144209d7a38e6b27c3d8f
+dringenden betrieblichen erfordernissen|darlegungslast|Der Arbeitgeber muss im Einzelnen das Vorliegen von 'dringenden betrieblichen Erfordernissen' darlegen und im Bestreitensfall beweisen.|ee260fd92a5144209d7a38e6b27c3d8f
+kurzarbeit|dringlichkeit der kündigungen|Vortrag, dass andere Maßnahmen (z. B. Kurzarbeit, Abbau von Überstunden) nicht möglich oder nicht zumutbar gewesen sind.|ee260fd92a5144209d7a38e6b27c3d8f
+arbeitnehmer|einführung von kurzarbeit|Arbeitnehmer dagegen darzulegen, dass z. B. die Einführung von Kurzarbeit möglich gewesen wäre.|ee260fd92a5144209d7a38e6b27c3d8f
+arbeitgeber|anderweitige beschäftigung|Dartun, dass eine Weiterarbeit auf anderen freien Arbeitsplätzen nicht möglich gewesen ist|ee260fd92a5144209d7a38e6b27c3d8f
+beweisaufnahme|arbeitnehmer|Verbleibende Zweifel nach Durchführung der Beweisaufnahme gehen zulasten des Arbeitnehmers.|ee260fd92a5144209d7a38e6b27c3d8f
+interessenausgleich|insolvenz|n einem Interessenausgleich zwischen Insolvenzverwalter und Betriebsrat zu kündigende Arbeitnehmer namentlich aufgeführt sind.|ee260fd92a5144209d7a38e6b27c3d8f
+personenbedingte kündigung|voraussetzungen|Der Beitrag stellt die allgemeinen Voraussetzungen der personenbedingten Kündigung nach § 1 Abs. 2 KSchG dar.|2a089a8c462f4c209d332dcd48cf326f
+personenbedingte kündigung|gesetzliche grundlage|Gesetzliche Grundlage für die personenbedingte Kündigung ist § 1 Abs. 2 KSchG.|2a089a8c462f4c209d332dcd48cf326f
+personenbedingte kündigung|personenbedingte gründe zur kündigung|Personenbedingte Gründe zur Kündigung sind solche, die auf den persönlichen Eigenschaften, Fähigkeiten und Fertigkeiten des Arbeitnehmers beruhen.|2a089a8c462f4c209d332dcd48cf326f
+personenbedingte kündigung|objektiver kündigungsgrund|Der personenbedingte Kündigungsgrund ist rein objektiv.|2a089a8c462f4c209d332dcd48cf326f
+personenbedingte kündigung|außerordentliche personenbedingte kündigung|Ist eine ordentliche Kündigung durch Tarifvertrag ausgeschlossen, kann der Ausspruch einer außerordentlichen Kündigung in Betracht kommen.|2a089a8c462f4c209d332dcd48cf326f
+außerordentliche personenbedingte kündigung|kündigungsfrist|Die außerordentliche Kündigung kann nur innerhalb einer Frist von 2 Wochen erfolgen (§ 626 Abs. 2 Satz 2 BGB).|2a089a8c462f4c209d332dcd48cf326f
+personenbedingte kündigung|sozialwidrigkeit der kündigung|Das KSchG verlangt vom Arbeitgeber die Rechtfertigung der Kündigungsgründe. Es nennt u. a. in § 1 Abs. 2 KSchG die personenbedingte Kündigung.|2a089a8c462f4c209d332dcd48cf326f
+personenbedingte kündigung|prüfungsschritte|Es kommt auf folgende Prüfungsschritte an: Gründe in der Person des Arbeitnehmers, Negative Prognose, Erhebliche Beeinträchtigung betrieblicher oder wirtschaftlicher Interessen, Fehlende Weiterbeschäftigungsmöglichkeit, Interessenabwägung.|2a089a8c462f4c209d332dcd48cf326f
+prüfungsschritte|gründe in der person des arbeitnehmers|Gründe in der Person des Arbeitnehmers (persönliche Fähigkeiten oder Eigenschaften stehen künftiger Erfüllung arbeitsvertraglicher Verpflichtungen entgegen)|2a089a8c462f4c209d332dcd48cf326f
+prüfungsschritte|negative prognose|Ist davon auszugehen, dass der Arbeitnehmer auch in Zukunft seine Arbeitsleistung ganz oder teilweise nicht mehr erbringen kann?|2a089a8c462f4c209d332dcd48cf326f
+prüfungsschritte|erhebliche beeinträchtigung betrieblicher interessen|Die Gründe in der Person müssen konkrete Auswirkungen auf den Betrieb haben. |2a089a8c462f4c209d332dcd48cf326f
+prüfungsschritte|vorrang von versetzung und änderungskündigung|Die Kündigung ist letztes Mittel (ultima ratio). Deshalb muss zuerst eine Weiterbeschäftigung an einem freien Arbeitsplatz im Betrieb oder in einem anderen Betrieb des Unternehmens, ggf. auch nach zumutbarer Umschulung oder Fortbildung geprüft werden.|2a089a8c462f4c209d332dcd48cf326f
+prüfungsschritte|umschulung und fortbildungsmaßnahmen|Die Umschulung hat das Ziel, dem Arbeitnehmer die notwendige fachliche Qualifikation für die Ausübung eines anderen Berufs zu vermitteln. Fortbildungsmaßnahmen bezwecken dagegen, den Arbeitnehmer in die Lage zu versetzen, den gestiegenen Anforderungen in seinem Beruf durch die Vermittlung der dafür notwendigen Kenntnisse und Fähigkeiten gerecht zu werden.|2a089a8c462f4c209d332dcd48cf326f
+prüfungsschritte|interessenabwägung|Bei der Interessenabwägung ist zu prüfen, ob der Arbeitgeber die Störung im Arbeitsverhältnis billigerweise hinnehmen muss oder ob die Kündigung aus der Sicht eines verständigen Arbeitgebers als billigenswert und angemessen erscheint.|2a089a8c462f4c209d332dcd48cf326f
+arbeitsunfall|wertentscheidungen|is zu berücksichtigen|e5fd594aa24d4441ae3d5c345669272c
+krankheit|wertentscheidungen|is zu berücksichtigen|e5fd594aa24d4441ae3d5c345669272c
+altersbedingter leistungsabfall|wertentscheidungen|is zu berücksichtigen|e5fd594aa24d4441ae3d5c345669272c
+gründe in der person|betriebliche umstände|zurückzuführen|e5fd594aa24d4441ae3d5c345669272c
+gründe in der person|betriebsunfall|zurückzuführen|e5fd594aa24d4441ae3d5c345669272c
+gesundheitsschädliche arbeit|gründe in der person|zurückzuführen|e5fd594aa24d4441ae3d5c345669272c
+gesundheitsschädliche arbeit|längere betriebszugehörigkeit|is zu berücksichtigen|e5fd594aa24d4441ae3d5c345669272c
+längere betriebszugehörigkeit|fortgeschrittenes lebensalter|is zu berücksichtigen|e5fd594aa24d4441ae3d5c345669272c
+unterhaltsverpflichtungen|wertentscheidungen|is zu berücksichtigen|e5fd594aa24d4441ae3d5c345669272c
+besondere belastungen durch hausbau|wertentscheidungen|is zu berücksichtigen|e5fd594aa24d4441ae3d5c345669272c
+verschulden des arbeitgebers|unterlassene sicherheitsmaßnahmen|zu berücksichtigen|e5fd594aa24d4441ae3d5c345669272c
+verschulden des arbeitgebers|verletzung von unfallverhütungsvorschriften|zu berücksichtigen|e5fd594aa24d4441ae3d5c345669272c
+kschg|personenbedingte kündigung|Nach § 1 Abs. 2|e5fd594aa24d4441ae3d5c345669272c
+personenbedingte kündigung|betriebsbedingten kündigung|abgegrenzt werden|e5fd594aa24d4441ae3d5c345669272c
+personenbedingte kündigung|verhaltensbedingten kündigung|abgegrenzt werden|e5fd594aa24d4441ae3d5c345669272c
+verhaltensbedingte kündigung|voraussetzungen|ist|a6224964135f45fab6f5354ed8302d71
+verhaltensbedingte kündigung|abmahnung|erfolgt nach|a6224964135f45fab6f5354ed8302d71
+verhaltensbedingte kündigung|interessenabwägung|erfordert|a6224964135f45fab6f5354ed8302d71
+verhaltensbedingte kündigung|gesetze, vorschriften und rechtsprechung|beachtet|a6224964135f45fab6f5354ed8302d71
+interessenabwägung|betriebliches interesse an der beendigung des arbeitsverhältnisses|wird abgewogen mit|a6224964135f45fab6f5354ed8302d71
+interessenabwägung|privaten interesse des arbeitnehmers an der fortsetzung des beschäftigungsverhältnisses|wird abgewogen mit|a6224964135f45fab6f5354ed8302d71
+interessenabwägung|dauer der betriebszugehörigkeit|berücksichtigt|a6224964135f45fab6f5354ed8302d71
+interessenabwägung|alter des arbeitnehmers|berücksichtigt|a6224964135f45fab6f5354ed8302d71
+interessenabwägung|unterhaltspflichten des arbeitnehmers|berücksichtigt|a6224964135f45fab6f5354ed8302d71
+interessenabwägung|betriebliche und wirtschaftliche auswirkungen der pflichtverletzung|werden abgewogen mit|a6224964135f45fab6f5354ed8302d71
+interessenabwägung|interesse an der korrekten handhabung der geschäftsanweisungen|wird abgewogen mit|a6224964135f45fab6f5354ed8302d71
+interessenabwägung|ausmaß des verschuldens des arbeitnehmers und das gegebene maß der beschädigung des vertrauens|wird abgewogen mit|a6224964135f45fab6f5354ed8302d71
+interessenabwägung|drohende wiederholungsgefahr bei vergeblicher abmahnung|wird abgewogen mit|a6224964135f45fab6f5354ed8302d71
+interessenabwägung|verhalten des arbeitnehmers nach der tat|wird abgewogen mit|a6224964135f45fab6f5354ed8302d71

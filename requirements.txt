@@ -1,0 +1,14 @@
+pandas
+numpy
+requests
+openai
+langchain
+networkx
+seaborn
+pyvis
+yachalk
+unstructured
+chromadb
+python-dotenv
+matplotlib
+scikit-learn

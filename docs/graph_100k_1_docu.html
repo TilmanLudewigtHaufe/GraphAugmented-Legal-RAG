@@ -1,0 +1,454 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #1a1a1a;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="arbeitnehmer">arbeitnehmer</option>
+                                
+                                    <option value="betriebliche erfordernisse">betriebliche erfordernisse</option>
+                                
+                                    <option value="betriebsbedingte kündigung">betriebsbedingte kündigung</option>
+                                
+                                    <option value="dringende betriebliche erfordernisse">dringende betriebliche erfordernisse</option>
+                                
+                                    <option value="interessenabwägung">interessenabwägung</option>
+                                
+                                    <option value="kündigungsschutzklage">kündigungsschutzklage</option>
+                                
+                                    <option value="soziale rechtfertigung">soziale rechtfertigung</option>
+                                
+                                    <option value="arbeitsplatzwegfall">arbeitsplatzwegfall</option>
+                                
+                                    <option value="außerbetriebliche gründe">außerbetriebliche gründe</option>
+                                
+                                    <option value="betriebsrat">betriebsrat</option>
+                                
+                                    <option value="bindende unternehmerentscheidung">bindende unternehmerentscheidung</option>
+                                
+                                    <option value="darlegungs- und beweislast">darlegungs- und beweislast</option>
+                                
+                                    <option value="dringlichkeit">dringlichkeit</option>
+                                
+                                    <option value="gerichtliche missbrauchskontrolle">gerichtliche missbrauchskontrolle</option>
+                                
+                                    <option value="innerbetriebliche gründe">innerbetriebliche gründe</option>
+                                
+                                    <option value="kündigungsrechtfertigung">kündigungsrechtfertigung</option>
+                                
+                                    <option value="kündigungsvermeidung">kündigungsvermeidung</option>
+                                
+                                    <option value="mildere mittel">mildere mittel</option>
+                                
+                                    <option value="sozialauswahl">sozialauswahl</option>
+                                
+                                    <option value="sozialdatenberücksichtigung">sozialdatenberücksichtigung</option>
+                                
+                                    <option value="unternehmerisches ermessen">unternehmerisches ermessen</option>
+                                
+                                    <option value="vier grunddaten">vier grunddaten</option>
+                                
+                                    <option value="weiterbeschäftigungsmöglichkeit">weiterbeschäftigungsmöglichkeit</option>
+                                
+                                    <option value="widerspruch">widerspruch</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"font": {"color": "#cccccc"}, "group": 1, "id": "arbeitnehmer", "label": "arbeitnehmer", "shape": "dot", "size": 6}, {"font": {"color": "#cccccc"}, "group": 1, "id": "betriebliche erfordernisse", "label": "betriebliche erfordernisse", "shape": "dot", "size": 23}, {"font": {"color": "#cccccc"}, "group": 1, "id": "betriebsbedingte k\u00fcndigung", "label": "betriebsbedingte k\u00fcndigung", "shape": "dot", "size": 23}, {"font": {"color": "#cccccc"}, "group": 1, "id": "dringende betriebliche erfordernisse", "label": "dringende betriebliche erfordernisse", "shape": "dot", "size": 23}, {"font": {"color": "#cccccc"}, "group": 1, "id": "interessenabw\u00e4gung", "label": "interessenabw\u00e4gung", "shape": "dot", "size": 23}, {"font": {"color": "#cccccc"}, "group": 1, "id": "k\u00fcndigungsschutzklage", "label": "k\u00fcndigungsschutzklage", "shape": "dot", "size": 6}, {"font": {"color": "#cccccc"}, "group": 1, "id": "soziale rechtfertigung", "label": "soziale rechtfertigung", "shape": "dot", "size": 23}, {"font": {"color": "#cccccc"}, "group": 2, "id": "arbeitsplatzwegfall", "label": "arbeitsplatzwegfall", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "au\u00dferbetriebliche gr\u00fcnde", "label": "au\u00dferbetriebliche gr\u00fcnde", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "betriebsrat", "label": "betriebsrat", "shape": "dot", "size": 6}, {"font": {"color": "#cccccc"}, "group": 1, "id": "bindende unternehmerentscheidung", "label": "bindende unternehmerentscheidung", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "darlegungs- und beweislast", "label": "darlegungs- und beweislast", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "dringlichkeit", "label": "dringlichkeit", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "gerichtliche missbrauchskontrolle", "label": "gerichtliche missbrauchskontrolle", "shape": "dot", "size": 6}, {"font": {"color": "#cccccc"}, "group": 1, "id": "innerbetriebliche gr\u00fcnde", "label": "innerbetriebliche gr\u00fcnde", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "k\u00fcndigungsrechtfertigung", "label": "k\u00fcndigungsrechtfertigung", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "k\u00fcndigungsvermeidung", "label": "k\u00fcndigungsvermeidung", "shape": "dot", "size": 6}, {"font": {"color": "#cccccc"}, "group": 1, "id": "mildere mittel", "label": "mildere mittel", "shape": "dot", "size": 6}, {"font": {"color": "#cccccc"}, "group": 1, "id": "sozialauswahl", "label": "sozialauswahl", "shape": "dot", "size": 6}, {"font": {"color": "#cccccc"}, "group": 1, "id": "sozialdatenber\u00fccksichtigung", "label": "sozialdatenber\u00fccksichtigung", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "unternehmerisches ermessen", "label": "unternehmerisches ermessen", "shape": "dot", "size": 6}, {"font": {"color": "#cccccc"}, "group": 1, "id": "vier grunddaten", "label": "vier grunddaten", "shape": "dot", "size": 6}, {"font": {"color": "#cccccc"}, "group": 3, "id": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "label": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "shape": "dot", "size": 5}, {"font": {"color": "#cccccc"}, "group": 1, "id": "widerspruch", "label": "widerspruch", "shape": "dot", "size": 6}]);
+                  edges = new vis.DataSet([{"from": "arbeitnehmer", "title": "contextual proximity", "to": "betriebliche erfordernisse", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "arbeitnehmer", "title": "Um eine K\u00fcndigung als sozial ungerechtfertigt zu deklarieren, muss der Arbeitnehmer innerhalb von 3 Wochen K\u00fcndigungsschutzklage erheben.", "to": "k\u00fcndigungsschutzklage", "width": 1.0}, {"from": "arbeitnehmer", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "arbeitsplatzwegfall", "title": "contextual proximity", "to": "betriebliche erfordernisse", "width": 0.5}, {"from": "arbeitsplatzwegfall", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 0.5}, {"from": "arbeitsplatzwegfall", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "arbeitsplatzwegfall", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "arbeitsplatzwegfall", "title": "Ein Grund f\u00fcr die soziale Rechtfertigung ist der Wegfall des Arbeitsplatzes im Betrieb aufgrund dringender betrieblicher Erfordernisse.,contextual proximity", "to": "soziale rechtfertigung", "width": 2.25}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "Betriebliche Erfordernisse k\u00f6nnen durch au\u00dferbetriebliche Gr\u00fcnde wie Auftragsmangel oder Marktver\u00e4nderungen bedingt sein.,contextual proximity", "to": "betriebliche erfordernisse", "width": 1.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "au\u00dferbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "betriebsbedingte k\u00fcndigung", "width": 1.0}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "betriebsrat", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "bindende unternehmerentscheidung", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "darlegungs- und beweislast", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 1.0}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "dringlichkeit", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "gerichtliche missbrauchskontrolle", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "innerbetriebliche gr\u00fcnde", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 1.0}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "k\u00fcndigungsrechtfertigung", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "k\u00fcndigungsschutzklage", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "k\u00fcndigungsvermeidung", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "mildere mittel", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "sozialdatenber\u00fccksichtigung", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 2.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "unternehmerisches ermessen", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "vier grunddaten", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 0.5}, {"from": "betriebliche erfordernisse", "title": "contextual proximity", "to": "widerspruch", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "betriebsrat", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "bindende unternehmerentscheidung", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "darlegungs- und beweislast", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 1.0}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "dringlichkeit", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "gerichtliche missbrauchskontrolle", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "innerbetriebliche gr\u00fcnde", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 1.0}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "k\u00fcndigungsrechtfertigung", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "k\u00fcndigungsschutzklage", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "k\u00fcndigungsvermeidung", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "mildere mittel", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "sozialdatenber\u00fccksichtigung", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 2.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "unternehmerisches ermessen", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "vier grunddaten", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 0.5}, {"from": "betriebsbedingte k\u00fcndigung", "title": "contextual proximity", "to": "widerspruch", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "betriebsrat", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "betriebsrat", "title": "Ein begr\u00fcndeter Widerspruch des Betriebsrats kann zur Sozialwidrigkeit und damit Unwirksamkeit einer ordentlichen K\u00fcndigung f\u00fchren.", "to": "widerspruch", "width": 1.0}, {"from": "bindende unternehmerentscheidung", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "bindende unternehmerentscheidung", "title": "Eine einzelfallbezogene Interessenabw\u00e4gung wird vorgenommen, kann aber selten zugunsten des Arbeitnehmers ausfallen, wenn eine bindende Unternehmerentscheidung vorliegt.,contextual proximity", "to": "interessenabw\u00e4gung", "width": 1.5}, {"from": "bindende unternehmerentscheidung", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "dringende betriebliche erfordernisse", "width": 0.5}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "darlegungs- und beweislast", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "dringlichkeit", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "gerichtliche missbrauchskontrolle", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "innerbetriebliche gr\u00fcnde", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 1.0}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "k\u00fcndigungsrechtfertigung", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "k\u00fcndigungsschutzklage", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "k\u00fcndigungsvermeidung", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "mildere mittel", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "sozialdatenber\u00fccksichtigung", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 2.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "unternehmerisches ermessen", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "vier grunddaten", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 0.5}, {"from": "dringende betriebliche erfordernisse", "title": "contextual proximity", "to": "widerspruch", "width": 0.5}, {"from": "dringlichkeit", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "dringlichkeit", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "gerichtliche missbrauchskontrolle", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "gerichtliche missbrauchskontrolle", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "gerichtliche missbrauchskontrolle", "title": "Gerichte beschr\u00e4nken sich bei der Pr\u00fcfung unternehmerischer Entscheidungen auf eine Missbrauchskontrolle, um deren Sachlichkeit zu beurteilen.", "to": "unternehmerisches ermessen", "width": 1.0}, {"from": "innerbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "interessenabw\u00e4gung", "width": 0.5}, {"from": "innerbetriebliche gr\u00fcnde", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "k\u00fcndigungsrechtfertigung", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "k\u00fcndigungsschutzklage", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "k\u00fcndigungsvermeidung", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "mildere mittel", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "sozialauswahl", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "sozialdatenber\u00fccksichtigung", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "Es muss eine umfassende Interessenabw\u00e4gung vorgenommen werden.,contextual proximity", "to": "soziale rechtfertigung", "width": 3.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "unternehmerisches ermessen", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "vier grunddaten", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 0.5}, {"from": "interessenabw\u00e4gung", "title": "contextual proximity", "to": "widerspruch", "width": 0.5}, {"from": "k\u00fcndigungsrechtfertigung", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "k\u00fcndigungsschutzklage", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "k\u00fcndigungsvermeidung", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "k\u00fcndigungsvermeidung", "title": "Bevor eine K\u00fcndigung aufgrund betrieblicher Erfordernisse ausgesprochen wird, muss gepr\u00fcft werden, ob mildere Mittel, z.B. Kurzarbeit, zur Verf\u00fcgung stehen.", "to": "mildere mittel", "width": 1.0}, {"from": "mildere mittel", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "sozialauswahl", "title": "contextual proximity", "to": "soziale rechtfertigung", "width": 1.25}, {"from": "sozialauswahl", "title": "Die Sozialauswahl muss die vier Grunddaten Betriebszugeh\u00f6rigkeit, Lebensalter, Unterhaltspflichten und Schwerbehinderung des Arbeitnehmers ber\u00fccksichtigen.", "to": "vier grunddaten", "width": 1.0}, {"from": "sozialdatenber\u00fccksichtigung", "title": "Bei der sozialen Rechtfertigung m\u00fcssen die Sozialdaten des Arbeitnehmers ausreichend ber\u00fccksichtigt werden.,contextual proximity", "to": "soziale rechtfertigung", "width": 2.25}, {"from": "soziale rechtfertigung", "title": "contextual proximity", "to": "unternehmerisches ermessen", "width": 1.25}, {"from": "soziale rechtfertigung", "title": "contextual proximity", "to": "vier grunddaten", "width": 1.25}, {"from": "soziale rechtfertigung", "title": "contextual proximity", "to": "weiterbesch\u00e4ftigungsm\u00f6glichkeit", "width": 1.25}, {"from": "soziale rechtfertigung", "title": "contextual proximity", "to": "widerspruch", "width": 1.25}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.015,
+            "damping": 0.4,
+            "gravitationalConstant": -31,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
