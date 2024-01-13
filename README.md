@@ -1,6 +1,6 @@
 ## Introduction
 
-Welcome to my project, a specialized application tailored for the analysis and visualization of complex relationships in German legal texts. My endeavor integrates advanced natural language processing and graph theory to provide a structured and interactive representation of legal documents. The project is divided into two key phases: the construction of a knowledge graph and its application in a Retrieval-Augmented Generation (RAG) system for enriched language model responses by grounding it in a domain specific area of legal expertise.
+This project represents a focused endeavor in the realm of computational legal studies, where we combine methodologies from natural language processing (NLP), network theory, and machine learning to analyze German legal texts. At its core, the project is structured into two principal components: the generation of a domain-specific knowledge graph and the application of this graph within a Retrieval-Augmented Generation (RAG) system to enhance language model responses.
 
 ## Objectives
 
