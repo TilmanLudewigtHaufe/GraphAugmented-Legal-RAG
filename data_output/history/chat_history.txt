@@ -7149,3 +7149,106 @@ beeinträchtigen, z. B. Betrugsstraftat bei einem Bankkassierer).
 ( (Score: N/A)
 
 
+
+
+User Query:
+ schlägerei am arbeitsplatz
+ Facts:
+ ['sachverhalt: sachverhalt eines falles', 'schlägerei am arbeitsplatz']
+ Response des LLM:
+ Gemäß dem vorliegenden Sachverhalt hat sich eine Schlägerei am Arbeitsplatz ereignet. Basierend auf den Informationen aus dem Knowledge Graph und den referenzierten Textstellen ergeben sich folgende rechtliche Aspekte und Zusammenhänge:
+
+Der Knowledge Graph liefert Informationen zu verschiedenen kündigungsrelevanten Themen. Es wird darauf hingewiesen, dass bei betriebsbedingten Kündigungen eine abgestufte Verteilung der Darlegungs- und Beweislast zwischen Arbeitgeber und Arbeitnehmer besteht. Des Weiteren wird die Darlegungs- und Beweislast im Zusammenhang mit der Sozialauswahl und einem vorhandenen Interessenausgleich thematisiert. Zudem werden Verhaltensbedingte Kündigungen und die damit verbundene Beweislast näher erläutert.
+
+Die referenzierten Textstellen betonen die Bedeutung der Darlegungs- und Beweislast in verschiedenen Kontexten, wie beispielsweise bei betriebsbedingten Kündigungen, fehlerhafter Sozialauswahl und vorhandenem Interessenausgleich.
+
+Basierend auf diesen Informationen ergibt sich eine klare rechtliche Relevanz der Schlägerei am Arbeitsplatz. Es müssen insbesondere die arbeitsrechtlichen Konsequenzen in Bezug auf mögliche kündigungsrelevante Aspekte, die Darlegungs- und Beweislast sowie eventuelle Verhaltensbedingungen in Betracht gezogen werden.
+
+Es scheint notwendig zu sein, die genauen Umstände der Schlägerei am Arbeitsplatz zu untersuchen, um eine fundierte rechtliche Analyse vornehmen zu können. Hierbei sind Aspekte wie mögliche Abmahnungen, verhaltensbedingte Kündigungen und die individuelle Verantwortlichkeit der beteiligten Arbeitnehmer von Relevanz.
+
+Es könnte in Erwägung gezogen werden, eine interne Untersuchung einzuleiten, um die genauen Umstände der Schlägerei am Arbeitsplatz aufzuklären und entsprechende arbeitsrechtliche Schritte einzuleiten.
+
+Insgesamt ist zu betonen, dass die Schlägerei am Arbeitsplatz rechtliche Konsequenzen nach sich ziehen kann und eine eingehende Analyse der Situation erforderlich ist, um die geeigneten arbeitsrechtlichen Maßnahmen zu ergreifen.
+
+ Korpus aus Knowledge Graph (A) und referenzierten Textstellen aus dem Grundkorpus (B): 
+A. Kontext vom Knowledge Graphen - 
+1. cosine similarity Vector-searched Nodes und Edges vom Knowledge Graphen :
+Node: darlegungs- und beweislast ist mit Node: betriebsbedingte kündigung verbunden, durch die Edge: 'Es besteht eine abgestufte Verteilung der Darlegungs- und Beweislast zwischen Arbeitgeber und Arbeitnehmer bei betriebsbedingten Kündigungen'
+Node: verhaltensbedingte kündigung ist mit Node: vertragswidriges verhalten verbunden, durch die Edge: 'Unterschied zur personenbedingten Kündigung'
+Node: beleidigungen gegenüber dem arbeitgeber ist mit Node: ordentliche kündigung verbunden, durch die Edge: 'Insults to the employer generally entitle to ordinary termination even without prior warning.'
+Node: arbeitsunfall ist mit Node: betriebsunfall verbunden, durch die Edge: 'Zu Gunsten des Arbeitnehmers zu berücksichtigende Gründe'
+
+2. Kontextuelle Nachbarn der vorherigen Nodes :
+Node: darlegungs- und beweislast
+ - Contextual Neighbor: betriebsbedingte kündigung, Edge: Es besteht eine abgestufte Verteilung der Darlegungs- und Beweislast zwischen Arbeitgeber und Arbeitnehmer bei betriebsbedingten Kündigungen,chunk contextual proximity, Combined Score: 1.0
+ - Contextual Neighbor: sozialauswahl, Edge: chunk contextual proximity, Combined Score: 0.4
+Node: verhaltensbedingte kündigung
+ - Contextual Neighbor: interessenabwägung, Edge: Hinweise für die Interessenabwägung werden gegeben, die in jedem Fall vor Ausspruch der Kündigung durchzuführen sind.,chunk contextual proximity, Combined Score: 3.6
+ - Contextual Neighbor: personenbedingte kündigung, Edge: chunk contextual proximity, Combined Score: 2.0
+Node: beleidigungen gegenüber dem arbeitgeber
+ - Contextual Neighbor: betriebsfrieden, Edge: chunk contextual proximity, Combined Score: 0.30000000000000004
+ - Contextual Neighbor: kündigung, Edge: chunk contextual proximity, Combined Score: 0.30000000000000004
+Node: arbeitsunfall
+ - Contextual Neighbor: personenbedingte kündigung, Edge: chunk contextual proximity, Combined Score: 3.0
+ - Contextual Neighbor: wertentscheidungen, Edge: Zu Gunsten des Arbeitnehmers zu berücksichtigende Gründe,chunk contextual proximity, Combined Score: 2.5
+
+
+3. Kürzester Weg durch den Graphen, der alle vector-searched nodes verbindet: 
+darlegungs- und beweislast - chunk contextual proximity - berechtigtes betriebliches interesse - chunk contextual proximity - altersgruppenbildung - chunk contextual proximity - punktesystem
+
+4. Topic Clusters im graphen basierend auf query:
+arbeitsunfall - chunk contextual proximity - personenbedingte kündigung
+außerordentliche kündigung - Ist eine ordentliche Kündigung durch Tarifvertrag ausgeschlossen, kann der Ausspruch einer außerordentlichen Kündigung in Betracht kommen.,chunk contextual proximity - personenbedingte kündigung
+kschg - Gesetzliche Grundlage für die personenbedingte Kündigung ist § 1 Abs. 2 KSchG.,chunk contextual proximity - personenbedingte kündigung
+
+5. weitere top_nodes für das query:
+betriebsunfall - chunk contextual proximity - verhaltensbedingte kündigung
+
+6. kontextuelle Nachbarn der weiteren top_nodes:
+ Node: verhaltensbedingte kündigung
+ - Contextual Neighbor: interessenabwägung, Edge: Hinweise für die Interessenabwägung werden gegeben, die in jedem Fall vor Ausspruch der Kündigung durchzuführen sind.,chunk contextual proximity, Combined Score: 3.6
+ - Contextual Neighbor: personenbedingte kündigung, Edge: chunk contextual proximity, Combined Score: 2.0
+Node: betriebsunfall
+ - Contextual Neighbor: personenbedingte kündigung, Edge: chunk contextual proximity, Combined Score: 5.0
+ - Contextual Neighbor: wertentscheidungen, Edge: chunk contextual proximity, Combined Score: 3.5
+
+
+B. Kontext durch referenzierte Textstellen aus dem Corpus:
+H (Score: I)
+H (Score: I)
+H (Score: I)
+HI3633284)
+Bei einer betriebsbedingten Kündigung besteht eine abgestufte Verteilung der Darlegungs- und
+Beweislast zwischen Arbeitgeber und Arbeitnehmer. Die in § 1 Abs. 2 Satz 4 KSchG enthaltene
+Beweislastregel, wonach der Arbeitgeber die Kündigungstatsachen zu beweisen hat, gilt auch für
+betriebsbedingte Kündigungen.
+Darlegungs- und Beweislast für fehlerhafte Sozialauswahl
+Für den Bereich der sozialen Auswahl besteht eine gesetzliche Regelung der Beweislast. Danach hat der
+Arbeitnehmer die Tatsachen zu beweisen, die die Kündigung wegen eines Fehlers in der sozialen Auswahl
+als sozial ungerechtfertigt erscheinen lassen. Das BAG steht auf dem Standpunkt, dass auch im Bereich
+der sozialen Auswahl eine abgestufte Darlegungslast zwischen Arbeitgeber und Arbeitnehmer gilt. Dabei
+ist danach zu unterscheiden, ob dem Arbeitnehmer die rechtserheblichen Tatsachen bekannt oder
+unbekannt sind. Kennt der Arbeitnehmer selbst die Zahl und Namen der vergleichbaren Arbeitnehmer und
+deren Sozialdaten, dann muss er, wenn er im Prozess die fehlerhafte Sozialauswahl des Arbeitgebers
+rügen will, die Arbeitnehmer, die nach seiner Meinung die Kündigung sozial weniger hart treffen würde,
+namentlich benennen unter Angabe ihrer individuellen Sozialdaten, Alter, Betriebszugehörigkeit und
+Unterhaltsverpflichtungen. Bei Unkenntnis der für die Sozialauswahl rechtserheblichen Tatsachen genügt
+der Arbeitnehmer zunächst seiner Darlegungslast, wenn er pauschal die soziale Auswahl beanstandet und
+den Arbeitgeber auffordert, die Gründe mitzuteilen, die ihn zu der Auswahl veranlasst haben. Im Umfang
+seiner Auskunftspflicht geht die Darlegungslast auf den Arbeitgeber über.
+Darlegungs- und Beweislast bei vorhandenem Interessenausgleich
+Personal Office Platin Seite 8
+Stand Produktdatenbank: 20.11.2023, Ausdruck vom 27.11.2023
+Betriebsbedingte Kündigung: Sozialauswahl ( (Score: N/A)
+HI2365602)
+Die grundlose Weigerung eines Arbeitnehmers, zu einer vom Arbeitgeber angeordneten Rücksprache zu
+erscheinen, kann zu einer verhaltensbedingten Kündigung nach vorangegangener Abmahnung
+berechtigen, wenn dem Arbeitnehmer das Erscheinen zumutbar und möglich ist. In schwerwiegenden
+Fällen, zum Beispiel bei einer hartnäckigen Weigerung an einer wichtigen Unterredung, mit einem Kunden
+teilzunehmen, kann nach vorangegangener Abmahnung auch eine außerordentliche Kündigung berechtigt
+sein. Die Verweigerung der Teilnahme an einem Personalgespräch, in dem über die Kürzung der
+Vergütung gesprochen werden soll, stellt dagegen keinen Kündigungsgrund dar.
+29 Verstoß gegen Rauchverbot am Arbeitsplatz
+( (Score: N/A)
+
+

@@ -13,3 +13,4 @@ chromadb
 python-dotenv
 matplotlib
 scikit-learn
+llama_index

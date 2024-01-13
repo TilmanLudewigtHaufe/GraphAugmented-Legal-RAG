@@ -3,6 +3,7 @@
 import os
 import re
 import ast
+import json
 from openai import OpenAI
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
@@ -24,6 +25,18 @@ from collections import defaultdict
 from sklearn.cluster import KMeans
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
+from llama_index.llama_pack import download_llama_pack
+
+download_llama_pack(
+    "SemanticChunkingQueryEnginePack",
+    "./semantic_chunking_pack",
+    skip_load=True,
+    # leave the below line commented out if using the notebook on main
+    # llama_hub_url="https://raw.githubusercontent.com/run-llama/llama-hub/jerry/add_semantic_chunker/llama_hub"
+)
+from semantic_chunking_pack.base import SemanticChunker
+from llama_index.node_parser import SentenceSplitter
+from llama_index.embeddings import OpenAIEmbedding
 
 # Load environment variables
 load_dotenv()
@@ -441,14 +454,20 @@ system_prompt_fact_extract = (
     ['fact 1', 'fact 2', 'fact 3', ...]
     Ensure that each fact is distinct, with no duplicates or minor variations of another fact.
     As the very first item of the fact list you will look at the query itself and extract the type of the query itself.
-    therefore you will choose from one of these query types:
+    therefore you will choose one from the following query types:
     [sachverhalt: sachverhalt eines falles, frage: frage zu einem sachverhalt und alles was auch ohne "?" als 
     frage erkannt werden kann, suche: suche nach rechtlichen begriffen oder konzepten - 
     oft erkannt dadurch, dass einfach nur begriffe als query abgesetzt werden (zB. "Belästigung am Arbeitsplatz"),
     erklärung: erklärung eines rechtlichen konzepten, gesetze: gesetze, urteile: urteile, sonstiges: sonstiges - für alles was du nicht klar definieren kannst]
-    Example: Query: "frau x wurde nach 5 jahren im betrieb mit 10 mitarbeitern gekündigt, weil sie lange krank ist.
+    In the following example queries and the expected responses:
+    Example 1: Query: "frau x wurde nach 5 jahren im betrieb mit 10 mitarbeitern gekündigt, weil sie lange krank ist.
     sie ist schwerbehindert und hat 10 kinder."
-    Example Response: ['sachverhalt', 'krankheitsbedingte kündigung', 'kündigung nach 5 jahre betriebszugehörigkeit', 'betrieb mit 10 mitarbeitern', 'kündigung schwerbehinderte mitarbeiterin', 'mitarbeiter mit 10 kindern']"""
+    Example Response 1: ['sachverhalt', 'krankheitsbedingte kündigung', 'kündigung nach 5 jahre betriebszugehörigkeit', 'betrieb mit 10 mitarbeitern', 'kündigung schwerbehinderte mitarbeiterin', 'mitarbeiter mit 10 kindern']
+    Example 2: Query: "beleidigung vorgesetzter"
+    Example Response 2: ['suche', 'beleidigung', 'vorgesetzter', 'beleidigung vorgesetzter', 'beleidigung am arbeitsplatz']
+    Example 3: Query: "was ist sind voraussetzungen einer verhaltensbedingten kündigung?"
+    Example Response 3: ['frage', 'voraussetzungen verhaltensbedingte kündigung', 'verhaltensbedingte kündigung']
+    """
 )
 
 
@@ -982,7 +1001,7 @@ def generate_response(query, fact_extract):
 
     # Get referenced text chunks
     similar_chunk_for_query = find_similar_text_chunks(query, text_vectorstore, k=5, parent_child_dict=parent_child_dict)
-    similar_chunks = [find_similar_text_chunks(query, text_vectorstore, k=1, parent_child_dict=parent_child_dict) for query in fact_extract]
+    similar_chunks = [find_similar_text_chunks(query, text_vectorstore, k=5, parent_child_dict=parent_child_dict) for query in fact_extract]
     print("Apply similarity search for text chunks")
 
     # Format the referenced text chunks
@@ -1053,57 +1072,69 @@ def generate_response(query, fact_extract):
     return full_interaction
 
 # ==============================
-
-# Function to apply custom HI splitter function
-def custom_hi_text_splitter(directory):
-    chunks = []
-    for file_path in glob.glob(f"{directory}/*.txt"):
-        with open(file_path, 'r', encoding='utf-8-sig') as file:
-            text = file.read()
-            hi_indices = [match.start() for match in re.finditer(r'HI\d+', text)]
-            if hi_indices:
-                chunks.append(text[:hi_indices[0]])
-                for start, end in zip(hi_indices, hi_indices[1:] + [None]):
-                    chunks.append(text[start:end])
-    return chunks
-
+# Check if the text vector store exists, if not create a new one
+# ==============================
 # Vectorstore creation or loading
 text_vectorstore_path = "vectorstores/text"
+parent_child_dict_path = "vectorstores/parent_child_dict.json"
 
-# Splitting by custom HI function
-parent_texts = custom_hi_text_splitter("./data_input")
-
-# Text Splitting using Langchain
-splitter = RecursiveCharacterTextSplitter(
-    chunk_size=256,
-    chunk_overlap=75,
-    length_function=len,
-    is_separator_regex=False,
-)
-
-# Split parent chunks into children chunks and store them with reference to their parent
-children_chunks = []
-parent_child_dict = {}
-for i, parent in enumerate(parent_texts):
-    children = splitter.split_text(parent)
-    children_chunks.extend(children)
-    for child in children:
-        parent_child_dict[child] = parent
-
-# Convert children_chunks into Document objects
-docs = [Document(page_content=chunk) for chunk in children_chunks]
-
-openai_ef = embedding_functions.OpenAIEmbeddingFunction(
-                api_key=api_key,
-                model_name="text-embedding-ada-002"
-            )
-
-# Check if the text vector store exists, if not create a new one
 if os.path.exists(text_vectorstore_path):
     print("Loading existing vectorstore for text chunks")
-    text_vectorstore = Chroma(persist_directory=text_vectorstore_path, embedding=OpenAIEmbeddings())
+    text_vectorstore = Chroma(persist_directory=text_vectorstore_path, embedding_function=OpenAIEmbeddings())
+
+    # Load parent-child dictionary from json file
+    with open(parent_child_dict_path, 'r', encoding="utf-8-sig") as file:
+        parent_child_dict = json.load(file)
 else:
     print("Creating vectorstore for text chunks")
+
+    # Function to apply custom HI splitter function
+    def custom_hi_text_splitter(directory):
+        chunks = []
+        for file_path in glob.glob(f"{directory}/*.txt"):
+            with open(file_path, 'r', encoding='utf-8-sig') as file:
+                text = file.read()
+                hi_indices = [match.start() for match in re.finditer(r'HI\d+', text)]
+                if hi_indices:
+                    chunks.append(text[:hi_indices[0]])
+                    for start, end in zip(hi_indices, hi_indices[1:] + [None]):
+                        chunks.append(text[start:end])
+        return chunks
+
+    # Splitting by custom HI function
+    parent_texts = custom_hi_text_splitter("./data_input")
+
+    # Text Splitting using Langchain
+    # splitter = RecursiveCharacterTextSplitter(
+    #     chunk_size=256,
+    #     chunk_overlap=75,
+    #     length_function=len,
+    #     is_separator_regex=False,
+    # )
+
+    # Text Splitting using Semantic Chunker
+    embed_model = OpenAIEmbedding()
+    splitter = SemanticChunker(
+        buffer_size=1, breakpoint_percentile_threshold=95, embed_model=embed_model
+    )
+
+    # Split parent chunks into children chunks and store them with reference to their parent
+    children_chunks = []
+    parent_child_dict = {}
+    for i, parent in enumerate(parent_texts):
+        children = splitter.split_text(parent)
+        children_chunks.extend(children)
+        for child in children:
+            parent_child_dict[child] = parent
+
+    # Save parent-child dictionary to json file
+    with open(parent_child_dict_path, 'w', encoding="utf-8-sig") as file:
+        json.dump(parent_child_dict, file, ensure_ascii=False)
+
+    # Convert children_chunks into Document objects
+    docs = [Document(page_content=chunk) for chunk in children_chunks]
+
+    # Create and initialize Chroma vectorstore with text embeddings
     text_vectorstore = Chroma.from_documents(docs, embedding=OpenAIEmbeddings(), persist_directory=text_vectorstore_path)
 
 # ==============================

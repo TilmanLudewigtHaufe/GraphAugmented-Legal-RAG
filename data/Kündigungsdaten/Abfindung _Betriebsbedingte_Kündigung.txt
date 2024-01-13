@@ -1,0 +1,109 @@
+﻿Abfindung: Betriebsbedingte Kündigung (HI3549834)
+Fachlich geprüft/geändert am: 01.08.2023
+Abfindung: Betriebsbedingte Kündigung
+(HI3549834)
+Zusammenfassung
+Überblick
+Seit dem 1.1.2004 besteht für einen betriebsbedingt gekündigten Arbeitnehmer mit dem Ablauf der
+Kündigungsfrist ein Abfindungsanspruch, sofern dieser innerhalb der 3-Wochenfrist keine
+Kündigungsschutzklage erhoben und der Arbeitgeber zuvor in der Kündigungserklärung einen
+entsprechenden Hinweis gegeben hat.
+Dieser Beitrag informiert über die Voraussetzungen und Höhe eines solchen Abfindungsanspruchs.
+Gesetze, Vorschriften und Rechtsprechung
+Bedingungen und Höhe eines Abfindungsanspruchs nach betriebsbedingten Kündigungen sind in § 1a
+KSchG i. V. m. einem Verweis auf § 10 KSchG normiert.
+Die Vorschrift des § 1a KSchG ist auch auf eine aus dringenden betrieblichen Gründen ausgesprochene
+Änderungskündigung anwendbar, soweit diese wegen Nichtannahme oder vorbehaltloser Ablehnung
+des Änderungsangebots zur Beendigung des Arbeitsverhältnisses führt.
+1 Voraussetzungen des Abfindungsanspruchs
+(HI4712547)
+Nach dem Gesetzeswortlaut des § 1a KSchG setzt der Abfindungsanspruch folgende Tatbestandsmerkmale
+kumulativ voraus:
+Ausspruch einer arbeitgeberseitigen Kündigung aus betriebsbedingten Gründen,
+Hinweis des Arbeitgebers im Kündigungsschreiben, dass die Kündigung auf dringende
+betriebliche Erfordernisse gestützt ist und der Arbeitnehmer bei Verstreichenlassen der
+Klagefrist eine Abfindung beanspruchen kann,
+Verstreichenlassen der 3-wöchigen Klagefrist nach § 4 Satz 1 KSchG durch Nichterhebung einer
+Kündigungsschutzklage und
+Ablauf der Kündigungsfrist.
+Die Regelung des § 1a KSchG ist auch auf eine aus dringenden betrieblichen Gründen ausgesprochene
+Änderungskündigung anwendbar, soweit diese wegen Nichtannahme oder vorbehaltloser Ablehnung des
+Änderungsangebots zur Beendigung des Arbeitsverhältnisses führt.
+Aus dieser Aufzählung wird deutlich, dass es sich um ein echtes Wahlrecht des Arbeitgebers handelt, ob
+er im Zusammenhang mit dem Ausspruch einer betriebsbedingten Kündigung eine Abfindungszahlung für
+den Fall des "Klageverzichts" anbieten will. Die Regelung des § 1a KSchG etabliert keinen unabdingbaren
+Mindestanspruch auf eine Abfindung bei Ausspruch einer betriebsbedingten Kündigung.
+Dagegen dürfen Sozialplanleistungen nicht vom Verzicht auf die Erhebung einer Kündigungsschutzklage
+abhängig gemacht werden. An dieser Rechtslage hat sich durch die Regelung des § 1a KSchG nichts
+geändert.
+Das Verstreichenlassen der Klagefrist bedeutet, dass der Arbeitnehmer keine Klage in dieser Zeit erheben
+darf. Auch eine nach Ablauf der Frist des § 4 Satz 1 KSchG erhobene Kündigungsschutzklage hindert die
+Personal Office Platin Seite 1
+Stand Produktdatenbank: 20.11.2023, Ausdruck vom 27.11.2023
+Abfindung: Betriebsbedingte Kündigung (HI3549834)
+Fachlich geprüft/geändert am: 01.08.2023
+Entstehung des Abfindungsanspruchs nach § 1a KSchG. Es kommt nicht darauf an, ob die Klage mit einem
+Antrag auf nachträgliche Zulassung verbunden ist.
+Der Anspruch auf die Abfindung entsteht erst nach Ablauf der Kündigungsfrist. Endet das
+Arbeitsverhältnis vorher (z. B. durch Tod des Arbeitnehmers oder fristlose Kündigung), entsteht der
+Abfindungsanspruch nicht. Der Anspruch kann deshalb nicht nach § 1922 Abs. 1 BGB auf den oder die
+Erben des Arbeitnehmers übergehen. Eine davon abweichende arbeitsvertragliche Regelung ist jedoch
+möglich. Aus Arbeitnehmersicht ist zu beachten, dass dieser bei langen Kündigungsfristen das
+Insolvenzrisiko für die Zahlung der Abfindung trägt.
+Hinweis
+Keine Konkurrenz von Kündigungs- und Sozialplanabfindung!
+Nach Auffassung des Bundesarbeitsgerichts (BAG) besteht zwischen einer Kündigungsabfindung nach
+§ 1a Abs. 2 KSchG und einer Sozialplanabfindung keine (generelle) Anspruchskonkurrenz. Für den
+Arbeitgeber besteht daher das Risiko, aufgrund einer betriebsbedingten Kündigung nach § 1a KSchG
+die angekündigte Abfindung doppelt zahlen zu müssen. Um dies zu verhindern, ist ausdrücklich zu
+vereinbaren, dass die kündigungsschutzrechtliche Abfindung auf einen kollektivrechtlich oder
+einzelvertraglich vereinbarten Abfindungsanspruch angerechnet wird.
+2 Höhe der Abfindung
+(HI4712548)
+Entscheidet sich der Arbeitnehmer für die Annahme des Angebots, ist die Höhe der Abfindungszahlung
+gesetzlich festgelegt. Da sich diese aus § 1a Abs. 2 KSchG ergibt, ist es nicht erforderlich, dass der
+Arbeitgeber in seinen Hinweis den Abfindungsbetrag mit aufnimmt. Für die Abfindungshöhe ist für jedes
+Jahr des Bestehens des Arbeitsverhältnisses ein halber Bruttomonatsverdienst zugrunde zu legen, der sich
+nach § 10 Abs. 3 KSchG errechnet. Will der Arbeitgeber dem Arbeitnehmer mit Ausspruch der Kündigung
+ein Angebot auf Abschluss eines Vertrags nur in Anlehnung an das gesetzliche Modell des § 1a KSchG
+unterbreiten, ohne jedoch die gesetzliche Abfindung anbieten zu wollen, gilt Folgendes: Aus Gründen der
+Rechtssicherheit, Rechtsklarheit und Beweissicherung ist es erforderlich, dass sich aus der schriftlichen
+Kündigungserklärung eindeutig und unmissverständlich ergibt, welche Abfindung der Arbeitgeber anbietet
+. Der Arbeitnehmer muss dann nach Erhalt des Kündigungsschreibens innerhalb von 3 Wochen
+entscheiden, ob er gegen Zahlung der angebotenen Abfindung aus dem Arbeitsverhältnis ausscheidet oder
+ob er eine Kündigungsschutzklage erhebt. Zusätzlich muss der Arbeitnehmer in der Situation des Zugangs
+der Kündigung klar erkennen können, ob der Arbeitgeber ein Angebot nach § 1a KSchG oder ein von § 1a
+KSchG abweichendes Angebot unterbreitet. Andernfalls könnte sich erst bei Zahlung der Abfindung nach
+Ablauf der Kündigungsfrist herausstellen, dass der Arbeitgeber ein von § 1a Abs. 2 KSchG abweichendes
+Angebot unterbreiten wollte.
+3 Abfindung nach § 1a KSchG und Arbeitslosengeldanspruch
+(HI13006967)
+Die Abfindung nach § 1a KSchG ist keine Entlassungsentschädigung i. S. d. § 158 Abs. 1 SGB III. Danach
+ruht der Anspruch auf Arbeitslosengeld, wenn der Arbeitslose wegen der Beendigung des
+Arbeitsverhältnisses eine Abfindung, Entschädigung oder ähnliche Leistung (Entlassungsentschädigung)
+erhalten oder zu beanspruchen hat und das Arbeitsverhältnis ohne Einhaltung der ordentlichen
+Kündigungsfrist beendet worden ist.
+Zwar spricht für eine Einordnung der Leistung nach § 1a KSchG als "Entlassungsentschädigung" im Sinne
+der Vorschrift zunächst, dass die Leistung im Kündigungsschutzgesetz selbst als "Abfindungsanspruch"
+bezeichnet wird. Es fehlt jedoch an dem notwendigen Ursachenzusammenhang zwischen der Beendigung
+des Arbeitsverhältnisses und dem Entstehen des Abfindungsanspruchs. Dieser entsteht erst dann, wenn
+Personal Office Platin Seite 2
+Stand Produktdatenbank: 20.11.2023, Ausdruck vom 27.11.2023
+Abfindung: Betriebsbedingte Kündigung (HI3549834)
+Fachlich geprüft/geändert am: 01.08.2023
+das Arbeitsverhältnis aufgrund der gesetzlichen Fiktion der §§ 7, 4 Satz 1 KSchG nach Ablauf der 3-
+Wochenfrist für die Erhebung der Kündigungsschutzklage als rechtswirksam gilt und die ordentliche
+Kündigungsfrist abgelaufen ist. Zu diesem Zeitpunkt hat der Arbeitgeber keinen Anlass mehr, dem
+Arbeitnehmer wegen der Beendigung des Arbeitsverhältnisses eine Abfindung zu zahlen. Aus diesem
+Grund findet im Fall des § 1a KSchG auch die Regelung in § 158 Abs. 1 Nr. 4 SGB III keine Anwendung,
+wonach für einzel- oder tarifvertraglich kündigungsgeschützte Arbeitnehmer, die nur bei Zahlung einer
+Entlassungsentschädigung ordentlich gekündigt werden können, eine fiktive Kündigungsfrist von einem
+Jahr einzuhalten ist.
+Auch im Zusammenhang mit dem Ruhen des Arbeitslosengeldanspruchs bei Feststellung einer Sperrzeit
+i. S. d. § 159 SGB III wirkt die Regelung des § 1a KSchG privilegierend. Nach der Rechtsprechung des
+Bundessozialgerichts (BSG) kann sich ein Arbeitnehmer nicht nur nach einer arbeitgeberseitigen
+Kündigung, sondern auch bei einem Aufhebungsvertrag mit Abfindungsvereinbarung in den Grenzen des
+§ 1a Abs. 2 KSchG auf einen wichtigen Grund berufen und es entfällt die Prüfung der Rechtmäßigkeit der
+drohenden Arbeitgeberkündigung.
+Personal Office Platin Seite 3
+Stand Produktdatenbank: 20.11.2023, Ausdruck vom 27.11.2023
