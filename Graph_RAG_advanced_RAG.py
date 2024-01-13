@@ -27,7 +27,8 @@ from sklearn.cluster import KMeans
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from llama_index.llama_pack import download_llama_pack
-
+from semantic_chunking_pack.base import SemanticChunker
+from llama_index.embeddings import OpenAIEmbedding
 download_llama_pack(
     "SemanticChunkingQueryEnginePack",
     "./semantic_chunking_pack",
@@ -35,9 +36,6 @@ download_llama_pack(
     # leave the below line commented out if using the notebook on main
     # llama_hub_url="https://raw.githubusercontent.com/run-llama/llama-hub/jerry/add_semantic_chunker/llama_hub"
 )
-from semantic_chunking_pack.base import SemanticChunker
-from llama_index.node_parser import SentenceSplitter
-from llama_index.embeddings import OpenAIEmbedding
 
 # Load environment variables
 load_dotenv()
@@ -421,20 +419,11 @@ def get_system_prompt(fact_extract):
     query_type = fact_extract[0]
     print(fact_extract[0])
     print("query_type: ", query_type)
-    if query_type.lower() == 'sachverhalt':
-        return system_prompt_sachverhalt
-    elif query_type.lower() == 'frage':
-        return system_prompt_frage
-    elif query_type.lower() == 'suche':
-        return system_prompt_begriffliche_suche
-    elif query_type.lower() == 'erklärung':
-        return system_prompt_erklärung
-    elif query_type.lower() == 'gesetze':
-        return system_prompt_gesetze
-    elif query_type.lower() == 'urteile':
-        return system_prompt_urteile
+    query_type = query_type.lower()
+    if query_type in system_prompts:
+        return system_prompts[query_type]
     else:
-        return system_prompt_sonstiges
+        return system_prompts['sonstiges']
 
 # function to Generate Response with OpenAI API
 def generate_response(query, fact_extract):
