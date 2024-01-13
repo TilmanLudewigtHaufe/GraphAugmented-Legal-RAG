@@ -393,6 +393,10 @@ def generate_fact_extract(query):
 
     print("start fact extract")
     client = OpenAI(api_key=api_key)
+
+    # Get system_prompt_fact_extract from the dictionary
+    system_prompt_fact_extract = system_prompts.get('system_prompt_fact_extract')
+
     #gpt-4-1106-preview #gpt-3.5-turbo-1106
     completion = client.chat.completions.create(
         model="gpt-4-1106-preview",
