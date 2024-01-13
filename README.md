@@ -1,6 +1,6 @@
 ## Introduction
 
-This project represents a focused endeavor in the realm of computational legal studies, where we combine methodologies from natural language processing (NLP), network theory, and machine learning to analyze German legal texts. At its core, the project is structured into two principal components: the generation of a domain-specific knowledge graph and the application of this graph within a Retrieval-Augmented Generation (RAG) system to enhance language model responses.
+This project represents a focused effort in the field of legal tech research, where I combine methodologies from natural language processing (NLP), network theory, and machine learning to analyze German legal texts. At its core, the project is structured into two principal components: the generation of a domain-specific knowledge graph and the application of this graph within a Retrieval-Augmented Generation (RAG) system to enhance language model responses.
 
 ## Objectives
 
