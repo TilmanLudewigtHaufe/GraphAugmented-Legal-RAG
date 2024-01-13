@@ -42,8 +42,6 @@ Welcome to my project, a specialized application tailored for the analysis and v
 4. **Data Preparation:**
    - Place your text data in the `data_input` directory.
 
-Certainly! I'll adjust the "Running the Application" section to reflect these steps.
-
 ---
 
 ## Usage
