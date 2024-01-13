@@ -414,7 +414,6 @@ def generate_fact_extract(query):
     # Convert the string representation of a list to an actual list
     response_list = ast.literal_eval(response)
 
-
     return response_list
 
 #function to determine the system_prompt based on the first entry in the list returned from fact_extract
@@ -688,8 +687,8 @@ else:
                     for start, end in zip(hi_indices, hi_indices[1:] + [None]):
                         chunks.append(text[start:end])
         return chunks
-
-    # Splitting by custom HI function
+    
+    # chunking by either HI or character
     parent_texts = custom_hi_text_splitter("./data_input")
 
     # Text Splitting using Langchain
