@@ -1,0 +1,559 @@
+node_1|node_2|edge|chunk_id
+beratungshilfegesetz|prozesskostenhilfe|Beide Begriffe sind in der Einleitung erwähnt und sind die Hauptthemen des Textes.|72dd647f52cd450596811bd2c570fac4
+menschen|streit|Menschen können zusammenleben oder zusammenarbeiten und dabei kann es zu Streit kommen.|72dd647f52cd450596811bd2c570fac4
+streit|nachbarn|Streit kann zum Beispiel mit den Nachbarn entstehen.|72dd647f52cd450596811bd2c570fac4
+streit|vermieterin|Streit kann auch mit der Vermieterin entstehen.|72dd647f52cd450596811bd2c570fac4
+streit|arbeitgeber|Streit kann auch mit dem Arbeitgeber entstehen.|72dd647f52cd450596811bd2c570fac4
+streit|familie|Streit kann auch innerhalb der eigenen Familie entstehen.|72dd647f52cd450596811bd2c570fac4
+rechtlichen beistand|beratungshilfe|Beratungshilfe ermöglicht rechtlichen Beistand in Fällen, in denen man miteinander nicht mehr ins Gespräch kommt.|72dd647f52cd450596811bd2c570fac4
+beratungshilfe|prozesskostenhilfe|Beratungshilfe und Prozesskostenhilfe bieten rechtlichen Beistand außerhalb und innerhalb eines gerichtlichen Verfahrens.|72dd647f52cd450596811bd2c570fac4
+außergerichtliche einigung|gericht|Wenn außergerichtliche Einigungsversuche scheitern, wird ein Gericht mit der Sache befasst.|72dd647f52cd450596811bd2c570fac4
+prozesskostenhilfe|prozessführung|Die Kosten der Prozessführung werden ganz oder teilweise vom Staat getragen, falls notwendig.|72dd647f52cd450596811bd2c570fac4
+beratungs- und prozesskostenhilfe|streit|Beratungs- und Prozesskostenhilfe dienen nicht als Einladung zum Streit.|72dd647f52cd450596811bd2c570fac4
+recht|freie gesellschaft|Eine freiheitliche Gesellschaft wird durch das Recht geregelt.|72dd647f52cd450596811bd2c570fac4
+bürgerinnen|rechte durchsetzen|Alle Bürgerinnen und Bürger haben die Möglichkeit, unabhängig von ihren finanziellen Verhältnissen, ihre Rechte durchzusetzen.|72dd647f52cd450596811bd2c570fac4
+rechtsbeistand|beratungs- und prozesskostenhilfe|Beratungs- und Prozesskostenhilfe leisten einen wichtigen Beitrag zur Durchsetzung von Rechten durch Rechtsbeistand.|72dd647f52cd450596811bd2c570fac4
+regelungen|beratungshilfe|Detailierte Regelungen zur Beratungshilfe können im weiteren Verlauf des Textes nachgelesen werden.|72dd647f52cd450596811bd2c570fac4
+regelungen|prozesskostenhilfe|Detailierte Regelungen zur Prozesskostenhilfe können im weiteren Verlauf des Textes nachgelesen werden.|72dd647f52cd450596811bd2c570fac4
+motor|defekt|The motor is defective.|693d6334ba794b1cbbbcfe7899a815fc
+wagen|kilometerzähler|The odometer indicates 30,000 km, but the car had actually been driven 130,000 km.|693d6334ba794b1cbbbcfe7899a815fc
+herr fröhlich|herr neulack|Herr Fröhlich feels deceived by Herr Neulack as he confirmed the low mileage during the sales negotiations.|693d6334ba794b1cbbbcfe7899a815fc
+herr fröhlich|wagen|Herr Fröhlich wants to return the car and get his money back.|693d6334ba794b1cbbbcfe7899a815fc
+herr neulack|auto|Herr Neulack refuses to take the car back, claiming that he was also unaware of the actual mileage.|693d6334ba794b1cbbbcfe7899a815fc
+herr fröhlich|herr ehrlich|Herr Fröhlich tells Herr Ehrlich about the conversation with Herr Neulack, who advises Herr Fröhlich to go to a lawyer.|693d6334ba794b1cbbbcfe7899a815fc
+beratungshilfegesetz|herr fröhlich|Herr Fröhlich's colleague informs him about the Beratungshilfegesetz, suggesting that he can likely get legal advice for free due to his low income.|693d6334ba794b1cbbbcfe7899a815fc
+herr fröhlich|anwalt|Herr Fröhlich cannot afford a lawyer at the moment.|693d6334ba794b1cbbbcfe7899a815fc
+rechtsrat|rechtsberatung|Seek advice and look for compromise possibilities. Usually, your counterpart is not as malicious as it may seem.|693d6334ba794b1cbbbcfe7899a815fc
+schiedsstellen|handelskammern|Inform yourself about out-of-court arbitration bodies, e.g. at the chambers of commerce.|693d6334ba794b1cbbbcfe7899a815fc
+beratungshilfe|rechtsanwalt|Beratungshilfe allows getting expert legal advice and representation if necessary.|693d6334ba794b1cbbbcfe7899a815fc
+zivilrechts|beratungshilfe|Beratungshilfe is granted in all legal matters, including civil law (e.g. purchase law, rental matters, etc.).|693d6334ba794b1cbbbcfe7899a815fc
+arbeitsrechts|beratungshilfe|One can get Beratungshilfe in labor law matters (e.g. in case of termination of the employment relationship).|693d6334ba794b1cbbbcfe7899a815fc
+verwaltungsrechts|beratungshilfe|Beratungshilfe is provided in administrative law matters (e.g. BAFöG, tax law, school and university law, commercial law).|693d6334ba794b1cbbbcfe7899a815fc
+sozialrechts|beratungshilfe|Assistance is available in social law matters (e.g. basic security for employed persons (citizen's pay), matters of statutory health, pension and accident insurance).|693d6334ba794b1cbbbcfe7899a815fc
+steuerrechts|beratungshilfe|Legal aid is provided in tax law matters (e.g. matters of child allowance according to the Income Tax Act).|693d6334ba794b1cbbbcfe7899a815fc
+verfassungsrechts|beratungshilfe|Beratungshilfe is granted in constitutional law matters.|693d6334ba794b1cbbbcfe7899a815fc
+verfassungsbeschwerden|grundrechtsverletzungen|Verfassungsbeschwerden wegen Grundrechtsverletzungen|c7a3d5e11ed84d5683bfeb7d11ad4841
+ausländisches recht|beratungshilfe|Beratungshilfe aber nur dann, wenn der Sachverhalt eine Beziehung zum Inland hat|c7a3d5e11ed84d5683bfeb7d11ad4841
+europäischen union|ansprüche|Ansprüche gegen eine Person, die in einem anderen EU­Mitgliedstaat wohnt|c7a3d5e11ed84d5683bfeb7d11ad4841
+beratungshilfe|rechtsberatung|Beratungshilfe wird gewährt für die vorprozessuale Rechtsberatung im Hinblick auf eine außergerichtliche Streitbeilegung|c7a3d5e11ed84d5683bfeb7d11ad4841
+beratungshilfe|unterstützung|Beratungshilfe wird gewährt für die Unterstützung bei Anträgen auf grenzüberschreitende Prozesskostenhilfe|c7a3d5e11ed84d5683bfeb7d11ad4841
+strafrechtlichen angelegenheiten|beratungshilfe|In strafrechtlichen Angelegenheiten kann man sich zwar im Wege der Beratungshilfe beraten lassen, erhält jedoch keine Vertretung oder Verteidigung|c7a3d5e11ed84d5683bfeb7d11ad4841
+strafprozessordnung|vorschriften|spezielle Vorschriften in der Strafprozessordnung für die Vertretung oder Verteidigung in Strafsachen|c7a3d5e11ed84d5683bfeb7d11ad4841
+rechtspfleger|mutwillen|Rechtspfleger oder die Rechtspflegerin beim Amtsgericht prüft, ob kein Mutwillen vorliegen|c7a3d5e11ed84d5683bfeb7d11ad4841
+person|rechtsrat|wirtschaftlich besser gestellte Person auf eigene Kosten Rechtsrat einholen oder sich vertreten lassen würde|c7a3d5e11ed84d5683bfeb7d11ad4841
+behörden|hilfe|Behörden dürfen entweder nicht zur Verfügung stehen oder der rechtsuchenden Person nicht zumutbar sein|c7a3d5e11ed84d5683bfeb7d11ad4841
+gewerkschaften|mitglieder|Gewerkschaften beraten ihre Mitglieder in ihrem Aufgabenbereich|c7a3d5e11ed84d5683bfeb7d11ad4841
+mieterverbände|mitglieder|Mieterverbände beraten ihre Mitglieder in ihrem Aufgabenbereich|c7a3d5e11ed84d5683bfeb7d11ad4841
+mitglied|vereinigung|Wenn Sie also Mitglied in einer solchen Vereinigung sind, müssen Sie diese Möglichkeiten ausschöpfen|c7a3d5e11ed84d5683bfeb7d11ad4841
+amtsgericht|sozialämter|Auskunft und Beratungspflicht gegenüber den Bürgern|64dbb89cd1f64952aa0e08ea7814bff6
+amtsgericht|arbeitsagenturen|Auskunft und Beratungspflicht gegenüber den Bürgern|64dbb89cd1f64952aa0e08ea7814bff6
+amtsgericht|jugendämter|Auskunft und Beratungspflicht gegenüber den Bürgern|64dbb89cd1f64952aa0e08ea7814bff6
+amtsgericht|rechtspfleger/rechtspflegerin|Zuständig für Bera­tungshilfe|64dbb89cd1f64952aa0e08ea7814bff6
+rechtspfleger/rechtspflegerin|berechtigungsschein|Auskunft, Hinweis oder Ausstellung eines Berechtigungsscheins|64dbb89cd1f64952aa0e08ea7814bff6
+rechtspfleger/rechtspflegerin|erinnerung|Entscheidung zu Erinnerung oder Ablehnung|64dbb89cd1f64952aa0e08ea7814bff6
+berechtigungsschein|beratungsperson|Ermöglicht den Zugang zu einer Beratungsperson|64dbb89cd1f64952aa0e08ea7814bff6
+beratungsperson|antrag auf bewilligung von beratungshilfe|Erteilung und Beantragung von Beratungshilfe|64dbb89cd1f64952aa0e08ea7814bff6
+beratungsperson|prozesskostenhilfe|Beratung und Vertretung in Prozesskosten|64dbb89cd1f64952aa0e08ea7814bff6
+rechtsanwältinnen und rechtsanwälte|kammern|Befugt zur Beratungshilfe|64dbb89cd1f64952aa0e08ea7814bff6
+rechtsanwältinnen und rechtsanwälte|prozesskostenhilfe|Erhalt und Vertretung in Prozesskosten|64dbb89cd1f64952aa0e08ea7814bff6
+rechtsanwältinnen und rechtsanwälte|erinnerung|Entscheidung zu Erinnerung oder Ablehnung|64dbb89cd1f64952aa0e08ea7814bff6
+rechtsbeistände|prozesskostenhilfe|Erhalt und Vertretung in Prozesskosten|64dbb89cd1f64952aa0e08ea7814bff6
+steuerberaterinnen und steuerberater|prozesskostenhilfe|Erhalt und Vertretung in steuerrechtlichen Prozesskosten|64dbb89cd1f64952aa0e08ea7814bff6
+wirtschaftsprüferinnen und wirtschaftsprüfer|prozesskostenhilfe|Erhalt und Vertretung in steuerrechtlichen Prozesskosten|64dbb89cd1f64952aa0e08ea7814bff6
+buchprüfer/innen|prozesskostenhilfe|Erhalt und Vertretung in steuerrechtlichen Prozesskosten|64dbb89cd1f64952aa0e08ea7814bff6
+rentenberaterinnen und rentenberater|prozesskostenhilfe|Erhalt und Vertretung in Rentenangelegenheiten|64dbb89cd1f64952aa0e08ea7814bff6
+öffentlichen rechtsauskunfts­ und vergleichsstellen (öra)|auskunft|Öffentliche Rechtsberatung in Hamburg|64dbb89cd1f64952aa0e08ea7814bff6
+arbeitnehmerkammern|auskunft|Öffentliche Rechtsberatung in Bremen|64dbb89cd1f64952aa0e08ea7814bff6
+amtsgericht|rechtanwalt/rechtsanwältin|Besuch einer Beratungsperson oder Rechtsanwalt zur Beratungshilfe|64dbb89cd1f64952aa0e08ea7814bff6
+gerichtskosten|prozesskostenhilfe|Kostendeckung für Gerichtskosten|64dbb89cd1f64952aa0e08ea7814bff6
+erwerbstätigkeit|bruttoeinkommen|Erwerbstätigkeit ist der Ausgangspunkt für das Bruttoeinkommen der rechtsuchenden Partei.|4700475188ef4b6bab055f6615ac1537
+bruttoeinkommen|kindergeld|Das Kindergeld zählt grundsätzlich auch zum Bruttoeinkommen der rechtsuchenden Partei, wenn dieser es ausgezahlt bekommt.|4700475188ef4b6bab055f6615ac1537
+ehegatte|erwerbseinkommen|Das Erwerbseinkommen des Ehegatten/der Ehegattin oder des eingetragenen Lebenspartners/der eingetragenen Lebenspartnerin ist nicht dem Einkommen der rechtsuchenden Partei hinzuzurechnen.|4700475188ef4b6bab055f6615ac1537
+bruttoeinkommen|steuern|Von dem Bruttoeinkommen werden zunächst Steuern und Vorsorgeaufwendungen abgezogen.|4700475188ef4b6bab055f6615ac1537
+freibetrag|partei|Der Freibetrag von 552 € wird für die Partei abgesetzt.|ee779169c73446e2937dc9aca1a69d53
+freibetrag|ehegatten/ehegattin|Ebenfalls wird ein Freibetrag von 552 € für den Ehegatten/die Ehegattin abgesetzt. Dieser Freibetrag mindert sich jedoch um eigenes Einkommen des Ehegatten/der Ehegattin.|ee779169c73446e2937dc9aca1a69d53
+freibetrag|lebenspartner/lebenspartnerin|Ein Freibetrag von 552 € wird auch für den Lebenspartner/die Lebenspartnerin nach dem Lebenspartnerschaftsgesetz abgesetzt. Der Freibetrag mindert sich jedoch um eigenes Einkommen des eingetragenen Lebenspartners/der eingetragenen Lebenspartnerin.|ee779169c73446e2937dc9aca1a69d53
+freibetrag|unterhaltsberechtigte kind|Es gibt zusätzlich einen Freibetrag für jedes unterhaltsberechtigte Kind abhängig von seinem Alter, z. B. 442 € für Erwachsene, 462 € für Jugendliche, 383 € für Kinder vom 7. bis zum 14. Lebensjahr, und 350 € für Kinder bis zum 6. Lebensjahr. Diese Freibeträge mindern sich jedoch um eigenes Einkommen der Unterhaltsberechtigten.|ee779169c73446e2937dc9aca1a69d53
+freibetrag|partei|Zusätzlich wird ein Freibetrag von 251 € für die Partei abgesetzt, wenn sie Einkünfte aus Erwerbstätigkeit erzielt.|ee779169c73446e2937dc9aca1a69d53
+wohnkosten|miete, mietnebenkosten, heizung|Die Wohnkosten, einschließlich Miete, Mietnebenkosten und Heizung, werden berücksichtigt.|ee779169c73446e2937dc9aca1a69d53
+weitere beträge|besondere belastungen|Eventuell werden weitere Beträge mit Rücksicht auf besondere Belastungen berücksichtigt.|ee779169c73446e2937dc9aca1a69d53
+prozesskostenhilfe|einkommen|Das einzusetzende Einkommen ist entscheidend für die Gewährung von Prozesskostenhilfe, mit oder ohne Ratenzahlungsverpflichtung.|dbdba9a3af244fd68072f9688efd2bea
+prozesskostenhilfe|sozialhilfe|Das Einkommen ist auch maßgeblich für die Gewährung von Sozialhilfe.|dbdba9a3af244fd68072f9688efd2bea
+freibeträge|sozialhilfe|Die Freibeträge werden im Bundesgesetzblatt bekannt gemacht und ändern sich entsprechend der Entwicklung der maßgeblichen Regelsätze für Sozialhilfe.|dbdba9a3af244fd68072f9688efd2bea
+freibeträge|einkommen|Es werden Freibeträge für verschiedene Personen und Kinder vom Einkommen abgesetzt.|dbdba9a3af244fd68072f9688efd2bea
+vermögen|prozesskostenhilfe|Das Vorhandensein von Vermögen kann zur Begleichung der Prozesskosten einsetzt werden.|dbdba9a3af244fd68072f9688efd2bea
+vermögen|ratenzahlungsverpflichtung|Das Vorhandensein von Vermögen kann zu einer Ratenzahlungsverpflichtung führen.|dbdba9a3af244fd68072f9688efd2bea
+einkommen|prozesskostenhilfe|Rechtsuchenden Personen mit einem Einkommen von mindestens 20 € wird das Recht eingeräumt, die Prozesskosten in monatlichen Raten zu zahlen.|dbdba9a3af244fd68072f9688efd2bea
+freibeträge|einkommen|Die Freibeträge werden bei der Berechnung des einzusetzenden Einkommens berücksichtigt.|dbdba9a3af244fd68072f9688efd2bea
+vermögen|prozesskostenhilfe|Das Vorhandensein von Vermögen kann zur Begleichung der Prozesskosten einsetzt werden.|dbdba9a3af244fd68072f9688efd2bea
+antrag|prozesskostenhilfe|Man muss beim Prozessgericht einen Antrag stellen, um Prozesskostenhilfe zu erhalten.|dbdba9a3af244fd68072f9688efd2bea
+formular|antrag|Dem Antrag sind eine Erklärung über die persönlichen und wirtschaftlichen Verhältnisse sowie entsprechende Belege in Kopie beizufügen.|dbdba9a3af244fd68072f9688efd2bea
+formular|erklärung|Für die Erklärung über die persönlichen und wirtschaftlichen Verhältnisse gibt es ein spezifisches Formular.|dbdba9a3af244fd68072f9688efd2bea
+formular|partei|Das Formular muss von der Partei sorgfältig und vollständig ausgefüllt werden.|dbdba9a3af244fd68072f9688efd2bea
+rechtsbeistand|rechtsanwalt|Rechtsbeistand kann durch einen Rechtsanwalt vertreten werden|264303e0a033464d8cf4d0247b49a8c5
+rechtsbeistand|rechtsanwältin|Rechtsbeistand kann durch eine Rechtsanwältin vertreten werden|264303e0a033464d8cf4d0247b49a8c5
+rechtsanwalt|rechtsanwältin|Ein Rechtsanwalt oder eine Rechtsanwältin kann in Betracht gezogen werden, wenn anwaltliche Vertretung erforderlich ist|264303e0a033464d8cf4d0247b49a8c5
+rechtsanwalt|gericht|Ein Antrag auf Beiordnung des Rechtsanwalts kann gestellt werden|264303e0a033464d8cf4d0247b49a8c5
+rechtsanwältin|gericht|Ein Antrag auf Beiordnung der Rechtsanwältin kann gestellt werden|264303e0a033464d8cf4d0247b49a8c5
+gericht|raten|Das Gericht kann die Raten herabsetzen oder bestimmen, dass Raten nicht mehr zu zahlen sind, abhängig von den finanziellen Verhältnissen|264303e0a033464d8cf4d0247b49a8c5
+gericht|prozesskostenhilfe|Das Gericht kann die Bewilligung der Prozesskostenhilfe nachträglich aufheben und die gesamten Kosten müssen nachgezahlt werden, wenn eine wesentliche Verbesserung der finanziellen Verhältnisse eintritt|264303e0a033464d8cf4d0247b49a8c5
+gericht|rechtsanwalt|Das Gericht kann einen Rechtsanwalt zur Vertretung bereiter|264303e0a033464d8cf4d0247b49a8c5
+gericht|rechtsanwältin|Das Gericht kann eine Rechtsanwältin zur Vertretung bereite|264303e0a033464d8cf4d0247b49a8c5
+prozesskosten|raten|Es wird festgelegt oder erhöht|9df66cc3f4644431a12fbd3907c488b8
+prozesskosten|zahlungen|Anordnung von Zahlungen aus dem Vermögen|9df66cc3f4644431a12fbd3907c488b8
+gerichtsverfahren|verbesse­rungen der wirtschaftlichen verhält­nisse|Verpflichtung zur unaufgeforderten und unverzüglichen Mitteilung während des Gerichtsverfahrens und vier Jahre über dessen Beendigung hinaus|9df66cc3f4644431a12fbd3907c488b8
+gerichtsverfahren|änderung der anschrift|Verpflichtung zur unaufgeforderten und unverzüglichen Mitteilung während des Gerichtsverfahrens und vier Jahre über dessen Beendigung hinaus|9df66cc3f4644431a12fbd3907c488b8
+einkünfte|verbesse­rung von mehr als 100 euro (brutto) im monat|Verpflichtung zur Mitteilung von nicht nur einmaligen Verbesserungen von mehr als 100 Euro (brutto) im Monat|9df66cc3f4644431a12fbd3907c488b8
+abzüge|verringerung|Verpflichtung zur Mitteilung bei Verringerung der geltend gemachten Abzüge|9df66cc3f4644431a12fbd3907c488b8
+wohnkosten|verringerung|Verpflichtung zur Mitteilung bei Verringerung der geltend gemachten Wohnkosten|9df66cc3f4644431a12fbd3907c488b8
+zahlungsverpflichtungen|verringerung|Verpflichtung zur Mitteilung bei Verringerung der geltend gemachten Zahlungsverpflichtungen|9df66cc3f4644431a12fbd3907c488b8
+belastungen|wegfall|Verpflichtung zur Mitteilung bei Wegfall oder Verringerung besonderer Belastungen|9df66cc3f4644431a12fbd3907c488b8
+pflichten|verstoß|Konsequenz bei Verstoß gegen die Mitteilungspflichten|9df66cc3f4644431a12fbd3907c488b8
+streitwert|gerichtsgebühren|Kosten im Zusammenhang mit dem Streitwert|9df66cc3f4644431a12fbd3907c488b8
+streitwert|anwaltskosten für den eigenen anwalt|Kosten im Zusammenhang mit dem Streitwert|9df66cc3f4644431a12fbd3907c488b8
+streitwert|anwaltskosten für den gegenanwalt|Kosten im Zusammenhang mit dem Streitwert|9df66cc3f4644431a12fbd3907c488b8
+streitwert|kosten für 2 zeugen|Kosten im Zusammenhang mit dem Streitwert|9df66cc3f4644431a12fbd3907c488b8
+sachverständigengutachten|nebenkosten|Sachverständigengutachten and Nebenkosten are both legal cost components in the context.|169f26ebd23749ef8dbe58a282a9a8c4
+landgericht|rechtsanwalt|The Landgericht is responsible for cases with a certain value, and representation by a Rechtsanwalt is required at the Landgericht.|169f26ebd23749ef8dbe58a282a9a8c4
+rechtsanwalt|prozesskostenhilfe|The Rechtsanwalt applies for Prozesskostenhilfe on behalf of the client.|169f26ebd23749ef8dbe58a282a9a8c4
+herr fröhlich|prozess|Herr Fröhlich decides to proceed with the legal process.|169f26ebd23749ef8dbe58a282a9a8c4
+prozesskostenhilfe|gericht|The Gericht approves the Prozesskostenhilfe for Herr Fröhlich.|169f26ebd23749ef8dbe58a282a9a8c4
+rechtsstreitigkeiten|eu-mitgliedstaaten|Rechtsstreitigkeiten und EU-Mitgliedstaaten sind die zentralen Konzepte dieses Textes und sind miteinander verbunden, da der Text hauptsächlich die rechtlichen Aspekte von Streitigkeiten zwischen EU-Mitgliedstaaten behandelt.|a155de3b4d2947f48a4463fedb8a7721
+rechtsstreitigkeiten|prozesskostenhilfe|Der Text diskutiert die Gewährung von Prozesskostenhilfe in Fällen, in denen eine der Parteien in einem anderen EU-Mitgliedstaat wohnt, als eine Möglichkeit, Streitigkeiten zu klären. Dies zeigt eine Verbindung zwischen Rechtsstreitigkeiten und Prozesskostenhilfe.|a155de3b4d2947f48a4463fedb8a7721
+rechtsstreitigkeiten|gericht|Die Entscheidung über Prozesskostenhilfe in Fällen von Rechtsstreitigkeiten hängt vom Gericht ab, in dem das Verfahren stattfindet. Dies stellt eine Verbindung zwischen Rechtsstreitigkeiten und Gericht her.|a155de3b4d2947f48a4463fedb8a7721
+eu-mitgliedstaaten|prozesskostenhilfe|Die Gewährung von Prozesskostenhilfe hängt davon ab, in welchem EU-Mitgliedstaat die prozessführende Partei ansässig ist. Somit gibt es eine Verbindung zwischen EU-Mitgliedstaaten und Prozesskostenhilfe.|a155de3b4d2947f48a4463fedb8a7721
+gericht|prozesskostenhilfe|Die Entscheidung, ob Prozesskostenhilfe bewilligt wird, hängt vom Gericht ab, in dem das Verfahren stattfindet. Dies stellt eine Verbindung zwischen Gericht und Prozesskostenhilfe her.|a155de3b4d2947f48a4463fedb8a7721
+prozesskostenhilfe|übermittlungsstelle|Die prozessführende Partei wird von der Übermittlungsstelle unterstützt, die in Deutschland ansässig ist. Somit ergibt sich eine Verbindung zwischen Prozesskostenhilfe und Übermittlungsstelle.|a155de3b4d2947f48a4463fedb8a7721
+übermittlungsstelle|empfangsstelle|Die Übermittlungsstelle in Deutschland übermittelt den Antrag an die zuständige Empfangsstelle im Staat des Prozessgerichts. Dadurch besteht eine Verbindung zwischen Übermittlungsstelle und Empfangsstelle.|a155de3b4d2947f48a4463fedb8a7721
+herr fröhlich|polen|Herr Fröhlich hat in Polen ein Auto erworben. Das zeigt die Verbindung zwischen Herr Fröhlich und Polen.|a155de3b4d2947f48a4463fedb8a7721
+polen|prozesskostenhilfe|Falls ein polnisches Gericht über die Sache entscheidet, kann Herr Fröhlich Prozesskostenhilfe beantragen. Dies stellt eine Verbindung zwischen Polen und Prozesskostenhilfe her.|a155de3b4d2947f48a4463fedb8a7721
+deutschland|amtsgericht|Die in Deutschland ansässige Übermittlungsstelle ist das örtlich zuständige Amtsgericht. Somit ergibt sich eine Verbindung zwischen Deutschland und Amtsgericht.|a155de3b4d2947f48a4463fedb8a7721
+g|art. 1 abs.|The term 'G' is related to 'Art. 1 Abs.' through the abbreviation in the legal context.|542658d1ffcf4a719f9728ab18e21d10
+g|fünf ländern|The term 'G' is related to 'fünf Ländern' as it is applicable in the context of the five joined countries.|542658d1ffcf4a719f9728ab18e21d10
+fünf ländern|art. 1 abs.|The term 'fünf Ländern' and 'Art. 1 Abs.' are related as the countries are likely referred to in this particular Article.|542658d1ffcf4a719f9728ab18e21d10
+einigvtr|anl. i kap. iii sachg. a abschn. iii nr. 10 einigvtr|EinigVtr is related to Anl. I Kap. III Sachg. A Abschn. III Nr. 10 EinigVtr as per the given context.|a6b497f4e8bf479aaa4c248dd174ad63
+einigvtr|art. 1 g v. 23.9.1990 ii 885, 927|EinigVtr is related to Art. 1 G v. 23.9.1990 II 885, 927 as per the given context.|a6b497f4e8bf479aaa4c248dd174ad63
+landes berlin|grundgesetz|Landes Berlin is related to Grundgesetz as per the given context.|a6b497f4e8bf479aaa4c248dd174ad63
+landes berlin|grundgesetz|Landes Berlin is related to Grundgesetz as per the given context.|a6b497f4e8bf479aaa4c248dd174ad63
+iv|nr.|IV is an abbreviation for 'Nummer' which means 'number' in English.|ec9ff280be6541609735f9f067dd8f25
+beratungshilfe|rechtsuchende|Die Beratungshilfe wird auf Antrag gewährt, wenn Rechtsuchende die erforderlichen Mittel nach ihren persönlichen und wirtschaftlichen Verhältnissen nicht aufbringen können.|d9fc99f06e2344ecb72c09ffadf3b7e5
+beratungshilfe|amtsgericht|Das Amtsgericht entscheidet über den Antrag auf Beratungshilfe.|d9fc99f06e2344ecb72c09ffadf3b7e5
+beratungshilfe|beratungspersonen|Die Beratungshilfe wird durch Rechtsanwälte, Rechtsbeistände, Steuerberater, Steuerbevollmächtigte, Wirtschaftsprüfer, vereidigte Buchprüfer sowie Rentenberater gewährt.|d9fc99f06e2344ecb72c09ffadf3b7e5
+beratungshilfe|vergütung|Die Bewilligung von Beratungshilfe bewirkt, dass die Beratungsperson gegen Rechtsuchende keinen Anspruch auf Vergütung mit Ausnahme der Beratungshilfegebühr geltend machen kann.|d9fc99f06e2344ecb72c09ffadf3b7e5
+amtsgericht|antrag|Das Amtsgericht ist zuständig für die Entscheidung über den Antrag auf Beratungshilfe.|d9fc99f06e2344ecb72c09ffadf3b7e5
+rechtsuchende|prozesskostenhilfe|Die Voraussetzungen des Absatzes 1 Nummer 1 sind gegeben, wenn den Rechtsuchenden Prozesskostenhilfe nach den Vorschriften der Zivilprozessordnung ohne einen eigenen Beitrag zu den Kosten zu gewähren wäre.|d9fc99f06e2344ecb72c09ffadf3b7e5
+26 s. 41|abl. eu nr.|26 S. 41 is related to ABl. EU Nr. in the context of legal references|7858030b8c1e44f1945a967555968f3c
+beratungshilfe|rechtsberatung|Beratungshilfe wird gewährt für die vorprozessuale Rechtsberatung im Hinblick auf eine außergerichtliche Streitbeilegung.|a6bfa226633942058425f7f5f04e3a4e
+beratungshilfe|unterstützung|Beratungshilfe wird gewährt für die Unterstützung bei einem Antrag nach § 1077 der Zivilprozessordnung, bis das Ersuchen im Mitgliedstaat des Gerichtsstands eingegangen ist.|a6bfa226633942058425f7f5f04e3a4e
+antrag|§ 1077 der zivilprozessordnung|Unterstützung wird gewährt bei einem Antrag nach § 1077 der Zivilprozessordnung, bis das Ersuchen im Mitgliedstaat des Gerichtsstands eingegangen ist.|a6bfa226633942058425f7f5f04e3a4e
+ersuchen|mitgliedstaat des gerichtsstands|Unterstützung bei einem Antrag nach § 1077 der Zivilprozessordnung, bis das Ersuchen im Mitgliedstaat des Gerichtsstands eingegangen ist.|a6bfa226633942058425f7f5f04e3a4e
+antrag|grenzüberschreitende beratungshilfe|Für die Übermittlung von Anträgen auf grenzüberschreitende Beratungshilfe gilt § 1077 der Zivilprozessordnung entsprechend.|a6bfa226633942058425f7f5f04e3a4e
+ersuchen|grenzüberschreitende beratungshilfe|Für eingehende Ersuchen um grenzüberschreitende Beratungshilfe ist das in § 4 Absatz 1 Satz 2 bezeichnete Amtsgericht zuständig.|a6bfa226633942058425f7f5f04e3a4e
+ersuchen|§ 4 absatz 1 satz 2|Für eingehende Ersuchen um grenzüberschreitende Beratungshilfe ist das in § 4 Absatz 1 Satz 2 bezeichnete Amtsgericht zuständig.|a6bfa226633942058425f7f5f04e3a4e
+amtsgericht|grenzüberschreitende beratungshilfe|Für eingehende Ersuchen um grenzüberschreitende Beratungshilfe ist das in § 4 Absatz 1 Satz 2 bezeichnete Amtsgericht zuständig.|a6bfa226633942058425f7f5f04e3a4e
+§ 1078 der zivilprozessordnung|grenzüberschreitende beratungshilfe|§ 1078 Absatz 1 Satz 2, Absatz 2 Satz 2 und Absatz 3 der Zivilprozessordnung gilt entsprechend für eingehende Ersuchen um grenzüberschreitende Beratungshilfe.|a6bfa226633942058425f7f5f04e3a4e
+unterhaltssachen|verordnung (eg) nr. 4/2009 des rates|Bei Unterhaltssachen nach der Verordnung (EG) Nr. 4/2009 des Rates wird grenzüberschreitende Unterhaltssachen verhandelt.|a6bfa226633942058425f7f5f04e3a4e
+dezember 2008|abl.|has publication date|1b1a07dc6a7542988cf5e52845123193
+beratungshilfe|verordnung|Beratungshilfe wird gemäß Artikel 46 und 47 Absatz 2 dieser Verordnung gewährt|90e5de556c8140af85405bda3653e765
+antrag|unterhaltssachen|Anträge in Unterhaltssachen auf grenzüberschreitende Beratungshilfe gemäß § 10 Absatz 1|90e5de556c8140af85405bda3653e765
+amtsgericht|oberlandesgerichts|Amtsgericht am Sitz des Oberlandesgerichts ist zuständig für ausgehende Anträge in Unterhaltssachen auf grenzüberschreitende Beratungshilfe|90e5de556c8140af85405bda3653e765
+gericht|rechtsuchenden|Gericht am Sitz des Oberlandesgerichts ist zuständig in dessen Bezirk die Rechtsuchenden ihren gewöhnlichen Aufenthalt haben|90e5de556c8140af85405bda3653e765
+ersuchen|gericht|Amtsgericht am Sitz des Oberlandesgerichts ist zuständig für eingehende Ersuchen gemäß § 4 Absatz 1 Satz 2|90e5de556c8140af85405bda3653e765
+bundesministerium der justiz|rechtsverordnung|Bundesministerium der Justiz wird ermächtigt, Formulare für den Antrag auf Gewährung von Beratungshilfe und auf Zahlung der Vergütung der Beratungsperson einzuführen und deren Verwendung vorzuschreiben|90e5de556c8140af85405bda3653e765
+öffentliche rechtsberatung|beratungshilfe|In den Ländern Bremen und Hamburg tritt die öffentliche Rechtsberatung an die Stelle der Beratungshilfe, wenn und soweit das Landesrecht nichts anderes bestimmt|90e5de556c8140af85405bda3653e765
+rechtsuchende|rechtsberatung|Im Land Berlin haben Rechtsuchende die Wahl zwischen der Inanspruchnahme der öffentlichen Rechtsberatung und Beratungshilfe, wenn und soweit das Landesrecht nichts anderes bestimmt|90e5de556c8140af85405bda3653e765
+beratungsstellen|beratungshilfe|Länder können durch Gesetz die ausschließliche Zuständigkeit von Beratungsstellen zur Gewährung von Beratungshilfe bestimmen|90e5de556c8140af85405bda3653e765
+justiz|bundesministerium|Ein Service des Bundesministeriums der Justiz sowie des Bundesamts für Justiz|90e5de556c8140af85405bda3653e765
+rechtsanwalt|rechtsuchenden|Rechtsanwälte sind in gleicher Weise wie ein beauftragter Rechtsanwalt zur Verschwiegenheit verpflichtet und mit schriftlicher Zustimmung der Rechtsuchenden berechtigt, Auskünfte aus Akten zu erhalten und Akteneinsicht zu nehmen|90e5de556c8140af85405bda3653e765
+rechtsstreits|kostenrisiko|Einleitung eines gerichtlichen Verfahrens erfordert Überlegungen zu dem damit verbundenen Kostenrisiko|90e5de556c8140af85405bda3653e765
+kläger|kostenursachen|Kläger muss im Wesentlichen drei verschiedene Kostenursachen berücksichtigen: Gerichtsgebühren, Rechtsanwaltskosten sowie die im Laufe des Prozesses entstehenden gerichtlichen Auslagen|90e5de556c8140af85405bda3653e765
+gerichtsgebühren|gegenleistung|Gerichtsgebühren sind die Gegenleistung für die Inanspruchnahme der Gerichte|90e5de556c8140af85405bda3653e765
+klage|gerichtsgebühren|Gerichtsgebühren sind mit Einreichung einer Klage-, Antrags-, Einspruchs- oder Rechtsmittelschrift als Vorschuss fällig|90e5de556c8140af85405bda3653e765
+wert|streitgegenstand|Höhe der einzelnen Gebühr bestimmt sich nach dem Wert des der Klage zugrunde liegenden Streitgegenstandes|90e5de556c8140af85405bda3653e765
+rechtsanwalt|vergütung|Wer einen Rechtsanwalt beauftragt, schuldet diesem eine Vergütung|90e5de556c8140af85405bda3653e765
+rechtsanwalt|einigung|Rechtsanwalt und Einigung sind im Kontext der Gebühren miteinander verbunden, da die Einigung unter Mitwirkung des Rechtsanwalts zu zusätzlichen außergerichtlichen Einigungsgebühren führt.|b2f4edea838142eb9436d32c460e0d6a
+einigung|außergerichtliche einigungsgebühr|Die Einigung führt zur Entstehung einer außergerichtlichen Einigungsgebühr gemäß Nr. 1000 VV-RVG.|b2f4edea838142eb9436d32c460e0d6a
+rechtsanwalt|verfahrensgebühr|Der Rechtsanwalt hat Anspruch auf eine Verfahrensgebühr für die Betreibung eines gerichtlichen Verfahrens.|b2f4edea838142eb9436d32c460e0d6a
+außergerichtliche geschäftsgebühr|verfahrensgebühr|Eine zuvor entstandene außergerichtliche Geschäftsgebühr ist auf die Verfahrensgebühr anzurechnen.|b2f4edea838142eb9436d32c460e0d6a
+gerichtstermins|wahrnehmung|is part of|b98aa18e5662406c8ef0dbf0ab08cf6e
+gerichtstermins|anwalt|participates in|b98aa18e5662406c8ef0dbf0ab08cf6e
+gerichtstermins|prozess|ends with|b98aa18e5662406c8ef0dbf0ab08cf6e
+prozess|prozessvergleich|ends with|b98aa18e5662406c8ef0dbf0ab08cf6e
+prozessvergleich|anwalt|participates in|b98aa18e5662406c8ef0dbf0ab08cf6e
+prozessvergleich|einigungsgebühr|results in|b98aa18e5662406c8ef0dbf0ab08cf6e
+anwalt|mitwirkung|receives|b98aa18e5662406c8ef0dbf0ab08cf6e
+anwalt|einigungsgebühr|receives|b98aa18e5662406c8ef0dbf0ab08cf6e
+mandanten|euro-betrag|pays|b98aa18e5662406c8ef0dbf0ab08cf6e
+gegenstandswert|anwaltliche tätigkeit|Der Gegenstandswert ist relevant für die Berechnung der anwaltlichen Tätigkeit gemäß der Gebührentabelle.|0d77778e1c0a4500ae04d6cfc44791f1
+gegenstandswert|gebührentabelle|Der Gegenstandswert ist ein Parameter, der in der Gebührentabelle gemäß § 13 RVG zur Bestimmung der Gebührenhöhe verwendet wird.|0d77778e1c0a4500ae04d6cfc44791f1
+gebührentabelle|§ 13 rvg|Die Gebührentabelle ist gemäß § 13 RVG relevant für die Bestimmung der Gebührenhöhe.|0d77778e1c0a4500ae04d6cfc44791f1
+nettogebühr|gegenstandswert|Die Nettogebühr variiert entsprechend dem Gegenstandswert, z.B. beträgt eine Nettogebühr von 303,- € bei einem Gegenstandswert von bis zu 5.000,- €.|0d77778e1c0a4500ae04d6cfc44791f1
+1,3-fache geschäftsgebühr|gegenstandswert|Die 1,3-fache Geschäftsgebühr ist abhängig vom Gegenstandswert, z.B. ergibt sich ein Betrag in Höhe von 393,90 € bei diesem Gegenstandswert.|0d77778e1c0a4500ae04d6cfc44791f1
+anspruch|ersatz von post- und telekommunikationsdienstentgelten|Der Rechtsanwalt hat Anspruch auf Ersatz von Post- und Telekommunikationsdienstentgelten nach bestimmten Vorschriften.|0d77778e1c0a4500ae04d6cfc44791f1
+rechtsanwalt|umsatzsteuer|Der Rechtsanwalt kann auf seine Leistungen Umsatzsteuer gemäß einer bestimmten Vorschrift verlangen.|0d77778e1c0a4500ae04d6cfc44791f1
+verkehrsunfall|außergerichtliche vergleichsweise abwicklung|Für die außergerichtliche vergleichsweise Abwicklung eines Verkehrsunfalls gelten bestimmte Honorarforderungen, z.B. eine 1,3 Geschäftsgebühr in Höhe von 592,80 €.|0d77778e1c0a4500ae04d6cfc44791f1
+verkehrsunfall|gerichtliche anwaltliche tätigkeit|Im Falle von außergerichtlichen Verhandlungen über Ansprüche aus dem Verkehrsunfall entstehen spezifische Honorarforderungen für die gerichtliche anwaltliche Tätigkeit.|0d77778e1c0a4500ae04d6cfc44791f1
+gerichtsgebühren|rechtsstreit|Zusätzlich zu Gerichtsgebühren und Rechtsanwaltskosten fallen in einem Rechtsstreit weitere Auslagen an, z.B. Dokumentenpauschalen und Kosten der Beweisaufnahme.|0d77778e1c0a4500ae04d6cfc44791f1
+prozesskostenhilfe|zugang zu den gerichten|Die Prozesskostenhilfe gewährleistet, dass der Zugang zu den Gerichten jeder Partei in gleicher Weise offensteht, unabhängig von den finanziellen Mitteln.|0d77778e1c0a4500ae04d6cfc44791f1
+3|129a|is related to|0c9148f3bba44ae98004dd258bb79b4a
+129a|abs.|is a part of|0c9148f3bba44ae98004dd258bb79b4a
+antrag|antragsteller|Der Antrag muss vom Antragsteller oder seinem Bevollmächtigten unterzeichnet sein.|401f9d4a715b437e8e7df73bd0ee0907
+antrag|kläger|Der Kläger kann den Antrag nicht nur vor Klageerhebung, sondern in jedem Stadium des Rechtsstreits stellen.|401f9d4a715b437e8e7df73bd0ee0907
+antrag|beklagter|Der Beklagte kann den Antrag - ab Zustellung der Klage - ebenfalls stellen.|401f9d4a715b437e8e7df73bd0ee0907
+pkh-antrag|prozessgericht|Der PKH-Antrag muss bei dem für die Hauptsache örtlich und sachlich zuständigen Prozessgericht des zuständigen Rechtsweges eingereicht werden.|401f9d4a715b437e8e7df73bd0ee0907
+gericht|pkh-verfahren|Fehlt die Zuständigkeit, so verweist das Gericht das PKH-Verfahren auf Antrag und nach Anhörung des Gegners an das zuständige Gericht.|401f9d4a715b437e8e7df73bd0ee0907
+gericht|pkh-antrag|Bleibt der Antrag aus, wird der PKH-Antrag abgelehnt.|401f9d4a715b437e8e7df73bd0ee0907
+gericht|rechtsweg|Das Gericht, an das verwiesen wurde, ist zwar für das PKH-Verfahren, nicht aber für die Hauptsache an die Verweisung gebunden.|401f9d4a715b437e8e7df73bd0ee0907
+gericht|rechtsweg|Hält das angegangene Gericht den beschrittenen Rechtsweg für nicht gegeben, so wird der PKH-Antrag abgelehnt.|401f9d4a715b437e8e7df73bd0ee0907
+antrag|streitverhältnis|Im Antrag ist das Streitverhältnis unter Angabe der Beweismittel darzustellen.|401f9d4a715b437e8e7df73bd0ee0907
+rn|registered nurse|Rn is an acronym for Registered Nurse|f678116db5044966b6858b1327abc201
+klage|prozesskostenhilfegesuch|Klage und Prozesskostenhilfegesuch sind eng miteinander verbunden, da bei falscher Bezeichnung eines Antrags als „Klage und Prozesskostenhilfegesuch“ Probleme bezüglich unbedingter Klageerhebung entstehen können, was wiederum ein Kostenrisiko für den Antragsteller darstellt.|5c9e7e222b4e49ef8b93541ff3db89c6
+antrag|klage|Der Antragsteller muss eindeutig klarstellen, dass er den Klageantrag nur unter der Bedingung der Bewilligung von Prozesskostenhilfe stellen will, um Probleme bei der Zustellung an den Gegner und ein daraus resultierendes Kostenrisiko zu vermeiden.|5c9e7e222b4e49ef8b93541ff3db89c6
+klage|zustellung|Eine unbedingte Klageerhebung kann bereits bei Zustellung an den Gegner vorliegen, was zu Problemen für den Antragsteller führen kann.|5c9e7e222b4e49ef8b93541ff3db89c6
+zustellung|gegner|Das Gericht kann eine Klagezustellung verhindern, wenn es beim Antragsteller Rückfrage hält oder Klageschrift und Prozesskostenhilfe-Antrag formlos an den Gegner zur Stellungnahme übersendet.|5c9e7e222b4e49ef8b93541ff3db89c6
+erklärung|persönliche und wirtschaftliche verhältnisse|Nach § 117 Abs. 2 ZPO sind dem Antrag eine Erklärung der Partei über ihre persönlichen und wirtschaftlichen Verhältnisse (Familienverhältnisse, Beruf, Vermögen, Einkommen und Lasten) sowie Belege beizufügen.|5c9e7e222b4e49ef8b93541ff3db89c6
+antrag|vordrucke|Es stehen Vordrucke zur Verfügung, die der Antragsteller zu verwenden hat gemäß § 117 Abs. 4 ZPO.|5c9e7e222b4e49ef8b93541ff3db89c6
+ausfüllen|vordruck|Unvollständiges Ausfüllen eines Vordruckes ist nur dann unschädlich, wenn sich das Gericht dennoch ein zuverlässiges Bild über die Verhältnisse des Antragstellers machen oder fehlende Angaben den beigefügten Unterlagen entnehmen kann.|5c9e7e222b4e49ef8b93541ff3db89c6
+verjährung|bekanntgabe|wird durch die Bekanntgabe des erstmaligen Antrags gegenüber dem Schuldner gehemmt|837a6c9c9cda4930aabb33beddded5c4
+verjährung|antrag|Die Veranlassung der Bekanntgabe des erstmaligen Antrags gegenüber dem Schuldner bewirkt die Hemmung der Verjährung|837a6c9c9cda4930aabb33beddded5c4
+antrag|gericht|Einreichung des Antrags bei Gericht|837a6c9c9cda4930aabb33beddded5c4
+antrag|bekanntgabe|Die Bekanntgabe des erstmaligen Antrags gegenüber dem Schuldner|837a6c9c9cda4930aabb33beddded5c4
+antrag|§ 117 zpo|Antrag muss in beiden Fällen den wesentlichen Voraussetzungen des § 117 ZPO entsprechen|880baac627314cefac186dc4b8af44e6
+antrag|parteien|Antrag muss die Parteien und das Gericht bezeichnen|880baac627314cefac186dc4b8af44e6
+antrag|gericht|Antrag muss die Parteien und das Gericht bezeichnen|880baac627314cefac186dc4b8af44e6
+antrag|anspruchsgrund|Antrag muss einen bestimmten Antrag und Anspruchsgrund enthalten|880baac627314cefac186dc4b8af44e6
+antrag|§§ 114 ff. zpo|Nur der erste PKH-Antrag hemmt die Verjährung, nicht seine Wiederholung, auch wenn der erste Antrag die Voraussetzungen der §§ 114 ff. ZPO nicht erfüllte|880baac627314cefac186dc4b8af44e6
+antrag|§ 204 abs. 2 bgb|Die Hemmung endet nach § 204 Abs. 2 BGB 6 Monate nach der letzten Verfahrenshandlung der Beteiligten, sobald das Verfahren durch Nichtbetreiben in Stillstand gerät, sonst 6 Monate nach Beendigung des Verfahrens|880baac627314cefac186dc4b8af44e6
+antrag|beschwerde|mit Ablauf der 2-Wochenfrist der sofortigen Beschwerde|880baac627314cefac186dc4b8af44e6
+antrag|antragsrücknahme|mit Antragsrücknahme oder Vergleich|880baac627314cefac186dc4b8af44e6
+antrag|vergleich|mit Antragsrücknahme oder Vergleich|880baac627314cefac186dc4b8af44e6
+pkh-antrag|verjährung|Nur der erste PKH-Antrag hemmt die Verjährung, nicht seine Wiederholung|880baac627314cefac186dc4b8af44e6
+pkh-antrag|fristwahrung|Fristgerechte Einreichung des vollständigen PKH-Antrags wahrt die Einhaltung der Rechtsmittelfrist|880baac627314cefac186dc4b8af44e6
+pkh-antrag|rechtsmittelfrist|Fristgerechte Einreichung des vollständigen PKH-Antrags wahrt die Einhaltung der Rechtsmittelfrist|880baac627314cefac186dc4b8af44e6
+pkh-antrag|wiedereinsetzung|Wiedereinsetzung in den vorigen Stand gewährt werden kann, §§ 233 ff. ZPO (BGH NJW 2014, 1307)|880baac627314cefac186dc4b8af44e6
+anhörung|gegner|Anhörung des Gegners im Regelfall zwingend vorgeschrieben|880baac627314cefac186dc4b8af44e6
+eilverfahren|§ 118 abs. 1 satz 1 zpo|Eilverfahren can be related to § 118 Abs. 1 Satz 1 ZPO as it may be deemed inappropriate in this context.|4473ed8c952b4b018b2820c1b16c67bd
+gegners|stellungnahme|The opinion of the opponent is significant for evaluating the chances of success.|4473ed8c952b4b018b2820c1b16c67bd
+angaben|persönlichen und wirtschaftlichen verhältnisse|Personal and economic circumstances should not be disclosed to the opponent without the consent of the applicant due to data protection, according to § 117 Abs. 2 Satz 2 ZPO.|4473ed8c952b4b018b2820c1b16c67bd
+prozessakte|gesondertes pkh-heft|The documents are not to be placed in the court record, but in a separate PKH booklet.|4473ed8c952b4b018b2820c1b16c67bd
+antragsberechtigte personen|natürliche personen|All natural persons are eligible to apply according to § 114 ZPO, regardless of their role as plaintiff, defendant, joint litigant, or intervenor, and regardless of their place of residence.|4473ed8c952b4b018b2820c1b16c67bd
+vertreter|gesetzlichen vertretungsfällen|In cases of legal representation, the circumstances of the represented person are decisive.|4473ed8c952b4b018b2820c1b16c67bd
+elternteils|kindes|In the maintenance claim of a parent as the legal representative of the child, the financial situation of the child is relevant.|4473ed8c952b4b018b2820c1b16c67bd
+zessionare|abgetretenen forderungen|In asserting assigned claims, the personal and economic circumstances of the plaintiff are generally relevant.|4473ed8c952b4b018b2820c1b16c67bd
+parteien kraft amtes|pkh|Parties acting ex officio (executors, estate, compulsory or insolvency administrators) are granted PKH according to § 116 Satz 1 Nr. 1 ZPO if the costs cannot be covered from the administered assets and it is not reasonable for those economically involved in the subject matter of the legal dispute (e.g. the insolvency creditors) to bear the costs.|4473ed8c952b4b018b2820c1b16c67bd
+juristische personen|pkh|PKH can be granted to domestic and European legal entities according to § 116 Satz 1 Nr. 2 ZPO if the costs cannot be borne by them or by those economically involved in the subject matter of the legal dispute, and if the omission of legal prosecution or defense would run contrary to general interests. This also applies to the party-capable associations OHG, KG, shipping company, and the foreign GbR.|4473ed8c952b4b018b2820c1b16c67bd
+prozesskostenhilfeanspruchs|bewilligung|The granting of PKH according to § 114 ZPO requires that the applicant cannot, only partly, or only in installments, bear the costs of the litigation based on their economic and personal circumstances, the intended legal action or defense offers sufficient prospects of success, and does not appear frivolous.|4473ed8c952b4b018b2820c1b16c67bd
+einkommen|partei|Das gesamte Einkommen der Partei ist zu berücksichtigen.|f98f718b527745fe9ad6f0e71ef0418e
+einkommen|einkünfte|Das Einkommen umfasst alle Einkünfte in Geld oder Geldeswert, wie Löhne, Gehälter, Urlaubs- und Weihnachtsgeld, Kapital- oder Mieterträge, Unterhaltsrenten und Sozialleistungen.|f98f718b527745fe9ad6f0e71ef0418e
+einkommen|familie|Es ist nur das Einkommen der Partei relevant, nicht das Einkommen der Familie oder des Ehepartners.|f98f718b527745fe9ad6f0e71ef0418e
+pkh|ehepartner|Auch wenn Ehegatten gemeinsam einen vermögensrechtlichen Anspruch einklagen und beide Prozesskostenhilfe (PKH) beantragen, ist die PKH für jeden Einzelnen aufgrund seines eigenen Einkommens zu berechnen.|f98f718b527745fe9ad6f0e71ef0418e
+einkommen|freiberufler|Für die Berechnung des Einkommens von Freiberuflern können Steuerbescheide, Bilanzen, Einnahme-/Überschussrechnungen und Entnahmen aus dem Betriebsvermögen für persönliche Bedürfnisse als Grundlage dienen.|f98f718b527745fe9ad6f0e71ef0418e
+einkommen|gewerbetreibende|Für die Berechnung des Einkommens von Gewerbetreibenden können Steuerbescheide, Bilanzen, Einnahme-/Überschussrechnungen und Entnahmen aus dem Betriebsvermögen für persönliche Bedürfnisse als Grundlage dienen.|f98f718b527745fe9ad6f0e71ef0418e
+einkommen|aufwendungen|Einkommen is related to Aufwendungen as certain expenses are deductible from the income|5572db1f7f3d4b248536e4c3ca173873
+einkommen|steuern und abgaben|Einkommen is related to Steuern und Abgaben as they are deductible from the income|5572db1f7f3d4b248536e4c3ca173873
+einkommen|unterhalt|Einkommen is related to Unterhalt (maintenance) as it is deductible from the income|5572db1f7f3d4b248536e4c3ca173873
+einkommen|unterkunft und heizung|Einkommen is related to Unterkunft und Heizung (accommodation and heating) as they are deductible from the income|5572db1f7f3d4b248536e4c3ca173873
+einkommen|besondere belastungen|Einkommen is related to besondere Belastungen (special burdens) as they are deductible from the income|5572db1f7f3d4b248536e4c3ca173873
+§ 115 abs. 1 satz 3 nr. 1–5 zpo|einkommen|Section § 115 Abs. 1 Satz 3 Nr. 1–5 ZPO defines what is included in the income|5572db1f7f3d4b248536e4c3ca173873
+sozial-rechtliche ermittlung des einkommens|gerichte|Die Gerichte arbeiten mit speziellen Computerprogrammen aufgrund der Unübersichtlichkeit der unterschiedlichen Berechnungsfaktoren|e21136ae90694e60af9158db9db222c4
+monatseinkommen|prozesskosten|Die Höhe der auf die Prozesskosten zu leistenden Monatsraten wird auf der Grundlage des einzusetzenden Monatseinkommens bestimmt.|e21136ae90694e60af9158db9db222c4
+vermögen|prozesskosten|Nach § 115 Abs. 3 ZPO hat der Antragsteller zur Aufbringung der Prozesskosten auch sein Vermögen einzusetzen, soweit ihm dies zumutbar ist.|e21136ae90694e60af9158db9db222c4
+rechtsschutzversicherung|bedürftigkeit|Besteht eine Rechtsschutzversicherung, die Deckungszusage erteilt hat, besteht ab diesem Zeitpunkt keine Bedürftigkeit mehr.|e21136ae90694e60af9158db9db222c4
+hilfsbedürftigkeit|pkh|Liegt eine Hilfsbedürftigkeit im Sine des § 114 ZPO vor, so wird dennoch keine PKH bewilligt, wenn dies im Einzelfall unbillig wäre.|e21136ae90694e60af9158db9db222c4
+rechtsverfolgung|rechtsverfolgung|Hinreichende Erfolgsaussicht der Rechtsverfolgung liegt vor, wenn die beabsichtigte Klage zulässig und schlüssig ist und die erforderlichen Beweismittel zur Verfügung stehen|e21136ae90694e60af9158db9db222c4
+pkh|zuständigkeit|Die Zuständigkeit des angegangenen Gerichts für die Hauptsache ist Voraussetzung eines ordnungsgemäßen PKH-Antrags und ebenso materielle Voraussetzung für die Erfolgsaussicht der Hauptsache.|e21136ae90694e60af9158db9db222c4
+rechtsverteidigung|beweismittel|Die Rechtsverteidigung des Beklagten ist aussichtsreich, wenn er rechtsbegründende Behauptungen des Klägers bestreitet oder erhebliche Einwendungen bzw. Einreden mit entsprechendem Beweisangebot vorträgt.|e21136ae90694e60af9158db9db222c4
+rechtsfragen|prüfung der erfolgsaussicht|Bei der Prüfung der Erfolgsaussicht soll nicht kleinlich verfahren werden. Sie ist auch dann zu bejahen, wenn Rechtsfragen zu entscheiden sind, die in Rechtsprechung und Lehre noch nicht eindeutig geklärt sind.|e21136ae90694e60af9158db9db222c4
+erfolgsaussicht|einzelfälle|Bei Erledigung der Hauptsache hat die beabsichtigte Prozessführung keine Aussicht auf Erfolg mehr. Der PKH-Antrag ist abzulehnen, wenn z. B. die mit der beabsichtigten Klage begehrte Zahlung schon während des PKH-Verfahrens erfolgt.|e21136ae90694e60af9158db9db222c4
+mutwilligkeit|rechtsverfolgung|Mutwillig ist eine Rechtsverfolgung, wenn eine Partei, die selbst für die Kosten aufkommen muss, bei verständiger Würdigung aller Umstände von der Prozessführung oder Rechtsverteidigung absehen würde.|e21136ae90694e60af9158db9db222c4
+pkh|gegner|Vor Bewilligung oder Ablehnung der PKH ist dem Gegner Gelegenheit zur Stellungnahme zu geben, sofern dies nicht aus besonderen Gründen unzweckmäßig erscheint.|e21136ae90694e60af9158db9db222c4
+glaubhaftmachung|antragsteller|Das Gericht kann die Glaubhaftmachung tatsächlicher Angaben durch den Antragsteller anordnen, etwa bei Zweifeln über die Richtigkeit der Angaben.|e21136ae90694e60af9158db9db222c4
+gericht|erhebungen|Das Gericht kann Erhebungen anstellen, z. B. durch Vorlage von Urkunden, Beiziehen von Strafakten oder Einholung von Behördenauskünften gemäß § 118 Abs. 2 Satz 2 ZPO.|f13e122dace646789c4e1377e83ee383
+antragstellers|mitwirkungspflicht|Es obliegt dem Antragsteller, vollständig und glaubhaft vorzutragen gemäß § 118 Abs. 2 Satz 2 ZPO.|f13e122dace646789c4e1377e83ee383
+zeugen|sachverständigen|Die Vernehmung von Zeugen und Sachverständigen kommt nur ganz ausnahmsweise in Betracht, wenn eine anderweitige Klärung der Erfolgsaussicht oder der Mutwilligkeit nicht möglich ist gemäß § 118 Abs. 2 Satz 3 ZPO.|f13e122dace646789c4e1377e83ee383
+gericht|parteien|Das Gericht kann die Parteien des PKH-Verfahrens zur mündlichen Erörterung laden gemäß § 118 Abs. 1 Satz 3 ZPO.|f13e122dace646789c4e1377e83ee383
+einigung|mündlichen erörterung|Das Gericht kann die Parteien des PKH-Verfahrens zur mündlichen Erörterung laden, wenn eine Einigung zu erwarten ist gemäß § 118 Abs. 1 Satz 3 ZPO.|f13e122dace646789c4e1377e83ee383
+mündliche erörterung|mündlichen verhandlung|Die mündliche Erörterung soll eine Ausnahme bleiben und darf nicht dazu dienen, die mündliche Verhandlung und damit wesentliche Teile des Hauptprozesses vorwegzunehmen.|f13e122dace646789c4e1377e83ee383
+termin|vergleich|Kommt es im Termin zum erwarteten Vergleich, ist er zu Protokoll zu nehmen und ist Vollstreckungstitel nach § 794 Abs. 1 Nr.|f13e122dace646789c4e1377e83ee383
+vergleich|gerichtsgebühr|ist gerichtsgebührenfrei|23f36f2091ca4d859ee569ee8a1301bc
+rechtsanwalt|mandant|erhalten von ihren Mandanten|23f36f2091ca4d859ee569ee8a1301bc
+rechtsanwalt|verfahrensgebühr|erhalten von ihren Mandanten mindestens eine 0,5 Verfahrensgebühr|23f36f2091ca4d859ee569ee8a1301bc
+rechtsanwalt|einigungsgebühr|erhalten von ihren Mandanten mindestens eine 1,0 Einigungsgebühr|23f36f2091ca4d859ee569ee8a1301bc
+nr. 1003|vv-rvg||23f36f2091ca4d859ee569ee8a1301bc
+nr. 3335|vv-rvg||23f36f2091ca4d859ee569ee8a1301bc
+nr. 3337|vv-rvg||23f36f2091ca4d859ee569ee8a1301bc
+beschlussverfahren|beschleunigungsgebot|In the context of the PKH application, the decision within the Beschlussverfahren must be made promptly and should not be unduly delayed until the completion of the trial proceedings.|ba6c7be01a6d476ebc3a7df435d87921
+beschlussverfahren|pkh-antrag|The decision within the Beschlussverfahren is based on the PKH application, which is considered ready for a decision when the application is coherent and supported by a statement on personal and economic circumstances, and the opponent has had a reasonable opportunity to comment.|ba6c7be01a6d476ebc3a7df435d87921
+beschlussverfahren|beweiserhebung|The decision within the Beschlussverfahren should not be delayed until after the completion of the trial proceedings and obtaining evidence.|ba6c7be01a6d476ebc3a7df435d87921
+beschlussverfahren|beweisaufnahme|If the trial proceedings are conducted before the decision is made on the PKH-Antrag of the defendant, then PKH can be subsequently granted based on the prospects of the defendant's legal defense, even if the evidence gathering has been unfavorable for the defendant's submission.|ba6c7be01a6d476ebc3a7df435d87921
+beschlussverfahren|entscheidungsreife|The Beschlussverfahren decision should be based on the court's last knowledge and if the court unjustifiably delays the decision, the point at which it should have been decided with the correct treatment of the application takes precedence.|ba6c7be01a6d476ebc3a7df435d87921
+pkh-antrag|entscheidungsreife|The PKH-Antrag is considered ready for a decision when the application is coherent and supported by a statement on personal and economic circumstances, and the opponent has had a reasonable opportunity to comment.|ba6c7be01a6d476ebc3a7df435d87921
+entscheidungsreife|beweisaufnahme|The decision on PKH can be granted after the completion of the trial proceedings and obtaining evidence if the PKH application was already ready for a decision prior to this.|ba6c7be01a6d476ebc3a7df435d87921
+pkh-antrag|beweisaufnahme|If the trial proceedings are conducted before the decision is made on the PKH-Antrag of the defendant, then PKH can be subsequently granted based on the prospects of the defendant's legal defense, even if the evidence gathering has been unfavorable for the defendant's submission.|ba6c7be01a6d476ebc3a7df435d87921
+beschlussverfahren|beklagter|If there is a delayed decision on the PKH-Antrag of the defendant, then PKH can be subsequently granted based on the prospects of the defendant's legal defense, even if the evidence gathering has been unfavorable for the defendant's submission.|ba6c7be01a6d476ebc3a7df435d87921
+beschlussverfahren|gerichtsentscheidung|If the court's decision is unduly delayed with regard to the PKH-Antrag, the point at which it should have been decided with the correct treatment of the application takes precedence.|ba6c7be01a6d476ebc3a7df435d87921
+pkh-antrag|beklagter|If there is a delayed decision on the PKH-Antrag of the defendant, then PKH can be subsequently granted based on the prospects of the defendant's legal defense, even if the evidence gathering has been unfavorable for the defendant's submission.|ba6c7be01a6d476ebc3a7df435d87921
+beschlussverfahren|beweisaufnahme|If the trial proceedings are conducted before the decision is made on the PKH-Antrag of the defendant, then PKH can be subsequently granted based on the prospects of the defendant's legal defense, even if the evidence gathering has been unfavorable for the defendant's submission.|ba6c7be01a6d476ebc3a7df435d87921
+beschlussverfahren|instanz|Exceptionally, PKH can also be retroactively approved after the end of the instance, if the application was already ready for a decision prior to this.|ba6c7be01a6d476ebc3a7df435d87921
+bewilligender beschluss|antragsteller|According to § 121 Abs. 1 ZPO, a legally ready lawyer must be assigned to the applicant in the approving decision, as far as legal representation by lawyers is mandatory, even if the applicant is a lawyer himself.|ba6c7be01a6d476ebc3a7df435d87921
+anwaltsprozess|rechtsanwalt|A ready lawyer is only assigned to the party if requested and legal representation by a lawyer is deemed necessary, or if the opponent is represented by a lawyer, according to § 121 Abs. 2 ZPO.|ba6c7be01a6d476ebc3a7df435d87921
+rechtsanwalt|pkh-antrag|Ein Rechtsanwalt kann dem Antragsteller im Rahmen eines PKH-Antrags beigeordnet werden.|513cb2113d7f401ab1dfc445eb8488dd
+pkh-antrag|beschluss|Der Beschluss über den PKH-Antrag wird ohne mündliche Verhandlung getroffen gemäß den entsprechenden Paragraphen der Zivilprozessordnung (ZPO).|513cb2113d7f401ab1dfc445eb8488dd
+pkh|rechtszug|Die Bewilligung der Prozesskostenhilfe (PKH) gilt jeweils für den entsprechenden Rechtszug.|513cb2113d7f401ab1dfc445eb8488dd
+pkh|monatsraten|Mit der Bewilligung der Prozesskostenhilfe können Monatsraten festgesetzt werden, die der Antragsteller an die Gerichtskasse zahlen muss.|513cb2113d7f401ab1dfc445eb8488dd
+beschluss|kostenentscheidung|Ein ablehnender Beschluss muss begründet werden und enthält keine Kostenentscheidung gemäß ZPO.|513cb2113d7f401ab1dfc445eb8488dd
+beschluss|streitwert|Der Beschluss soll im Hinblick auf die Rechtsanwaltsgebühren den Streitwert festsetzen.|513cb2113d7f401ab1dfc445eb8488dd
+beschluss|antragsteller|Im bewilligenden Beschluss wird die Prozesskostenhilfe für den Antragsteller bewilligt und ein Rechtsanwalt beigeordnet.|513cb2113d7f401ab1dfc445eb8488dd
+beschluss|raten|Im bewilligenden Beschluss können monatliche Raten festgelegt werden, die der Antragsteller zahlen muss.|513cb2113d7f401ab1dfc445eb8488dd
+rechtsmittel|beschluss|Der bewilligende Beschluss ist für Antragsteller und Antragsgegner unanfechtbar, während nur der Staatskasse unter bestimmten Voraussetzungen die sofortige Beschwerde zusteht.|513cb2113d7f401ab1dfc445eb8488dd
+zivilprozessordnung|prozesskostenhilfe|Die Prozesskostenhilfe wird gemäß den Paragraphen der Zivilprozessordnung (ZPO) bewilligt oder abgelehnt.|513cb2113d7f401ab1dfc445eb8488dd
+beschluss|sofortige beschwerde|Beschluss kann zu einer sofortigen Beschwerde führen|779c1d75da0a47f1b6f6bcb8b1ad280f
+beschluss|ablehnenden beschluss|Ein Beschluss kann auch ein ablehnender Beschluss sein, der zur sofortigen Beschwerde führen kann|779c1d75da0a47f1b6f6bcb8b1ad280f
+beschluss|fehlender erfolgsaussicht|Die Ablehnung eines Beschlusses kann auf fehlender Erfolgsaussicht beruhen|779c1d75da0a47f1b6f6bcb8b1ad280f
+beschluss|streitwert|Die Beschwerde ist nur zulässig, wenn der Streitwert in der Hauptsache einen bestimmten Betrag übersteigt|779c1d75da0a47f1b6f6bcb8b1ad280f
+beschluss|hauptsache|Der Streitwert in der Hauptsache beeinflusst die Zulässigkeit der Beschwerde|779c1d75da0a47f1b6f6bcb8b1ad280f
+streitwert|600,00 €|Die Beschwerde ist nur zulässig, wenn der Streitwert in der Hauptsache 600,00 € übersteigt|779c1d75da0a47f1b6f6bcb8b1ad280f
+beschwerde|zulässig|Die Zulässigkeit der Beschwerde hängt vom Streitwert in der Hauptsache ab|779c1d75da0a47f1b6f6bcb8b1ad280f
+beschwerdefrist|monat|Die Beschwerdefrist beträgt 1 Monat, § 127 Abs. 2 Satz 3, Abs. 3 Satz 3 ZPO.|44b1c6a43fb64656ab33beb1cf388bc6
+antragsteller|beschluss|Für den Antragsteller beginnt sie mit Zustellung des Beschlusses, §§ 127 Abs. 2 Satz 3, 569 Abs. 1 Satz 2 ZPO.|44b1c6a43fb64656ab33beb1cf388bc6
+bewilligung der pkh|frist|Bei Bewilligung der PKH beginnt die Frist für die Gerichtskasse mit der Bekanntgabe des Beschlusses an den zuständigen Revisor und endet spätestens 3 Monate nach Verkündung bzw. Übermittlung an die Geschäftsstelle, § 127 Abs.|44b1c6a43fb64656ab33beb1cf388bc6
+revisor|beschwerde|Der Revisor kann die Beschwerde darauf richten|563201e8743943b8bee281bf87989c74
+revisor|partei|dass die Partei Zahlungen zu leisten hat|563201e8743943b8bee281bf87989c74
+revisor|zpo|nach § 115 Abs. 1–3 ZPO bzw. Beträge nach § 116 Satz 3 ZPO zu leisten hat, § 127 Abs. 3 Satz 2 ZPO|563201e8743943b8bee281bf87989c74
+antragsteller|prozesskosten|Der Antragsteller wird von der Zahlung von Prozesskosten befreit bzw. nur im Rahmen der Anordnung der Ratenzahlung verpflichtet, § 122 Abs. 1 ZPO|563201e8743943b8bee281bf87989c74
+anwalt|staatskasse|Der beigeordnete Rechtsanwalt erhält seine Gebühren und Auslagen aus der Staatskasse, §§ 45 Abs. 1, 48 RVG|563201e8743943b8bee281bf87989c74
+rechtsanwalt|erstattungsanspruch|Nach § 126 ZPO hat der Rechtsanwalt aber einen direkten Erstattungsanspruch gegenüber dem unterlegenen Gegner|563201e8743943b8bee281bf87989c74
+rechtsanwalt|gebühren|Er kann seine Gebühren nicht gegenüber der eigenen Partei geltend machen, § 122 Abs. 1 Nr. 3 ZPO|563201e8743943b8bee281bf87989c74
+rechtsanwalt|staatskasse|Soweit der Rechtsanwalt aus der Staatskasse befriedigt wird, gehen seine Vergütungsansprüche gegen die Partei oder einen ersatzpflichtigen Gegner auf diese über, § 59 Abs. 1 RVG|563201e8743943b8bee281bf87989c74
+gegner|kostenerstattungsanspruch|Hat der siegreiche Gegner aufgrund der Kostenentscheidung im Urteil oder einer Kostenübernahme im Prozessvergleich einen Kostenerstattungsanspruch, so kann er diesen trotz bewilligter PKH gegen die bedürftige Partei geltend machen, d. h. PKH befreit nicht von der Verpflichtung, im Falle des Unterliegens die Kosten der Gegenseite tragen zu müssen, § 123 ZPO|563201e8743943b8bee281bf87989c74
+gerichtskosten|pkh|Wird die Partei, die PKH erhalten hat, durch eine Entscheidung des Gerichts kostenfällig verurteilt, so kann die siegreiche Partei im Kostenfestsetzungsbeschluss, § 104 ZPO, die von ihr bezahlten Gerichtskosten nicht festsetzen lassen, da der Gegner auch hiervon befreit ist, § 122 Abs. 1 Nr.|563201e8743943b8bee281bf87989c74
+erstattungsanspruch|gerichtskasse|Der Erstattungsanspruch besteht gegen die Gerichtskasse.|121b8e296bdb41a89c28ace4d9f88785
+bedürftige partei|vergleich|Die bedürftige Partei übernimmt im Vergleich die Kosten.|121b8e296bdb41a89c28ace4d9f88785
+bedürftige partei|gerichtskosten|Die bedürftige Partei erstattet der anderen Partei auch die verauslagten Gerichtskosten.|121b8e296bdb41a89c28ace4d9f88785
+entscheidungsschuldner|manipulationsgefahr|Die Kostenregelung gilt nur für den Entscheidungsschuldner und nicht für den Übernahmeschuldner wegen der Manipulationsgefahr.|121b8e296bdb41a89c28ace4d9f88785
+pkh|gegner|Die PKH befreit den Gegner vorübergehend von der Kostenzahlung an das Gericht.|121b8e296bdb41a89c28ace4d9f88785
+zpo|nachträgliche änderungen|is related to|2813ff7e4d4a44a1978be80e9be5c2e1
+nachträgliche änderungen|nachträgliche aufhebung der bewilligung|is a type of|2813ff7e4d4a44a1978be80e9be5c2e1
+nachträgliche änderungen|§ 124 abs.|is related to|2813ff7e4d4a44a1978be80e9be5c2e1
+unrichtige darstellung des streitverhältnisses|voraussetzungen der pkh-bewilligung|is related to|d5615d773a964edc80ab13d24b4be8cf
+unrichtige angaben über ihre persönlichen und wirtschaftlichen verhältnisse|anfrage des gerichts nach veränderungen|is related to|d5615d773a964edc80ab13d24b4be8cf
+persönlichen oder wirtschaftlichen voraussetzungen für die pkh-bewilligung|rechtskräftigen entscheidung oder sonstigen beendigung des prozesses|is related to|d5615d773a964edc80ab13d24b4be8cf
+eine wesentliche verbesserung ihrer einkommens- und vermögensverhältnisse|änderung ihrer anschrift|is related to|d5615d773a964edc80ab13d24b4be8cf
+zahlung einer rate oder eines sonstigen betrags|im rückstand|is related to|d5615d773a964edc80ab13d24b4be8cf
+beweiserhebung|erfolgsaussicht|is related to|d5615d773a964edc80ab13d24b4be8cf
+umstände|beantragte beweiserhebung|is related to|d5615d773a964edc80ab13d24b4be8cf
+umstände|mutwillig erscheint|is related to|d5615d773a964edc80ab13d24b4be8cf
+festgesetzten zahlungen|bewilligung der pkh|is related to|d5615d773a964edc80ab13d24b4be8cf
+monatsraten|aus dem vermögen zu zahlende beträge|is related to|d5615d773a964edc80ab13d24b4be8cf
+wesentlicher änderung der persönlichen oder wirtschaftlichen verhältnisse der partei|entscheidung über die zu leistenden zahlungen|is related to|d5615d773a964edc80ab13d24b4be8cf
+entscheidung über die zu leistenden zahlungen|verlangen des gerichts|is related to|d5615d773a964edc80ab13d24b4be8cf
+wesentliche änderung zugunsten des antragstellers|verbesserung der wirtschaftlichen verhältnisse|Describes the condition for a significant change in favor of the applicant|a7c7f3143b034ccba6da834a753ac832
+wirtschaftlichen und sozialen lebensstandard prägende und verändernde verbesserung|verbesserung der wirtschaftlichen verhältnisse|Describes the nature of the improvement in economic and social living standards|a7c7f3143b034ccba6da834a753ac832
+laufenden monatlichen einkommens|verbesserung der wirtschaftlichen verhältnisse|Relates to the improvement of the monthly income as a part of the economic improvement|a7c7f3143b034ccba6da834a753ac832
+den wirtschaftlichen und sozialen lebensstandard prägende und verändernde verbesserung|laufenden monatlichen einkommens|Indicates that improvements in the economic and social living standards include enhancements in the monthly income|a7c7f3143b034ccba6da834a753ac832
+wesentliche wirtschaftliche verbesserung|die beabsichtigte rechtsverfolgung bzw. rechtsverteidigung vermögenswerte erlangt hat|States that a significant economic improvement can also occur through gaining assets from the intended legal action or defense|a7c7f3143b034ccba6da834a753ac832
+ratenfreie bewilligung der pkh|vorteils|Relates to the granting of legal aid (PKH) without installments and the benefit obtained through timely acquisition of this advantage|a7c7f3143b034ccba6da834a753ac832
+rechtsverteidigung vermögenswerte erlangt hat|vorteils|Relates to gaining assets from the intended legal defense and the benefit obtained through timely acquisition of this advantage|a7c7f3143b034ccba6da834a753ac832
+das gericht|prüfungspflicht|Relates to the court's obligation to conduct examinations in respect to granting legal aid|a7c7f3143b034ccba6da834a753ac832
+bewilligung der pkh|erhebungen|Relates to the granting of legal aid and the court's authority to make investigations as required|a7c7f3143b034ccba6da834a753ac832
+zu lasten der partei|zu leistenden zahlungen|Relates to the payments to be made at the expense of the party|a7c7f3143b034ccba6da834a753ac832
+der rechtskräftigen entscheidung oder sonstigen beendigung des prozesses|zu leistenden zahlungen|Relates to the time limit within which the payments can be changed, i.e., within 4 years after the final decision or other termination of the process|a7c7f3143b034ccba6da834a753ac832
+verschlechterung der wirtschaftlichen verhältnisse|änderung der zu leistenden zahlungen|Refers to the court's examination, whether there is a need to change the payments due to a subsequent deterioration in the economic situation|a7c7f3143b034ccba6da834a753ac832
+einkommen|freibeträge|Relates to the income and the deduction amounts for the purpose of calculating the payments|a7c7f3143b034ccba6da834a753ac832
+raten|neuberechnung|Raten werden nur dann nicht mehr gezahlt, wenn eine Neuberechnung dazu führt, wie in § 120a Abs. 1 Satz 2 ZPO erwähnt|eca9015e88c741c9b0dbd10c029e98ff
+änderung der zahlungen|ausschlussfrist|Die Änderung der Zahlungen zum Vorteil der Partei ist nicht an die 4-jährige Ausschlussfrist gebunden, gemäß § 120a Abs. 1 Satz 4 ZPO|eca9015e88c741c9b0dbd10c029e98ff
+rechtsuchende|beratungshilfe|Außerhalb eines gerichtlichen Verfahrens erhält der Rechtsuchende Beratungshilfe gemäß den Voraussetzungen nach § 1 Beratungshilfegesetz (BerHG)|eca9015e88c741c9b0dbd10c029e98ff
+beratungshilfe|mittel|Der Rechtsuchende erhält Beratungshilfe, wenn er die erforderlichen Mittel nicht aufbringen kann, entsprechend § 1 Beratungshilfegesetz (BerHG)|eca9015e88c741c9b0dbd10c029e98ff
+beratungshilfe|rechtsanwälte und rechtsbeistände|Die Beratungshilfe wird durch Rechtsanwälte und Rechtsbeistände erteilt, wie in § 1 Abs. 2 BerHG erwähnt|eca9015e88c741c9b0dbd10c029e98ff
+beratungshilfe|amtsgericht|Die Beratungshilfe wird, soweit möglich, durch das Amtsgericht erteilt, gemäß den Vorschriften der §§ 4, 5 BerHG|eca9015e88c741c9b0dbd10c029e98ff
+antrag|rechtspfleger|Über den Antrag auf Beratungshilfe entscheidet der Rechtspfleger des zuständigen Amtsgerichts gemäß den Vorschriften der §§ 4, 5 BerHG|eca9015e88c741c9b0dbd10c029e98ff
+amtsgericht|berechtigungsschein|Wenn die Voraussetzungen für die Gewährung von Beratungshilfe gegeben sind, stellt das Amtsgericht einen Berechtigungsschein aus, gemäß § 6 BerHG|eca9015e88c741c9b0dbd10c029e98ff
+rechtssuchende|rechtsanwalt|Der Rechtssuchende kann den Rechtsanwalt selbst wählen|eca9015e88c741c9b0dbd10c029e98ff
+rechtsanwalt|vergütung|Die Vergütung des Rechtsanwalts erfolgt im Rahmen des § 44 RVG, Nr. 2500–2508 VV-RVG|eca9015e88c741c9b0dbd10c029e98ff
+beratungshilfegebühr|rechtsanwalt|Der Rechtsanwalt steht gegen den Rechtsuchenden nur eine Beratungshilfegebühr von 15,00 € zu, die er auch erlassen kann|eca9015e88c741c9b0dbd10c029e98ff
+rechtsanwalt|staatskasse|Der Rechtsanwalt erhält aus der Staatskasse eine Beratungsgebühr, Geschäftsgebühr sowie eine Einigungs- und Erledigungsgebühr|eca9015e88c741c9b0dbd10c029e98ff
+schuldenbereinigung|einigung|Höhere Beratungs- und Geschäftsgebühren sind nur für die Tätigkeit mit dem Ziel einer Einigung mit den Gläubigern über die Schuldenbereinigung auf der Grundlage eines Plans nach § 305 Abs. 1 Nr.|eca9015e88c741c9b0dbd10c029e98ff
+inso|vv-rvg|InsO is related to VV-RVG as specified in Nr. 2502, 2504–2507|57103a7ee88b4028a0610feec1987569
+mahnverfahren|vollstreckungsbescheid|Das Ziel des Mahnverfahrens ist der Vollstreckungsbescheid als Vollstreckungstitel|75d88dbb8770488fa65561b8dcfd4579
+vollstreckungsbescheid|vollstreckungstitel|Der Vollstreckungsbescheid fungiert als Vollstreckungstitel|75d88dbb8770488fa65561b8dcfd4579
+widerspruch|einspruch|beide stellen eine besondere Form der Einleitung des gerichtlichen Verfahrens dar|a61c002bf4d141a196ea2426f7de6e5c
+widerspruch|einspruch|beide Formen des Widerspruchs bzw. Einspruchs im gerichtlichen Verfahren|a61c002bf4d141a196ea2426f7de6e5c
+bundesländer|ermächtigungsgrundlage|Bundesländer haben von der Ermächtigungsgrundlage des §703c Abs. 3 ZPO für die maschinelle Bearbeitung des Mahnverfahrens Gebrauch gemacht|a61c002bf4d141a196ea2426f7de6e5c
+bundesländer|mahnverfahren|Bundesländer haben von der Ermächtigungsgrundlage des §703c Abs. 3 ZPO für die maschinelle Bearbeitung des Mahnverfahrens Gebrauch gemacht|a61c002bf4d141a196ea2426f7de6e5c
+mahnverfahren|maschinelle bearbeitung|maschinelle Bearbeitung des Mahnverfahrens|a61c002bf4d141a196ea2426f7de6e5c
+mahngerichte|internet-mahnportal|Mahngerichte informieren in ihrem gemeinsamen Internet-Mahnportal „www.mahngerichte.de“ umfassend über die Anwendung des Verfahrens|a61c002bf4d141a196ea2426f7de6e5c
+mahnverfahren|automatisiert|Das Mahnverfahren ist weitestgehend automatisiert|a61c002bf4d141a196ea2426f7de6e5c
+mahnverfahren|schriftliches verfahren|rein schriftliches, computergestütztes Verfahren|a61c002bf4d141a196ea2426f7de6e5c
+mahnverfahren|computergestütztes verfahren|rein schriftliches, computergestütztes Verfahren|a61c002bf4d141a196ea2426f7de6e5c
+mahnverfahren|rechtspfleger|Bearbeitung der Mahnsachen obliegt dem Rechtspfleger, § 20 Abs. 1 Nr. 1 RPflG|a61c002bf4d141a196ea2426f7de6e5c
+mahnverfahren|anwaltszwang|Für das Mahnverfahren besteht kein Anwaltszwang, vgl. § 78 ZPO|a61c002bf4d141a196ea2426f7de6e5c
+gerichtskosten|halbe gebühr|Gerichtskosten entstehen nur in Höhe einer halben Gebühr, § 3 Abs. 2 GKG, Nr. 1100 KV-GKG|a61c002bf4d141a196ea2426f7de6e5c
+mahnbescheid|sachurteilsvoraussetzungen|Der Erlass eines Mahnbescheids hat bestimmte Zulässigkeitsvoraussetzungen. Neben den allgemeinen Sachurteilsvoraussetzungen, wie Partei- und Prozessfähigkeit, bestehen beim Mahnbescheid besondere Zulässigkeitsvoraussetzungen.|3b4173e32ef842958d81b78ce1997a54
+mahnbescheid|mahnfähiger anspruch|Ein Mahnbescheid setzt eine mahnfähige Geldforderung in Euro voraus, die grundsätzlich gegen den Schuldner gerichtlich geltend gemacht werden kann.|3b4173e32ef842958d81b78ce1997a54
+mahnbescheid|zpo|Die Zulässigkeitsvoraussetzungen des Mahnbescheids sind in § 688 Abs. 1 ZPO geregelt, der die zugrundeliegenden Voraussetzungen für eine mahnfähige Geldforderung in Euro festlegt.|3b4173e32ef842958d81b78ce1997a54
+mahnbescheid|avag|Es gibt eine Ausnahme für eine ausländische Währung im Mahnverfahren, die gemäß § 32 Abs. 1 AVAG zulässig ist, wenn die Zustellung des Mahnbescheids in einem anderen Vertrags- oder Mitgliedstaat im Sinne des AVAG erfolgen muss.|3b4173e32ef842958d81b78ce1997a54
+mahnbescheid|widerspruchsfrist|Der Anspruch im Mahnbescheid muss jedenfalls innerhalb der zweiwöchigen Widerspruchsfrist fällig werden, weil der Gegner im Mahnbescheid zur Zahlung innerhalb dieser Frist aufgefordert wird, gemäß § 692 Abs.|3b4173e32ef842958d81b78ce1997a54
+1 nr.|concept|has type|bdbbd767f01949b59a56d562b03a864a
+zpo|zukünftige zahlungsansprüche|is part of|4fe461147e564dd299ed648214fb534b
+zpo|mahnverfahren|is related to|4fe461147e564dd299ed648214fb534b
+mahnverfahren|zukünftige zahlungsansprüche|involves|4fe461147e564dd299ed648214fb534b
+mahnverfahren|mahnverfahrenssperre|excludes|4fe461147e564dd299ed648214fb534b
+mahnverfahrenssperre|verbraucherdarlehen|relates to|4fe461147e564dd299ed648214fb534b
+verbraucherdarlehen|§ 688 abs.|is defined by|4fe461147e564dd299ed648214fb534b
+verbraucherdarlehen|überhöhtem zins|involves|4fe461147e564dd299ed648214fb534b
+zpo|unternehmen|ZPO (Zivilprozessordnung) is a legal framework that governs the procedural rules for civil lawsuits, including the exclusion of claims of a company from specific contracts|2431a3d5731247118fc8914c06d54de0
+verbraucherdarlehensvertrag|§ 491 bgb|Verbraucherdarlehensvertrag (consumer loan agreement) is regulated by §491 BGB (Bürgerliches Gesetzbuch - German Civil Code)|2431a3d5731247118fc8914c06d54de0
+verbraucherfinanzierungshilfe|§ 506 bgb|Verbraucherfinanzierungshilfe (consumer financial assistance) is regulated by §506 BGB (Bürgerliches Gesetzbuch - German Civil Code)|2431a3d5731247118fc8914c06d54de0
+teilzahlungsgeschäft|§ 508 bgb|Teilzahlungsgeschäft (installment transaction) is regulated by §508 BGB (Bürgerliches Gesetzbuch - German Civil Code)|2431a3d5731247118fc8914c06d54de0
+mahnverfahren|effektive jahreszins|The Mahnverfahren (dunning procedure) excludes claims from certain contracts if the effective annual interest rate exceeds the applicable base rate at the time of contract conclusion by more than 12%. Therefore, the date of the contract conclusion and the effective annual interest rate must be specified in the Mahnantrag (application for dunning) for such claims, as per § 690 Abs. 1 Nr. 3 ZPO.|2431a3d5731247118fc8914c06d54de0
+geldforderung|gegenleistung|According to § 688 Abs. 2 Nr., a Geldforderung (money claim) must not be dependent on any counter-performance or the counter-performance must have already been rendered.|2431a3d5731247118fc8914c06d54de0
+zpo|mahnantrag|Mahnantrag ist ein Antrag im Zivilprozess (ZPO)|56b40c8360354a2ca42a01aa66a5060f
+mahnantrag|angaben|Im Mahnantrag müssen entsprechende Angaben gemacht werden|56b40c8360354a2ca42a01aa66a5060f
+mahnantrag|§ 690 abs. 1 nr.|Im Mahnantrag müssen die entsprechenden Angaben gemäß § 690 Abs. 1 Nr. gemacht werden|56b40c8360354a2ca42a01aa66a5060f
+nachprüfung|mahngericht|Eine Nachprüfung durch das Mahngericht erfolgt nicht.|b0ead2cc14274386b37f4cde29ec1014
+vordruck|ordnungsgemäße ausfüllung|Geprüft wird nur, ob der Vordruck ordnungsgemäß ausgefüllt ist.|b0ead2cc14274386b37f4cde29ec1014
+mahnverfahren|unzulässig|Das Mahnverfahren ist unzulässig, wenn die zustellungsfähige Anschrift des Antragsgegners von vornherein nicht bekannt ist.|b0ead2cc14274386b37f4cde29ec1014
+mahnbescheid|öffentliche zustellung|Der Mahnbescheid daher eine öffentliche Zustellung, § 185 ZPO, erfordern würde, § 688 Abs. 2 Nr. 3 ZPO.|b0ead2cc14274386b37f4cde29ec1014
+mahnbescheid|zustellbarkeit|Ist der Mahnbescheid wider Erwarten nicht zustellbar, kommt eine Abgabe des nun unzulässigen Mahnverfahrens analog § 696 ZPO an das Streitgericht nicht in Betracht; der Mahnantrag ist zurückzuweisen, § 691 Abs. 1 ZPO (BGH NJW 2004, 2453).|b0ead2cc14274386b37f4cde29ec1014
+mahnverfahren|auslandszustellung|Das Mahnverfahren ist grundsätzlich unzulässig, wenn die Zustellung des Mahnbescheids im Ausland sein soll.|b0ead2cc14274386b37f4cde29ec1014
+ausnahmen|zustellung|Ausnahmen gelten nur für die Zustellung in einem Mitgliedstaat der Europäischen Union und soweit § 32 des Anerkennungs- und Vollstreckungsausführungsgesetzes (AVAG) und § 75 des Auslandsunterhaltsgesetzes (AUG) dies ausdrücklich vorsehen, § 688 Abs. 3 ZPO.|b0ead2cc14274386b37f4cde29ec1014
+europäisches mahnverfahren|verordnung (eg) nr. 1896/2006 (eumahnvo)|Im Übrigen kommt hier das Europäische Mahnverfahren in Betracht. Die Verordnung (EG) Nr. 1896/2006 (EuMahnVO) ermöglicht es Gläubigern, unbestrittene Geldforderungen in Zivil- und Handelssachen nach einem einheitlichen, formalisierten Verfahren beizutreiben.|b0ead2cc14274386b37f4cde29ec1014
+europäischer zahlungsbefehl|anerkennung|Der Europäische Zahlungsbefehl wird in allen Mitgliedstaaten – mit Ausnahme Dänemarks – anerkannt und vollstreckt, ohne dass es einer Erklärung der Vollstreckbarkeit bedarf.|b0ead2cc14274386b37f4cde29ec1014
+zuständigkeit|mahngericht|Die Zuständigkeit des Mahngerichts ist ausschließlich, § 689 Abs. 2 Satz 1 ZPO, weshalb abweichende Vereinbarungen über den Gerichtsstand unwirksam sind (BGH NJW 1985, 320).|b0ead2cc14274386b37f4cde29ec1014
+bundesländer|zentrale mahngerichte|Alle Bundesländer haben gemäß § 689 Abs. 3 ZPO die Mahnsachen – teilweise gemeinsam – auf zentrale Mahngerichte konzentriert (vgl. Thomas/Putzo § 689 Rn.|b0ead2cc14274386b37f4cde29ec1014
+7|output|relates_to|2a26db07a0984347a780caf219fde35f
+amtsgericht|antragsteller|Das Amtsgericht ist gemäß § 689 Abs. 2 Satz 1 ZPO zuständig, wo der Antragsteller seinen allgemeinen Gerichtsstand hat.|94cb5afa8fae47e6acb720022c8382c7
+zahlungsansprüche|gemeinschaft der wohnungseigentümer|Das Amtsgericht ist ausschließlich zuständig für Zahlungsansprüche der Gemeinschaft der Wohnungseigentümer aus dem WEG, gemäß § 43 Nr. 6 WEG.|94cb5afa8fae47e6acb720022c8382c7
+amtsgericht|bezirk|Das Amtsgericht ist zuständig, in dessen Bezirk das Grundstück liegt, gemäß § 43 Nr. 6 WEG.|94cb5afa8fae47e6acb720022c8382c7
+arbeitsgerichtlichen mahnverfahren|arbeitsgericht|Im arbeitsgerichtlichen Mahnverfahren bleibt das Arbeitsgericht zuständig, gemäß § 46a Abs. 2 ArbGG.|94cb5afa8fae47e6acb720022c8382c7
+mahantrag|originalvordrucke|Für den Mahnantrag müssen die Originalvordrucke zwingend verwendet werden, gemäß 703c Abs. 1, 2 ZPO.|94cb5afa8fae47e6acb720022c8382c7
+mahantrag|unterschrift|Der schriftliche Mahnantrag muss unterschrieben sein, gemäß § 690 Abs. 2 ZPO.|94cb5afa8fae47e6acb720022c8382c7
+parteien des mahnverfahren|elektronischer identitätsnachweis|Die Parteien des Mahnverfahrens können Anträge und Erklärungen – auch unter Nutzung des elektronischen Identitätsnachweises – in nur maschinell lesbarer Form übermitteln, gemäß § 702 Abs. 2 Satz 1 ZPO.|94cb5afa8fae47e6acb720022c8382c7
+rechtsanwälte|inkassodienstleister|Rechtsanwälte und Inkassodienstleister sind verpflichtet, Anträge und Erklärungen in nur maschinell lesbarer Form einzureichen, § 702 Abs. 2 Satz 2 ZPO.|94cb5afa8fae47e6acb720022c8382c7
+antrag|§ 690 abs. 1 nr. 1 bis 5 zpo|Der Inhalt des Antrags ergibt sich aus § 690 Abs. 1 Nr. 1 bis 5 ZPO.|1007c2b6cb934262b6884058c94c5531
+anspruch|mahnbescheid|Der Anspruch muss im Mahnantrag so hinreichend individuell bestimmt werden, dass er durch den Vollstreckungsbescheid Gegenstand einer Zwangsvollstreckung sein kann. Der Anspruch wird Gegenstand des Mahnbescheids.|1007c2b6cb934262b6884058c94c5531
+mahnverfahren|antragsgegner|Der Antragsgegner hat drei Möglichkeiten, auf den gerichtlich geltend gemachten Anspruch zu reagieren: Er kann die geforderten Beträge ganz oder teilweise bezahlen, ganz oder teilweise Widerspruch einlegen oder überhaupt nicht reagieren.|1007c2b6cb934262b6884058c94c5531
+zurückweisung|mahnverfahren|Wird der Mahnantrag zurückgewiesen, so ist das Mahnverfahren beendet.|1007c2b6cb934262b6884058c94c5531
+mahnverfahren|klage|Nach Zurückweisung des Mahnantrages steht dem Antragsteller die Geltendmachung seiner Forderung durch Klage beim Prozessgericht frei.|1007c2b6cb934262b6884058c94c5531
+mahnbescheid|antragsgegner|Der Mahnbescheid wird dem Antragsgegner zugestellt.|1007c2b6cb934262b6884058c94c5531
+mahnbescheid|verjährung|Durch Zustellung des Mahnbescheids tritt Hemmung der Verjährung des geltend gemachten Anspruchs ein.|1007c2b6cb934262b6884058c94c5531
+zustellung|mahnbescheid|Durch die Zustellung des Mahnbescheides erlangt der Antragsgegner Kenntnis vom gerichtlich geltend gemachten Anspruch.|1007c2b6cb934262b6884058c94c5531
+zahlung|mahnverfahren|Bei Zahlung tritt eine Erledigung des Mahnverfahrens nur ein, wenn die Haupt- und Nebenforderungen sowie die ausgewiesenen Kosten insgesamt bezahlt sind.|1007c2b6cb934262b6884058c94c5531
+widerspruch|mahnverfahren|Soweit der Antragsgegner Teile nicht bezahlt, muss er Widerspruch einlegen oder es wird insoweit das Mahnverfahren fortgesetzt.|1007c2b6cb934262b6884058c94c5531
+widerspruch|gericht|Gemäß § 3 ZPO ist der Widerspruch dem Gericht binnen 2 Wochen mitzuteilen|ca1892d863a945b6a3abe1a5128496c6
+widerspruch|zustellung des mahnbescheids|Der Widerspruch muss binnen 2 Wochen seit Zustellung des Mahnbescheids mitgeteilt werden|ca1892d863a945b6a3abe1a5128496c6
+arbeitsgerichtlichen mahnverfahren|widerspruch|Im arbeitsgerichtlichen Mahnverfahren muss der Widerspruch innerhalb 1 Woche mitgeteilt werden|ca1892d863a945b6a3abe1a5128496c6
+antragsgegner|widerspruch|Nach § 694 Abs. 1 ZPO kann der Antragsgegner solange Widerspruch erheben, wie der Vollstreckungsbescheid nicht verfügt ist|ca1892d863a945b6a3abe1a5128496c6
+vollstreckungsbescheid|antragsgegner|Der Antragsgegner kann solange Widerspruch erheben, wie der Vollstreckungsbescheid nicht verfügt ist|ca1892d863a945b6a3abe1a5128496c6
+antragsteller|mahngericht|Der Antragsteller wird vom Mahngericht über den Eingang des Widerspruchs in Kenntnis gesetzt und über die Folgen des Zurückbleibens der Anspruchsbegründung hinter dem Mahnantrag belehrt|ca1892d863a945b6a3abe1a5128496c6
+anspruchsbegründung|mahnantrag|Der Antragsteller wird über die Folgen des Zurückbleibens der Anspruchsbegründung hinter dem Mahnantrag belehrt|ca1892d863a945b6a3abe1a5128496c6
+rechtsanwälte|inkassodienstleister|sind gemäß §§ 692 Abs. 1 Nr.|e339d61e419a466b8888f3f28e8485b0
+5, 702 abs. 2 satz 2 zpo|maschinell lesbarer form|Specifies that the opposition must be submitted in a machine-readable form|f210a6d006dd4b75b6d01db870daa91b
+widerspruch|maschinell lesbarer form|Specifies that the opposition can be submitted in machine-readable form|f210a6d006dd4b75b6d01db870daa91b
+antragsgegner|widerspruch|Antragsgegner can submit the opposition to the court|f210a6d006dd4b75b6d01db870daa91b
+antragsgegner|geschäftsstelle|Antragsgegner can submit the opposition to the court record|f210a6d006dd4b75b6d01db870daa91b
+antragsgegner|formular|Antragsgegner can submit the opposition using the introduced form|f210a6d006dd4b75b6d01db870daa91b
+126c) sperrwirkung|erlass des vollstreckungsbescheids|Specifies that the issuance of the enforcement order is prevented|f210a6d006dd4b75b6d01db870daa91b
+widerspruch|mahnverfahren|Widerspruch affects the progress of the Mahnverfahren|f210a6d006dd4b75b6d01db870daa91b
+vollstreckungsbescheid|widerspruch|Specifies that a late opposition is treated as an objection to the enforcement order|f210a6d006dd4b75b6d01db870daa91b
+vollstreckungsbescheid|einspruch|Specifies that a late opposition is treated as an objection to the enforcement order|f210a6d006dd4b75b6d01db870daa91b
+wiedereinsetzung|§ 233 zpo|Wiedereinsetzung does not apply analogously to § 233 ZPO|f210a6d006dd4b75b6d01db870daa91b
+vollstreckungsbescheid|antragsteller|Specifies that if there is no opposition, the applicant can apply for the enforcement order|f210a6d006dd4b75b6d01db870daa91b
+vollstreckungsbescheid|mahnbescheid|Specifies that the enforcement order is issued based on the Mahnbescheid|f210a6d006dd4b75b6d01db870daa91b
+vollstreckungsbescheid|mahngericht|Der Vollstreckungsbescheid wird durch das Mahngericht erlassen.|9963f4b241db40f2ae4e222faf8acd12
+verfahren|prozessgericht|Das Verfahren wird an ein Prozessgericht abgegeben bzw. verwiesen.|9963f4b241db40f2ae4e222faf8acd12
+verfahren|vollstreckungsbescheid|Das Verfahren betrifft auch den Vollstreckungsbescheid.|9963f4b241db40f2ae4e222faf8acd12
+prozessgericht|rechtspfleger|Funktionell zuständig ist auch hier der Rechtspfleger.|9963f4b241db40f2ae4e222faf8acd12
+vollstreckungsbescheid|antragsgegner|Der Vollstreckungsbescheid wird dem Antragsgegner von Amts wegen zugestellt.|9963f4b241db40f2ae4e222faf8acd12
+antragsteller|zustellung|Der Antragsteller kann die Übergabe zur Zustellung im Parteibetrieb beantragen.|9963f4b241db40f2ae4e222faf8acd12
+vollstreckungsbescheid|versäumnisurteil|The Vollstreckungsbescheid is considered equal to a preliminary enforceable default judgment|854a731fbf2b411c93d6cc55f9efe47b
+vollstreckungsbescheid|einspruch|The Einspruch is the only remedy against the Vollstreckungsbescheid|854a731fbf2b411c93d6cc55f9efe47b
+einspruch|antragsgegner|The Einspruch can be filed by Einreichung der Einspruchsschrift bei dem Mahngericht by the Antragsgegner|854a731fbf2b411c93d6cc55f9efe47b
+einspruch|einspruchsfrist|The Einspruchsfrist is 2 Wochen ab Zustellung des Vollstreckungsbescheids an den Antragsgegner|854a731fbf2b411c93d6cc55f9efe47b
+einspruch|vordruck|For the Einspruch, kein Vordruck vorgesehen is|854a731fbf2b411c93d6cc55f9efe47b
+einspruch|anwaltszwang|No Anwaltszwang is required for the Einlegung eines Einspruchs|854a731fbf2b411c93d6cc55f9efe47b
+einspruch|begründung|The Einspruch braucht nicht begründet zu werden|854a731fbf2b411c93d6cc55f9efe47b
+einspruch|rücknahme|The Einspruch can be withdrawn until the mündlichen Verhandlung zur Hauptsache|854a731fbf2b411c93d6cc55f9efe47b
+widerspruch|mahnbescheid|Widerspruch can be made against the Mahnbescheid|854a731fbf2b411c93d6cc55f9efe47b
+antrag|widerspruch|The Antrag auf Durchführung des streitigen Verfahrens can be made after a rechtzeitigem Widerspruch|854a731fbf2b411c93d6cc55f9efe47b
+antrag|streitantrag|The Streitantrag can be included in the Mahnantrag|854a731fbf2b411c93d6cc55f9efe47b
+abgabe|streitgericht|The Verfahren is given to Streitgericht by Abgabeverfügung|854a731fbf2b411c93d6cc55f9efe47b
+1 nr. 5|692 abs.|The relationship between the sections of the legal code.|04777694416c4b01a0b8603663a593ea
+zpo|entscheidung|Die ZPO regelt die Abgabe an ein anderes Gericht für die Entscheidung des Rechtsstreits.|96e793709ab441ddbf5801970ab5989c
+abgabe|gericht|Die Abgabe erfolgt an ein anderes Gericht, wenn beide Parteien einverstanden sind, gemäß § 696 Abs. 1 Satz 1 ZPO.|96e793709ab441ddbf5801970ab5989c
+abgabeanträge|mahngericht|Die gleichzeitig oder nacheinander erklärten Abgabeanträge müssen beim Mahngericht vorliegen, bevor die Abgabe vollzogen ist (BGHReport 2003, 42).|96e793709ab441ddbf5801970ab5989c
+zuständigkeitsprüfung|empfangsgericht|Das Empfangsgericht prüft seine Zuständigkeit selbst gemäß § 696 Abs. 5 ZPO.|96e793709ab441ddbf5801970ab5989c
+rechtsstreit|wahlrecht|Das Wahlrecht der Parteien erlischt mit Abgabe des Mahngerichts gemäß § 696 Abs. 1 Satz 1 ZPO.|96e793709ab441ddbf5801970ab5989c
+kläger|wahlrecht|Das Wahlrecht des Klägers erlischt bereits mit Zustellung des Mahnbescheids (BGH NJW 1993, 1273).|96e793709ab441ddbf5801970ab5989c
+rechtshängigkeit|zustellung|Sie gilt rückwirkend mit der Zustellung des Mahnbescheids als eingetreten gemäß § 696 Abs. 3 ZPO.|96e793709ab441ddbf5801970ab5989c
+abgabe|widerspruch|Sie gilt rückwirkend mit der Zustellung des Mahnbescheids als eingetreten, wenn die Abgabe an das Streitgericht alsbald nach Widerspruch erfolgt, gemäß § 696 Abs. 3 ZPO.|96e793709ab441ddbf5801970ab5989c
+empfangsgericht|wohnsitz|Ist das im Mahnantrag bezeichnete Streitgericht erst nach Zustellung des Mahnbescheids unzuständig geworden, weil sich der Wohnsitz des Beklagten verändert hat, bleibt das Empfangsgericht nicht nach § 261 Abs. 3 Nr.|96e793709ab441ddbf5801970ab5989c
+zpo|rechtshängigkeit|definiert die Rechtshängigkeit und ist die Grundlage für die Zuständigkeitsprüfung|5493daebbec14708bd66cd85be87b820
+rechtshängigkeit|§ 696 abs. 3 zpo|beschreibt die rückbezogene Rechtshängigkeit gemäß § 696 Abs. 3 ZPO|5493daebbec14708bd66cd85be87b820
+rechtshängigkeit|empfangsgerichts|ist nicht maßgebend für die Zuständigkeitsprüfung des Empfangsgerichts|5493daebbec14708bd66cd85be87b820
+prozessgericht|akten|bezieht sich auf den Zeitpunkt des Eingangs der Akten beim Prozessgericht|5493daebbec14708bd66cd85be87b820
+empfangsgericht|antragsteller|Das Empfangsgericht fordert den Antragsteller formlos auf, seinen Anspruch zu begründen.|ad512c1cea64401b8df50cc89c45a3af
+anspruchsbegründung|klageschrift|Die Anspruchsbegründung muss nach Form und Inhalt einer Klageschrift nach § 253 Abs. 2 ZPO entsprechen.|ad512c1cea64401b8df50cc89c45a3af
+anspruchsbegründung|antrag|Die Anspruchsbegründung muss insbesondere einen Antrag enthalten.|ad512c1cea64401b8df50cc89c45a3af
+amtsgericht|anspruchsbegründung|Vor dem Amtsgericht kann die Anspruchsbegründung zu Protokoll des Urkundsbeamten der Geschäftsstelle gegeben werden.|ad512c1cea64401b8df50cc89c45a3af
+anwaltsprozess|anspruchsbegründung|Im Anwaltsprozess ist die Anspruchsbegründung durch einen zugelassenen Rechtsanwalt einzureichen.|ad512c1cea64401b8df50cc89c45a3af
+geschäftsstelle|antragsteller|Die Geschäftsstelle setzt dem Antragsteller für die Anspruchsbegründung eine Frist von 2 Wochen.|ad512c1cea64401b8df50cc89c45a3af
+antragsteller|frist|Lässt der Antragsteller die Frist verstreichen, so hat das für ihn keine nachteiligen Folgen.|ad512c1cea64401b8df50cc89c45a3af
+anspruchsbegründung|verfahren|Reicht der Antragsteller bis zum Ablauf der gesetzten Frist keine Anspruchsbegründung ein, so ruht der Vorgang bei Gericht. Trifft sie innerhalb von 6 Monaten ein, so nimmt das Verfahren wie nach Eingang einer Klage seinen Fortgang.|ad512c1cea64401b8df50cc89c45a3af
+anspruchsbegründung|akten| Wird innerhalb von 6 Monaten keine Anspruchsbegründung eingereicht und stellt der Antragsgegner keinen Antrag auf Terminbestimmung, so werden die Akten nach Ablauf des halben Jahres weggelegt, § 7 AktO.|ad512c1cea64401b8df50cc89c45a3af
+antragsgegner|anspruchsbegründung|Der Antragsgegner kann den früheren Fortgang des Verfahrens auch ohne Vorliegen einer Anspruchsbegründung erreichen, indem er den Antrag auf Bestimmung eines Termins zur mündlichen Verhandlung stellt.|ad512c1cea64401b8df50cc89c45a3af
+vorsitzende|antragsteller|Mit der Terminverfügung setzt der Vorsitzende dem Antragsteller eine richterliche Frist zur Begründung des Anspruchs.|ad512c1cea64401b8df50cc89c45a3af
+antragsteller|vorbringen|Versäumt der Antragsteller auch die Frist, läuft er Gefahr, dass sein Vorbringen als verspätet zurückgewiesen wird.|ad512c1cea64401b8df50cc89c45a3af
+§ 697 abs. 2 satz 1 zpo|anspruchsbegründung|Defines the procedure to be followed upon receipt of the statement of claim, treating it as if a lawsuit has been filed.|bb8f9b0687604df8a7531b89dda39fbc
+anspruchsbegründung|klage|Anspruchsbegründung is likened to the filing of a lawsuit, indicating a formal step in the legal process.|bb8f9b0687604df8a7531b89dda39fbc
+vorsitzende|§ 272 abs. 2 zpo|The chairman has the authority according to § 272 Abs. 2 ZPO to schedule the early first hearing or to initiate written proceedings.|bb8f9b0687604df8a7531b89dda39fbc
+§ 272 abs. 2 zpo|termin zur mündlichen verhandlung|Defines the authority of the chairman to schedule the early first hearing for an oral hearing.|bb8f9b0687604df8a7531b89dda39fbc
+§ 272 abs. 2 zpo|schriftliches vorverfahren|Defines the authority of the chairman to initiate the written preliminary proceedings.|bb8f9b0687604df8a7531b89dda39fbc
+klageschrift|verfahrensablauf|Der weitere Verfahrensablauf ist derselbe wie nach Einleitung durch die Klageschrift|c233ae8a12bf4bb1a648a85df2cd95b4
+widerspruch|mahnbescheid|Der Widerspruch gegen den Mahnbescheid ist nicht als Anzeige der Verteidigungsabsicht zu werten|c233ae8a12bf4bb1a648a85df2cd95b4
+widerspruch|anspruchsbegründung|weil sie keine Reaktion auf die erst danach eingehende Anspruchsbegründung darstellt|c233ae8a12bf4bb1a648a85df2cd95b4
+beklagter|prozessaussichten|seine Prozessaussichten zu beurteilen|c233ae8a12bf4bb1a648a85df2cd95b4
+beklagter|verteidigungsabsicht|Er muss deshalb seine fortbestehende Verteidigungsabsicht dem Gericht erneut mitteilen|c233ae8a12bf4bb1a648a85df2cd95b4
+mahnverfahren|anspruchsbegründung|kann die Frist zur Klageerwiderung nach einem vorangegangenen Mahnverfahren auch an die Zustellung der Anspruchsbegründung geknüpft werden|c233ae8a12bf4bb1a648a85df2cd95b4
+mahnverfahren|frist|sodass die Frist für die Verteidigungsanzeige und die Frist zur Klageerwiderung parallel laufen und insgesamt nur 2 Wochen betragen können|c233ae8a12bf4bb1a648a85df2cd95b4
+mahngericht|vollstreckungsbescheid|Hat das Mahngericht einen Vollstreckungsbescheid erlassen, ist der statthafte Rechtsbehelf nur noch der Einspruch|c233ae8a12bf4bb1a648a85df2cd95b4
+einspruch|abgabe|Nach Eingang des Einspruchs erfolgt die Abgabe des Verfahrens durch das Mahngericht von Amts wegen an das im Mahnbescheid als Streitgericht bezeichnete Gericht oder an das von den Parteien übereinstimmend bezeichnete andere Gericht|c233ae8a12bf4bb1a648a85df2cd95b4
+einspruch|kosten|Die Abgabe erfolgt auch, wenn die weiteren Kosten noch nicht einbezahlt sind|c233ae8a12bf4bb1a648a85df2cd95b4
+gericht|rechtsstreit|Mit Eingang des Aktenausdrucks mit dem Einspruchsschreiben beim Empfangsgericht wird der Rechtsstreit dort anhängig|c233ae8a12bf4bb1a648a85df2cd95b4
+einspruch|anspruchsbegründung|Bei zulässigem Einspruch wird der Antragsteller durch die Geschäftsstelle zur Vorlage einer Anspruchsbegründung binnen 2 Wochen aufgefordert|c233ae8a12bf4bb1a648a85df2cd95b4
+geschäftsstelle|frist|Nach fristgerechtem Eingang der Anspruchsbegründung ist wie nach Eingang einer Klage weiter zu verfahren|c233ae8a12bf4bb1a648a85df2cd95b4
+geschäftsstelle|verteidigungsabsicht|Bei Anordnung des schriftlichen Vorverfahrens kann keine Frist zur Anzeige der Verteidigungsabsicht gesetzt werden|c233ae8a12bf4bb1a648a85df2cd95b4
+vorsitzende|frist|Der Vorsitzende setzt nur eine mindestens zweiwöchige Frist zur Klageerwiderung, nach deren Ablauf er dann Haupttermin bestimmt|c233ae8a12bf4bb1a648a85df2cd95b4
+vorsitzende|verhandlung|Sinnvoller erscheint jedoch, sogleich einen frühen ersten Termin zur mündlichen Verhandlung über Einspruch und Hauptsache zu bestimmen|c233ae8a12bf4bb1a648a85df2cd95b4
+vorsitzende|termin|Geht die Anspruchsbegründung innerhalb der von der Geschäftsstelle gesetzten Frist nicht ein, so bestimmt der Vorsitzende unverzüglich von Amts wegen Termin|c233ae8a12bf4bb1a648a85df2cd95b4
+beklagter|tatsachenvortrag|zur Zurückweisung späteren Tatsachenvortrags führen kann|c233ae8a12bf4bb1a648a85df2cd95b4
+beklagter|ii. versäumnisurteil|Ist der Beklagte im Termin zur mündlichen Verhandlung säumig, so kann gegen ihn unter den Voraussetzungen des § 700 Abs. 6, HS 1 ZPO ein „II. Versäumnisurteil” ergehen|c233ae8a12bf4bb1a648a85df2cd95b4
+richter|vollstreckungsbescheid|Der Richter hat nun die allgemeinen Zulässigkeitsvoraussetzungen, die Schlüssigkeit der Klage und die Gesetzmäßigkeit des Vollstreckungsbescheids zu prüfen|c233ae8a12bf4bb1a648a85df2cd95b4
+richter|einspruch|Im Zweiten Versäumnisurteil ist der Einspruch zu verwerfen|c233ae8a12bf4bb1a648a85df2cd95b4
+kläger|berufung|Gegen das Zweite Versäumnisurteil steht dem Beklagten kein weiterer Einspruch zu. Es kann lediglich unter den Voraussetzungen des § 514 Abs. 2 ZPO mit der Berufung und der Behauptung angegriffen werden, ein Fall der schuldhaften Säumnis habe nicht vorgelegen|c233ae8a12bf4bb1a648a85df2cd95b4
+klage|kosten des rechtsstreits|Die Klage wird abgewiesen. 3. Der Kläger trägt die Kosten des Rechtsstreits|50fb4a0293e54414ad4e84edc3651e9f
+urteil|sicherheitsleistung|Das Urteil ist gegen Sicherheitsleistung von… vorläufig vollstreckbar.|50fb4a0293e54414ad4e84edc3651e9f
+richter|prüfung|Führt die Prüfung des Richters…|50fb4a0293e54414ad4e84edc3651e9f
+vollstreckungsbescheid|verfahrensmäßige unzulässigkeit|…zum Ergebnis, dass der Vollstreckungsbescheid verfahrensmäßig unzulässig war|50fb4a0293e54414ad4e84edc3651e9f
+versäumnisurteil|einspruch|Ist bereits eine erste Säumnis gar nicht vorgelegen hatte. In diesem Fall ergeht deshalb ein “I. Versäumnisurteil”.|50fb4a0293e54414ad4e84edc3651e9f
+einspruch|zweites versäumnisurteil|…so kann dagegen nach dem Grundsatz der Meistbegünstigung sowohl Einspruch als auch Berufung eingelegt werden|50fb4a0293e54414ad4e84edc3651e9f
+beratungshilfe|rechtliche hilfe|Sie können Beratungshilfe erhalten, wenn Sie nicht das erforderliche Geld für rechtliche Hilfe in außergerichtlichen Verfahren haben.|50fb4a0293e54414ad4e84edc3651e9f
+beratungshilfe|rechtsberatung|Die Beratungshilfe unterstützt Sie darin, Ihre Rechte wahrnehmen zu können. Gegen eine geringe Eigenbeteiligung erhalten Menschen mit niedrigem Einkommen Rechtsberatung und Rechtsvertretung.|50fb4a0293e54414ad4e84edc3651e9f
+beratungshilfe|zivilrechts|Die Beratungshilfe erhalten Sie in Angelegenheiten des Zivilrechts (z.B. Kaufrecht, Mietrecht, nachbarrechtliche Streitigkeiten, Familiensachen)|50fb4a0293e54414ad4e84edc3651e9f
+beratungshilfe|verwaltungsrechts|Die Beratungshilfe erhalten Sie in Angelegenheiten des Verwaltungsrechts (z.B. Wohngeld, Bausachen, Schul- und Hochschulrecht, Gewerberecht)|50fb4a0293e54414ad4e84edc3651e9f
+beratungshilfe|verfassungsrechts|Die Beratungshilfe erhalten Sie in Angelegenheiten des Verfassungsrechts (z.B. Verfassungsbeschwerde gegen Grundrechtsverletzung)|50fb4a0293e54414ad4e84edc3651e9f
+beratungshilfe|sozialrechts|Die Beratungshilfe erhalten Sie in Angelegenheiten des Sozialrechts (z.B. Renten- und Versorgungsangelegenheiten oder Fragen zur Arbeitslosenversicherung)|50fb4a0293e54414ad4e84edc3651e9f
+beratungshilfe|steuerrechts|Die Beratungshilfe erhalten Sie in Angelegenheiten des Steuerrechts|50fb4a0293e54414ad4e84edc3651e9f
+beratungshilfe|strafrechts|In Angelegenheiten des Strafrechts und des Ordnungswidrigkeitenrechts erhalten Sie eine Beratung, aber keine rechtliche Vertretung.|50fb4a0293e54414ad4e84edc3651e9f
+rechtsantragstelle|amtsgerichts|Die Rechtsantragstelle des Amtsgerichts, in dessen Bezirk Sie Ihren Wohnsitz haben.|50fb4a0293e54414ad4e84edc3651e9f
+rechtsantragstelle|rechtsanwalt|Der Rechtspfleger oder die Rechtspflegerin der Rechtsantragstelle berät Sie, wenn Ihr Anliegen direkt erledigt werden kann, beispielsweise durch eine sofortige Auskunft, einen Hinweis auf andere Möglichkeiten für Hilfe oder die Aufnahme eines Antrags oder einer Erklärung. Damit können Sie sich von einem Rechtsanwalt oder einer Rechtsanwältin Ihrer Wahl beraten lassen.|50fb4a0293e54414ad4e84edc3651e9f
+rechtsverfolgung|rechtsverteidigung|bezug zueinander in Bezug auf die mutwilligkeit|fab6677a49544d8088de62ef1360b04b
+antragsteller|verständige person|Antragsteller in Bezug auf die finanzielle Leistungsfähigkeit|fab6677a49544d8088de62ef1360b04b
+erfolgsaussichten|gericht|Gerichtsbeurteilung der Erfolgsaussichten im Einzelfall|fab6677a49544d8088de62ef1360b04b
+antragsteller|kosten|Kostenübernahme durch andere Wege wie Rechtsschutzversicherung, Gewerkschaft oder eine haftende Person|fab6677a49544d8088de62ef1360b04b
+prozess- oder verfahrenskostenhilfe|anwalt|Anwaltskosten bei Beantragung von Prozess- oder Verfahrenskostenhilfe|fab6677a49544d8088de62ef1360b04b
+prozess- oder verfahrenskostenhilfe|verfahrenskosten|Kostenabdeckung durch Prozess- oder Verfahrenskostenhilfe|fab6677a49544d8088de62ef1360b04b
+prozess- oder verfahrenskostenhilfe|verpflichtung|Verpflichtung zur Ratenzahlung unter bestimmten Voraussetzungen|fab6677a49544d8088de62ef1360b04b
+prozess- oder verfahrenskostenhilfe|verfahrensverlust|Kostenübernahme bei Verfahrensverlust|fab6677a49544d8088de62ef1360b04b
+verhältnisse|prozess- oder verfahrenskostenhilfe|Überprüfung der Verhältnisse für die Aufrechterhaltung von der Prozess- oder Verfahrenskostenhilfe|fab6677a49544d8088de62ef1360b04b
+antragsteller|verpflichtung|Anzeige und Nachweis der Veränderungen im persönlichen und wirtschaftlichen Verhältnissen|fab6677a49544d8088de62ef1360b04b

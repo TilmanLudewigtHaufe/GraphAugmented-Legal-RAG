@@ -6,8 +6,8 @@ import re
 import json
 import requests
 from openai import OpenAI
-from langchain.document_loaders import PyPDFLoader, UnstructuredPDFLoader, PyPDFium2Loader
-from langchain.document_loaders import PyPDFDirectoryLoader, DirectoryLoader
+from langchain_community.document_loaders import PyPDFLoader, UnstructuredPDFLoader, PyPDFium2Loader
+from langchain_community.document_loaders import PyPDFDirectoryLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents.base import Document
 from pathlib import Path
@@ -25,7 +25,7 @@ import pickle
 
 #semantic chunking
 from llama_index.llama_pack import download_llama_pack
-
+from llama_index import SimpleDirectoryReader
 download_llama_pack(
     "SemanticChunkingQueryEnginePack",
     "./semantic_chunking_pack",
@@ -47,7 +47,7 @@ logging.info(".env loaded")
 api_key = os.getenv("OPENAI_API_KEY")
 
 # function with OpenAI API integration for generating responses
-def generate_openai(prompt, model_name="gpt-4-1106-preview"):
+def generate_openai(prompt, model_name="gpt-3.5-turbo-1106"):
     try:
         client = OpenAI(api_key=api_key)
 
@@ -263,17 +263,20 @@ def custom_hi_text_splitter(directory):
 
     return pages
 
+# ====================
+# Splitting into document objects with normal splitting techniques
+# ====================
+
 # Input data directory
 data_dir = "data_input"
 inputdirectory = Path(f"./data_input")
 
 # This is where the output csv files will be written
-#out_dir = "test_out"
 outputdirectory = Path(f"./data_output")
 
-# Directory Loader
-loader = DirectoryLoader(inputdirectory, show_progress=True)
-documents = loader.load()
+# Directory Loader for langchain splitter
+# loader = DirectoryLoader(inputdirectory, show_progress=True)
+# documents = loader.load()
 logging.info("Starting document loading...")
 
 #toDO: either use HI splitting or normal splitting -> to get more context in this script a bigger chunk is better
@@ -281,23 +284,40 @@ logging.info("Starting document loading...")
 #pages = custom_hi_text_splitter("./data_input") #HI splitted chunks
 
 # Text Splitting using Langchain
-splitter = RecursiveCharacterTextSplitter(
-    chunk_size=20000,
-    chunk_overlap=200,
-    length_function=len,
-    is_separator_regex=False,
-)
+# splitter = RecursiveCharacterTextSplitter(
+#     chunk_size=20000,
+#     chunk_overlap=200,
+#     length_function=len,
+#     is_separator_regex=False,
+# )
 #pages = splitter.split_documents(documents) #normal langchain splitter
 
-#semantic chunking
+# ====================
+# semantic chunking for splitting - experimental
+# ==================== 
+# Define the path to the directory
+dir_path = "data_input"
+
+# Initialize an empty string to store the contents of all files
+all_content = ""
+
+# Iterate over all .txt files in the directory
+for file_path in glob.glob(os.path.join(dir_path, "*.txt")):
+    # Open the file and read its content
+    with open(file_path, 'r', encoding='utf-8-sig') as file:
+        content = file.read()
+
+    # Append the content to the all_content string
+    all_content += content
+
 embed_model = OpenAIEmbedding()
 splitter = SemanticChunker(
-    buffer_size=1, breakpoint_percentile_threshold=95, embed_model=embed_model
+    buffer_size=1, breakpoint_percentile_threshold=85, embed_model=embed_model
 )
-pages = splitter.get_nodes_from_documents(documents)
-
-# also baseline splitter
-base_splitter = SentenceSplitter(chunk_size=512)
+# Process Documents
+docs = splitter.split_text(all_content)
+pages = [Document(page_content=chunk) for chunk in docs]
+# ====================
 
 print("Number of chunks = ", len(pages))
 #print(pages[0].page_content)

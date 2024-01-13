@@ -62,7 +62,8 @@ for file_path in glob.glob(os.path.join(dir_path, "*.txt")):
     system_prompts[file_name] = content
     # Print the name of the file
     print(f"Loaded system prompt: {file_name}")
-
+# Print the keys of the dictionary
+print(system_prompts.keys())
 
 # Load graph data from CSV
 df_graph = pd.read_csv('./data_output/graph.csv', sep="|")
@@ -173,7 +174,8 @@ single_tf_idf_scores = {node: max(contexts.values()) for node, contexts in tf_id
 # function to generate embeddings for the graph
 def generate_embeddings(df, column_name):
     openai_api = OpenAIEmbeddings()
-    texts = df[column_name].tolist()
+    #texts = df[column_name].tolist()
+    texts = df[column_name].astype(str).tolist()  # Ensure all elements are strings
     embeddings = openai_api.embed_documents(texts)
     return [embedding for embedding in embeddings]
 
@@ -325,9 +327,7 @@ def find_similar_text_chunks(query, vectorstore, parent_child_dict, k=5):
 
     parent_chunks = set()  
     for doc, score in similar_chunks:
-        print(f"Child chunk: {doc.page_content}, Score: {score}")
         parent = parent_child_dict[doc.page_content]
-        print(f"Parent chunk: {parent}")
         parent_chunks.add(parent) 
 
     return list(parent_chunks)  # Convert set back to list before returning
@@ -422,12 +422,12 @@ def get_system_prompt(fact_extract):
     query_type = fact_extract[0]
     print(fact_extract[0])
     print("query_type: ", query_type)
-    query_type = query_type.lower()
+    query_type = "system_prompt_" + query_type.lower()
     if query_type in system_prompts:
         return system_prompts[query_type]
     else:
-        return system_prompts['sonstiges']
-
+        return system_prompts['system_prompt_sonstiges']
+    
 # function to Generate Response with OpenAI API
 def generate_response(query, fact_extract):
 
@@ -594,7 +594,6 @@ def generate_response(query, fact_extract):
     # Format the referenced text chunks
     references_query = "\n".join([f"{content[0]} (Score: {content[1] if len(content) > 1 else 'N/A'})" for content in similar_chunk_for_query])
     references = "\n".join([f"{content[0]} (Score: {content[1] if len(content) > 1 else 'N/A'})" for content in similar_chunks])
-    #print(references)
 
     # ==============================
     # combine all context
@@ -665,6 +664,20 @@ def generate_response(query, fact_extract):
 text_vectorstore_path = "vectorstores/text"
 parent_child_dict_path = "vectorstores/parent_child_dict.json"
 
+# Text Splitting using Langchain
+# splitter = RecursiveCharacterTextSplitter(
+#     chunk_size=256,
+#     chunk_overlap=75,
+#     length_function=len,
+#     is_separator_regex=False,
+# )
+
+# Text Splitting using Semantic Chunker
+embed_model = OpenAIEmbedding()
+splitter = SemanticChunker(
+    buffer_size=1, breakpoint_percentile_threshold=95, embed_model=embed_model
+)
+
 if os.path.exists(text_vectorstore_path):
     print("Loading existing vectorstore for text chunks")
     text_vectorstore = Chroma(persist_directory=text_vectorstore_path, embedding_function=OpenAIEmbeddings())
@@ -676,7 +689,7 @@ else:
     print("Creating vectorstore for text chunks")
 
     # Function to apply custom HI splitter function
-    def custom_hi_text_splitter(directory):
+    def hi_text_splitter(directory):
         chunks = []
         for file_path in glob.glob(f"{directory}/*.txt"):
             with open(file_path, 'r', encoding='utf-8-sig') as file:
@@ -688,22 +701,39 @@ else:
                         chunks.append(text[start:end])
         return chunks
     
-    # chunking by either HI or character
-    parent_texts = custom_hi_text_splitter("./data_input")
+    # Function to apply llama_index SemanticChunker
+    def semantic_parent_splitting(directory):
+        embed_model = OpenAIEmbedding()
+        splitter = SemanticChunker(
+            buffer_size=1, 
+            breakpoint_percentile_threshold=70, 
+            embed_model=embed_model
+        )
+        chunks = []
+        for file_path in glob.glob(f"{directory}/*.txt"):
+            with open(file_path, 'r', encoding='utf-8-sig') as file:
+                text = file.read()
+                chunks.extend(splitter.split_text(text))
+        return chunks
 
-    # Text Splitting using Langchain
-    # splitter = RecursiveCharacterTextSplitter(
-    #     chunk_size=256,
-    #     chunk_overlap=75,
-    #     length_function=len,
-    #     is_separator_regex=False,
-    # )
-
-    # Text Splitting using Semantic Chunker
-    embed_model = OpenAIEmbedding()
-    splitter = SemanticChunker(
-        buffer_size=1, breakpoint_percentile_threshold=95, embed_model=embed_model
-    )
+    # Function to apply Langchain RecursiveCharacterTextSplitter
+    def langchain_text_splitter(directory, chunk_size=2048, chunk_overlap=150):
+        splitter = RecursiveCharacterTextSplitter(
+            chunk_size=chunk_size,
+            chunk_overlap=chunk_overlap,
+            length_function=len,
+            is_separator_regex=False,
+        )
+        chunks = []
+        for file_path in glob.glob(f"{directory}/*.txt"):
+            with open(file_path, 'r', encoding='utf-8-sig') as file:
+                text = file.read()
+                chunks.extend(splitter.split_text(text))
+        return chunks
+    
+    # get parent_texts with whatever function is need - HI IF HAUFE DATA IS USED
+    parent_texts = hi_text_splitter("./data_input")
+    logging.info(f"Number of parent chunks: {len(parent_texts)}")
 
     # Split parent chunks into children chunks and store them with reference to their parent
     children_chunks = []
@@ -720,6 +750,8 @@ else:
 
     # Convert children_chunks into Document objects
     docs = [Document(page_content=chunk) for chunk in children_chunks]
+    logging.info(f"Number of child chunks: {len(docs)}")
+    logging.info(f"Number of unique parent chunks: {len(set(parent_child_dict.values()))}")
 
     # Create and initialize Chroma vectorstore with text embeddings
     text_vectorstore = Chroma.from_documents(docs, embedding=OpenAIEmbeddings(), persist_directory=text_vectorstore_path)
