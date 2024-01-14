@@ -46,6 +46,16 @@ This project represents a focused effort in the field of legal tech research, wh
 
 ## Usage
 
+### Configuration
+
+Before generating the Knowledge Graph or running the Graph-Augmented Retrieval-Augmented Generation, you need to decide and set the splitter.
+
+The splitter is a crucial component that determines how the text data is divided into distinct concepts for the Knowledge Graph. Similarly, in the Graph-Augmented Retrieval-Augmented Generation, the splitter plays a key role in breaking down user queries into manageable pieces for processing.
+
+You can set the splitter in the `networkX.py` and `Graph_RAG_advanced_RAG.py` scripts. 
+
+Remember, the choice of splitter can significantly impact the performance and results of the system. Therefore, choose a splitter that best suits your data and use case.
+
 ### Generating the Knowledge Graph
 
 1. **Creating the Knowledge Graph:**
