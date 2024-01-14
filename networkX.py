@@ -437,7 +437,7 @@ json_file_path = "./data_output/graph_data.json"
 
 # Write the graph data to a JSON file
 with open(json_file_path, "w", encoding="utf-8-sig") as json_file:
-    json.dump(graph_data, json_file)
+    json.dump(graph_data, json_file, ensure_ascii=False)
 logging.info("Graph Data as Json")
 
 #toDO: redundant - delete
