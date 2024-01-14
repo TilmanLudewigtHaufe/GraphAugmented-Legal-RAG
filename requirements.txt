@@ -14,3 +14,4 @@ python-dotenv
 matplotlib
 scikit-learn
 llama_index
+py2neo
