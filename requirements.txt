@@ -15,3 +15,4 @@ matplotlib
 scikit-learn
 llama_index
 py2neo
+neo4j
