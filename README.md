@@ -54,7 +54,7 @@ The splitter is a crucial component that determines how the text data is divided
 
 You can set the splitter in the `networkX.py` and `Graph_RAG_advanced_RAG.py` scripts. 
 
-Remember, the choice of splitter can significantly impact the performance and results of the system. Therefore, choose a splitter that best suits your data and use case.
+Remember, the choice of splitter can significantly impact the performance and results of the system. Therefore, choose a splitter that best suits your data and use case. In the respected code sections three various splitters with different approaches (simple to complex and custom) are provided which can be adjusted to your needs.
 
 ### Generating the Knowledge Graph
 
