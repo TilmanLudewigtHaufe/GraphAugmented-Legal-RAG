@@ -40,3 +40,7 @@ Thumbs.db
 # Ignore data folder #
 ######################
 data/
+
+# Ignore toDo.txt file #
+########################
+toDo.txt
