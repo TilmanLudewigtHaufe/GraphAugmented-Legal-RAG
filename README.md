@@ -40,7 +40,7 @@ This project represents a focused effort in the field of legal tech research, wh
    - Add `OPENAI_API_KEY=your_key_here`.
 
 4. **Data Preparation:**
-   - Place your text data in the `data_input` directory.
+   - Place your text data (.txt) in the `data_input` directory.
 
 ---
 
