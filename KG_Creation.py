@@ -47,12 +47,12 @@ logging.info(".env loaded")
 api_key = os.getenv("OPENAI_API_KEY")
 
 # function with OpenAI API integration for generating responses
-def generate_openai(prompt, model_name="gpt-3.5-turbo-1106"):
+def generate_openai(prompt, model_name="gpt-4o-mini"):
     try:
         client = OpenAI(api_key=api_key)
 
         completion = client.chat.completions.create(
-            model="gpt-3.5-turbo-1106",
+            model=model_name,
             messages=[
                 {"role": "system",
                  "content":
@@ -173,11 +173,20 @@ def contextual_proximity(df: pd.DataFrame) -> pd.DataFrame:
         df, id_vars=["chunk_id"], value_vars=["node_1", "node_2"], value_name="node"
     )
     dfg_long.drop(columns=["variable"], inplace=True)
+
     # Self join with chunk id as the key will create a link between terms occuring in the same text chunk
     dfg_wide = pd.merge(dfg_long, dfg_long, on="chunk_id", suffixes=("_1", "_2"))
     # drop self loops
     self_loops_drop = dfg_wide[dfg_wide["node_1"] == dfg_wide["node_2"]].index
     dfg2 = dfg_wide.drop(index=self_loops_drop).reset_index(drop=True)
+
+    # Ensure node_1 is always less than or equal to node_2 to treat pairs back and forth the same
+    dfg2["node_1"], dfg2["node_2"] = np.where(
+        dfg2["node_1"] <= dfg2["node_2"],
+        [dfg2["node_1"], dfg2["node_2"]],
+        [dfg2["node_2"], dfg2["node_1"]]
+    )
+
     # Group and count edges
     dfg2 = (
         dfg2.groupby(["node_1", "node_2"])
